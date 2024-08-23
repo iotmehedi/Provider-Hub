@@ -2,27 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
+import 'package:provider_hub/const/utils/consts/app_sizes.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
+import 'package:provider_hub/features/screens/trainer_reg_screen/presentation/controller/trainer_reg_controller.dart';
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
+import 'package:provider_hub/features/widget/custom_svg/custom_svg_widget.dart';
 import 'package:provider_hub/features/widget/custom_text_textfield_column/custom_text_textfield_column.dart';
+import '../../../../../../../../const/routes/route_name.dart';
+import '../../../../../../../../const/routes/router.dart';
+import '../../../../widget/custom_elevatedButton/custom_eleveted_button.dart';
 
-import '../../../../../../const/routes/route_name.dart';
-import '../../../../../../const/routes/router.dart';
-import '../../../../../widget/custom_elevatedButton/custom_eleveted_button.dart';
-import '../controller/provider_reg_controller.dart';
-
-class ProviderRegistrationScreen extends StatelessWidget {
-  ProviderRegistrationScreen({super.key});
-  var controller = Get.put(ProviderRegController());
+class TrainerRegistrationScreen extends StatelessWidget {
+  TrainerRegistrationScreen({super.key});
+  var controller = Get.put(TrainerRegController());
   @override
   Widget build(BuildContext context) {
     return Obx(
       () => Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(
-          title: "Provider Registration Form",
+          title: "Trainer Registration Form",
           onBackPressed: () {
             Navigator.pop(context);
           },
@@ -31,39 +33,38 @@ class ProviderRegistrationScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 10.ph,
+                CustomSvgWidget(
+                  image: AppAssets.uploadPictureAveter,
+                  height: AppSizes.newSize(10.0),
+                  width: AppSizes.newSize(10.0),
+                ),
+                10.ph,
+                CustomSimpleText(
+                  text: "Upload Picture",
+                  fontSize: AppSizes.size16,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.white,
+                ),
+                20.ph,
                 CustomTextTextfieldColumn(
-                    text: "Provider Name",
-                    hint: "Enter name",
-                    textEditingController:
-                        controller.providerNameController.value),
+                    text: "Full Name",
+                    hint: "Enter Your name",
+                    textEditingController: controller.fullNameController.value),
                 10.ph,
                 CustomTextTextfieldColumn(
-                    text: "Services",
-                    hint: "Enter Services that you provide",
+                    text: "Phone Number",
+                    hint: "Enter Your Phone Number",
                     textEditingController:
-                        controller.serviceController.value),
-                10.ph,
-                CustomTextTextfieldColumn(
-                    text: "Contact Name",
-                    hint: "Enter contact name",
-                    textEditingController:
-                        controller.contactNameController.value),
-                10.ph,
-                CustomTextTextfieldColumn(
-                    text: "Contact Number",
-                    hint: "Enter contact number",
-                    textEditingController:
-                        controller.contactController.value),
+                        controller.phoneNumberController.value),
                 10.ph,
                 CustomTextTextfieldColumn(
                     text: "Contact Email",
                     hint: "Enter contact email",
-                    textEditingController:
-                        controller.emailController.value),
+                    textEditingController: controller.emailController.value),
                 10.ph,
                 CustomTextTextfieldColumn(
                     text: "Office Address",
@@ -71,17 +72,42 @@ class ProviderRegistrationScreen extends StatelessWidget {
                     textEditingController:
                         controller.officeAddressController.value),
                 10.ph,
-                CustomTextTextfieldColumn(
-                    text: "License Number",
-                    hint: "Enter License Number",
-                    textEditingController:
-                        controller.licenseNumberController.value),
-                10.ph,
-                CustomTextTextfieldColumn(
-                    text: "NPI Number",
-                    hint: "Enter NPI Number",
-                    textEditingController:
-                        controller.npiNumberController.value),
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.appColors, width: 1.0),
+                    borderRadius:
+                        BorderRadius.circular(5.0), // Adjust as needed
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: controller.selectedValue.value,
+                      items: <String>["Select Training's", 'A', 'B', 'C', 'D']
+                          .map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: CustomSimpleText(
+                            text: value,
+                            fontWeight: FontWeight.w500,
+                            fontSize: AppSizes.size14,
+                            color: AppColors.white,
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        controller.selectedValue.value = value!;
+                      },
+                      underline: SizedBox(), // Removes the default underline
+                      isExpanded:
+                          true, // Makes the dropdown button expand to fill its container
+                      dropdownColor:
+                          Colors.black, // Sets the dropdown menu color to black
+                      iconEnabledColor: Colors
+                          .white, // Optional: Change the icon color if needed
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
                 10.ph,
                 Row(
                   children: [

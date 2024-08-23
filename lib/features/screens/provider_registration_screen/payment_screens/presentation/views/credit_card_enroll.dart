@@ -213,8 +213,8 @@ class CreditCardEnrollScreen extends StatelessWidget {
                             color: AppColors.white,
                           ),
                           onPress: () {
-                            RouteGenerator.pushNamed(
-                                context, Routes.creditCardEnroll);
+                            // RouteGenerator.pushNamed(
+                            //     context, Routes.creditCardEnroll);
                           },
                           backgroundColor: AppColors.appColors,
                           elevatedButtonSideBorderColor: AppColors.appColors),
