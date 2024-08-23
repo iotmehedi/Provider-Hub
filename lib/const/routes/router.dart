@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider_hub/const/routes/route_name.dart';
+import 'package:provider_hub/features/screens/consultant_reg_screen/presentation/view/consultant_reg_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_three.dart';
 import '../../features/screens/provider_registration_screen/payment_screens/presentation/views/credit_card_enroll.dart';
 import '../../features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_two.dart';
 import '../../features/screens/provider_registration_screen/registration_screen/presentation/view/provider_registration_screen.dart';
+import '../../features/screens/qddp_reg_screen/presentation/view/qddp_reg_screen.dart';
 import '../../features/screens/register_page/presentation/view/register_page.dart';
 import '../../features/screens/splash_screen/splash_screen.dart';
+import '../../features/screens/trainer_reg_screen/presentation/view/trainer_reg_screen.dart';
 
 
 class RouteGenerator {
@@ -68,6 +71,18 @@ class RouteGenerator {
         case Routes.providerRegScreen:
         return MaterialPageRoute(
           builder: (context) =>  ProviderRegistrationScreen(),
+        );
+        case Routes.trainerRegScreen:
+        return MaterialPageRoute(
+          builder: (context) =>  TrainerRegistrationScreen(),
+        );
+        case Routes.consultantRegScreen:
+        return MaterialPageRoute(
+          builder: (context) =>  ConsultantRegistrationScreen(),
+        );
+        case Routes.qddpRegScreen:
+        return MaterialPageRoute(
+          builder: (context) =>  QDDPRegistrationScreen(),
         );
         case Routes.paymentScreen:
         return MaterialPageRoute(

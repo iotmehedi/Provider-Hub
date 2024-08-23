@@ -66,6 +66,7 @@ class RegisterPage extends StatelessWidget {
                         ),
                         onPress: () {
                           controller.selectRegistrationOptions.value = "1";
+                          RouteGenerator.pushNamed(context,Routes.trainerRegScreen);
                         },
                         backgroundColor:
                             controller.selectRegistrationOptions.value == "1"
@@ -87,6 +88,7 @@ class RegisterPage extends StatelessWidget {
                         ),
                         onPress: () {
                           controller.selectRegistrationOptions.value = "2";
+                          RouteGenerator.pushNamed(context,Routes.consultantRegScreen);
                         },
                         backgroundColor:
                             controller.selectRegistrationOptions.value == "2"
@@ -108,6 +110,7 @@ class RegisterPage extends StatelessWidget {
                         ),
                         onPress: () {
                           controller.selectRegistrationOptions.value = "3";
+                          RouteGenerator.pushNamed(context,Routes.qddpRegScreen);
                         },
                         backgroundColor:
                             controller.selectRegistrationOptions.value == "3"
