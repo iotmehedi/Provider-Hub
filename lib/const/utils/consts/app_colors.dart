@@ -6,5 +6,9 @@ class AppColors {
   static final Color appColors = HexColor('#0000FF');
   static final Color white = HexColor('#FFFFFF');
   static final Color deepGrey = HexColor('#3B3B38');
+  static final Color slightGrey = HexColor('#D1D1D1');
+  static final Color slightDeepGrey = HexColor('#909090');
+  static final Color textGreyColor = HexColor('#BCBCBC');
+  static final Color hintTextColor = HexColor('#525252');
 
 }

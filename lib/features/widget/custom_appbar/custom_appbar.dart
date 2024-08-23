@@ -6,12 +6,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback? onBackPressed;
   final String? fontFamily;
+  final double? fontSize;
+  final Color? textColor;
 
   const CustomAppBar({
     Key? key,
     required this.title,
     this.onBackPressed,
-    this.fontFamily
+    this.fontFamily,
+    this.fontSize,
+    this.textColor,
   }) : super(key: key);
 
   @override
@@ -23,7 +27,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         title,
         textAlign: TextAlign.center,
         style:
-             TextStyle(fontWeight: FontWeight.w600, fontFamily: fontFamily ?? "Podkova", fontSize: 20, color: AppColors.appColors),
+             TextStyle(fontWeight: FontWeight.w600, fontFamily: fontFamily ?? "Podkova", fontSize: fontSize ?? 20, color: textColor ?? AppColors.appColors),
       ),
       leading: onBackPressed != null
           ? IconButton(

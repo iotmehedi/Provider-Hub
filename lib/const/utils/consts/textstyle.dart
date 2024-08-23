@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/src/hexcolor_base.dart';
+import 'package:provider_hub/const/utils/consts/app_sizes.dart';
 
 globalText2(
     {required String text,
@@ -227,12 +228,12 @@ globalText16(
     child: Text(
       text,
       // maxLines: 2,
-      textAlign:  textAlign ??TextAlign.center,
+      textAlign:  textAlign ??TextAlign.start,
       // overflow: TextOverflow.ellipsis,
       style:  GoogleFonts.roboto(
         letterSpacing: 0.2,
         color: color ?? hexColor,
-        fontSize: fontSize ?? 16.0,
+        fontSize: fontSize ?? AppSizes.size16,
         fontWeight: fontWeight ?? FontWeight.w700,
       ),
     ),
@@ -274,10 +275,10 @@ globalText28(
       maxLines: 2,
       textAlign: TextAlign.center,
       overflow: TextOverflow.ellipsis,
-      style: GoogleFonts.poppins(
+      style: GoogleFonts.roboto(
         letterSpacing: 0.2,
         color: color ?? hexColor,
-        fontSize: 28.0,
+        fontSize: AppSizes.size28,
         fontWeight: fontWeight ?? FontWeight.w700,
       ),
     ),

@@ -4,12 +4,14 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
-import 'package:provider_hub/features/screens/provider_registration_screen/presentation/controller/provider_reg_controller.dart';
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 import 'package:provider_hub/features/widget/custom_text_textfield_column/custom_text_textfield_column.dart';
 
-import '../../../../widget/custom_elevatedButton/custom_eleveted_button.dart';
+import '../../../../../../const/routes/route_name.dart';
+import '../../../../../../const/routes/router.dart';
+import '../../../../../widget/custom_elevatedButton/custom_eleveted_button.dart';
+import '../controller/provider_reg_controller.dart';
 
 class ProviderRegistrationScreen extends StatelessWidget {
   ProviderRegistrationScreen({super.key});
@@ -85,36 +87,49 @@ class ProviderRegistrationScreen extends StatelessWidget {
                   children: [
                     Checkbox(
                       side: WidgetStateBorderSide.resolveWith(
-                            (Set<WidgetState> states) {
+                        (Set<WidgetState> states) {
                           if (states.contains(WidgetState.pressed) ||
                               states.contains(WidgetState.hovered) ||
                               states.contains(WidgetState.focused)) {
-                            return BorderSide(color: AppColors.appColors, width: 2.0);
+                            return BorderSide(
+                                color: AppColors.appColors, width: 2.0);
                           }
-                          return BorderSide(color: AppColors.appColors, width: 2.0); // Default border color
+                          return BorderSide(
+                              color: AppColors.appColors,
+                              width: 2.0); // Default border color
                         },
                       ),
                       value: controller.isChecked.value,
                       focusColor: AppColors.white,
-                      fillColor: MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+                      fillColor: MaterialStateProperty.resolveWith(
+                          (Set<MaterialState> states) {
                         return AppColors.deepGrey;
                       }),
                       onChanged: (value) {
                         controller.isChecked.value = value!;
                       },
                     ),
-                     Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          CustomSimpleText(text: "By selecting Agree and continue below, I agree to ", fontSize: 12,color: AppColors.white,),
-                          CustomSimpleText(text: "Terms of Service and Privacy Policy", fontSize: 12, color: AppColors.appColors,),
+                          CustomSimpleText(
+                            text:
+                                "By selecting Agree and continue below, I agree to ",
+                            fontSize: 12,
+                            color: AppColors.white,
+                          ),
+                          CustomSimpleText(
+                            text: "Terms of Service and Privacy Policy",
+                            fontSize: 12,
+                            color: AppColors.appColors,
+                          ),
                         ],
                       ),
                     )
                   ],
                 ),
-10.ph,
+                10.ph,
                 SizedBox(
                   height: 48,
                   child: CustomElevatedButton(
@@ -124,10 +139,10 @@ class ProviderRegistrationScreen extends StatelessWidget {
                         color: AppColors.white,
                       ),
                       onPress: () {
-
+                        RouteGenerator.pushNamed(context, Routes.paymentScreen);
                       },
                       backgroundColor: AppColors.appColors,
-                      elevatedButtonSideBorderColor:AppColors.appColors),
+                      elevatedButtonSideBorderColor: AppColors.appColors),
                 ),
               ],
             ),
