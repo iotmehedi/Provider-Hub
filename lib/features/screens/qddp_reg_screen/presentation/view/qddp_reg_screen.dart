@@ -25,7 +25,7 @@ class QDDPRegistrationScreen extends StatelessWidget {
           () => Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(
-          title: "Consultant Registration Form",
+          title: "QDDP Registration Form",
           onBackPressed: () {
             Navigator.pop(context);
           },
@@ -70,7 +70,7 @@ class QDDPRegistrationScreen extends StatelessWidget {
                 Align(
                     alignment: Alignment.centerLeft,
                     child: CustomSimpleText(
-                      text: "Degree/Degree Fail",
+                      text: "Degree Field",
                       fontWeight: FontWeight.w400,
                       color: AppColors.white,
                       fontSize: AppSizes.size13,
@@ -160,6 +160,12 @@ class QDDPRegistrationScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                10.ph,
+                CustomTextTextfieldColumn(
+                    text: "New Password",
+                    hint: "Enter your password",
+                    isNeedIcon: true,
+                    textEditingController: controller.passwordController.value),
                 10.ph,
                 Row(
                   children: [

@@ -6,6 +6,7 @@ class QDDPRegController extends GetxController{
   var phoneNumberController = TextEditingController().obs;
   var emailController = TextEditingController().obs;
   var officeAddressController = TextEditingController().obs;
+  var passwordController = TextEditingController().obs;
   var isChecked = false.obs;
   var selectedValue = 'A'.obs;
   var selectedDegree = 'A'.obs;

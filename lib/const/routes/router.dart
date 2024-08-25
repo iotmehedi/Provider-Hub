@@ -4,6 +4,8 @@ import 'package:provider_hub/const/routes/route_name.dart';
 import 'package:provider_hub/features/screens/consultant_reg_screen/presentation/view/consultant_reg_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_three.dart';
+import '../../features/screens/homepage/presentation/view/all_services_screen.dart';
+import '../../features/screens/homepage/presentation/view/homepage.dart';
 import '../../features/screens/provider_registration_screen/payment_screens/presentation/views/credit_card_enroll.dart';
 import '../../features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_two.dart';
 import '../../features/screens/provider_registration_screen/registration_screen/presentation/view/provider_registration_screen.dart';
@@ -99,6 +101,14 @@ class RouteGenerator {
         case Routes.creditCardEnroll:
         return MaterialPageRoute(
           builder: (context) =>  CreditCardEnrollScreen(),
+        );
+        case Routes.homepage:
+        return MaterialPageRoute(
+          builder: (context) =>  HomepageScreen(),
+        );
+        case Routes.allService:
+        return MaterialPageRoute(
+          builder: (context) =>  AllServicesScreen(),
         );
 
     }

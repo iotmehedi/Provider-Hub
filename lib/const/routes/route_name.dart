@@ -9,5 +9,7 @@ class Routes {
   static const paymentScreenTwo = "/paymentScreenTwo";
   static const paymentScreenThree = "/paymentScreenThree";
   static const creditCardEnroll = "/creditCardEnroll";
+  static const homepage = "/homepage";
+  static const allService = "/allService";
 
 }

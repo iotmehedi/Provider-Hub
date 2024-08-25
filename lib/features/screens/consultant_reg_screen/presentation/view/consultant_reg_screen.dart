@@ -69,7 +69,7 @@ class ConsultantRegistrationScreen extends StatelessWidget {
                 Align(
                     alignment: Alignment.centerLeft,
                     child: CustomSimpleText(
-                      text: "Select Training's That You Can Provide",
+                      text: "Select consult's that you want to provide",
                       fontWeight: FontWeight.w400,
                       color: AppColors.white,
                       fontSize: AppSizes.size13,

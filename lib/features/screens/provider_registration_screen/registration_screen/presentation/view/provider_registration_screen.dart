@@ -10,7 +10,10 @@ import 'package:provider_hub/features/widget/custom_text_textfield_column/custom
 
 import '../../../../../../const/routes/route_name.dart';
 import '../../../../../../const/routes/router.dart';
+import '../../../../../../const/utils/consts/app_assets.dart';
+import '../../../../../../const/utils/consts/app_sizes.dart';
 import '../../../../../widget/custom_elevatedButton/custom_eleveted_button.dart';
+import '../../../../../widget/custom_svg/custom_svg_widget.dart';
 import '../controller/provider_reg_controller.dart';
 
 class ProviderRegistrationScreen extends StatelessWidget {
@@ -31,10 +34,23 @@ class ProviderRegistrationScreen extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 10.ph,
+                CustomSvgWidget(
+                  image: AppAssets.uploadPictureAveter,
+                  height: AppSizes.newSize(10.0),
+                  width: AppSizes.newSize(10.0),
+                ),
+                10.ph,
+                CustomSimpleText(
+                  text: "Upload Picture",
+                  fontSize: AppSizes.size16,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.white,
+                ),
+                20.ph,
                 CustomTextTextfieldColumn(
                     text: "Provider Name",
                     hint: "Enter name",

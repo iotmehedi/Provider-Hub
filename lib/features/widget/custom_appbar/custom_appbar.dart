@@ -8,6 +8,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? fontFamily;
   final double? fontSize;
   final Color? textColor;
+  final bool? needTitleCenter;
 
   const CustomAppBar({
     Key? key,
@@ -16,13 +17,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.fontFamily,
     this.fontSize,
     this.textColor,
+    this.needTitleCenter
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: AppColors.backgroundColor,
-      centerTitle: true,
+      centerTitle: needTitleCenter ?? true,
       title: Text(
         title,
         textAlign: TextAlign.center,

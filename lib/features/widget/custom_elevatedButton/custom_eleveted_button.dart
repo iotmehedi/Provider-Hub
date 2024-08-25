@@ -22,7 +22,7 @@ class CustomElevatedButton extends StatelessWidget {
               maximumSize: Size(MediaQuery.of(context).size.width, 60),
 
               shape:
-                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),side: BorderSide(
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),side: BorderSide(
                     color: elevatedButtonSideBorderColor ?? Colors.blue, // Set your border color here
                     width: 2.0, // Set the border width here
                   ),)),
