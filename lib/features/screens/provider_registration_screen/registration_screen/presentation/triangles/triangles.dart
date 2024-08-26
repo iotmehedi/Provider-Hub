@@ -61,28 +61,39 @@ class LeftTriangle extends CustomClipper<Path> {
     double triangleSize = size.height / 2; // Size of the left triangle
     double radius = 10.0; // Radius for the right-side curve
 
-    // Left triangle (facing inward)
-    path.moveTo(size.width / 5, size.height / 2); // Start at the middle left
-    path.lineTo(triangleSize, 0); // Top-left point of the triangle
-    path.lineTo(triangleSize, size.height); // Bottom-left point of the triangle
-    path.close(); // Close the left triangle
+    // Start at the top-left corner of the container
+    path.moveTo(0, 0);
+
+    // Top-left point of the triangle
+    path.lineTo(triangleSize, 0);
+
+    // Bottom-left point of the triangle
+    path.lineTo(triangleSize, size.height);
+
+    // Return to the starting point to close the left triangle
+    path.lineTo(0, size.height);
+
+    // Move to the start of the rectangle part
+    path.lineTo(triangleSize, size.height);
+    path.lineTo(triangleSize, 0);
 
     // Middle rectangle
     path.addRect(Rect.fromLTWH(triangleSize, 0, size.width - 2 * triangleSize - radius, size.height));
 
     // Right side with curved corners
-    path.lineTo(size.width - radius, 0); // Move to the top-right start of the curve
+    path.moveTo(size.width - radius, 0); // Move to the top-right start of the curve
     path.quadraticBezierTo(
-        size.width, 0, // Control point for the curve
-        size.width, radius // End point of the curve
+      size.width, 0, // Control point for the curve
+      size.width, radius, // End point of the curve
     );
     path.lineTo(size.width, size.height - radius); // Move to the bottom-right curve
     path.quadraticBezierTo(
-        size.width, size.height, // Control point for the curve
-        size.width - radius, size.height // End point of the curve
+      size.width, size.height, // Control point for the curve
+      size.width - radius, size.height, // End point of the curve
     );
-    // path.lineTo(size.height, 0);
-    path.lineTo(size.width, size.height + 17); // Connect to the bottom-left of the triangle
+
+    // Connect back to the bottom-left of the triangle
+    path.lineTo(triangleSize, size.height);
 
     path.close(); // Close the path to complete the shape
 
@@ -94,3 +105,4 @@ class LeftTriangle extends CustomClipper<Path> {
     return false;
   }
 }
+

@@ -200,24 +200,26 @@ class CreditCardEnrollScreen extends StatelessWidget {
                         ],
                       ),
                     )),
-                Positioned(
-                  bottom: 0,
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 5),
                     child: SizedBox(
                       height: 48,
-                      child: CustomElevatedButton(
-                          text: CustomSimpleText(
-                            text: "Pay Now",
-                            fontSize: 20,
-                            color: AppColors.white,
-                          ),
-                          onPress: () {
-                            RouteGenerator.pushNamed(
-                                context, Routes.homepage);
-                          },
-                          backgroundColor: AppColors.appColors,
-                          elevatedButtonSideBorderColor: AppColors.appColors),
+                      child: Center(
+                        child: CustomElevatedButton(
+                            text: CustomSimpleText(
+                              text: "Pay Now",
+                              fontSize: 20,
+                              color: AppColors.white,
+                            ),
+                            onPress: () {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.inbox);
+                            },
+                            backgroundColor: AppColors.appColors,
+                            elevatedButtonSideBorderColor: AppColors.appColors),
+                      ),
                     ),
                   ),
                 )

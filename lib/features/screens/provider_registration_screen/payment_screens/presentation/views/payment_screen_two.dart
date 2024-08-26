@@ -43,12 +43,14 @@ class PaymentScreenTwo extends StatelessWidget {
                     color3: AppColors.slightGrey,
                     titleColor1: AppColors.white,
                     titleColor2: AppColors.white,
-                    titleColor3: AppColors.slightDeepGrey),
+                    titleColor3: AppColors.slightDeepGrey,
+                from: "two",
+                ),
                 PlanSelectionTwo(),
               ],
             ),
-            Positioned(
-              bottom: 90,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 90),
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -109,8 +111,8 @@ class PaymentScreenTwo extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
-              bottom: 10,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(

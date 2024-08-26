@@ -56,7 +56,7 @@ class PlanSelectionWidgetOne extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CustomSimpleText(
-                                    text: "US \$50",
+                                    text: "US \$${controller.registerController.firstPrice.value}",
                                     fontSize: AppSizes.newSize(4.0),
                                     color: controller.planSelection.value == false ? AppColors.white : AppColors.appColors,
                                     fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class PlanSelectionWidgetOne extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   CustomSimpleText(
-                                    text: "US \$500",
+                                    text: "US \$${controller.registerController.secondPrice.value}",
                                     fontSize: AppSizes.newSize(4.0),
                                     color: controller.planSelection.value == true ? AppColors.white : AppColors.appColors,
                                     fontWeight: FontWeight.bold,

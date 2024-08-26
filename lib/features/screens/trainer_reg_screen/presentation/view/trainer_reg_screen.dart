@@ -13,6 +13,7 @@ import 'package:provider_hub/features/widget/custom_svg/custom_svg_widget.dart';
 import 'package:provider_hub/features/widget/custom_text_textfield_column/custom_text_textfield_column.dart';
 import '../../../../../../../../const/routes/route_name.dart';
 import '../../../../../../../../const/routes/router.dart';
+import '../../../../../const/utils/consts/textstyle.dart';
 import '../../../../widget/custom_elevatedButton/custom_eleveted_button.dart';
 
 class TrainerRegistrationScreen extends StatelessWidget {
@@ -72,6 +73,8 @@ class TrainerRegistrationScreen extends StatelessWidget {
                     textEditingController:
                         controller.officeAddressController.value),
                 10.ph,
+                globalText14(text: "Select Training's That You Can Provide", fontWeight: FontWeight.w500, color: AppColors.white),
+                10.ph,
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 12.0),
                   decoration: BoxDecoration(
@@ -82,7 +85,7 @@ class TrainerRegistrationScreen extends StatelessWidget {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: controller.selectedValue.value,
-                      items: <String>["Select Training's", 'A', 'B', 'C', 'D']
+                      items: <String>["Select Training's", 'CRP/First Aid', 'TOVA', 'Medication Aid', 'DSP', 'Documentation']
                           .map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
