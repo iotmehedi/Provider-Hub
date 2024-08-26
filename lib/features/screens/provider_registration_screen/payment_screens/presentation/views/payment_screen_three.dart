@@ -43,7 +43,9 @@ class PaymentScreenThree extends StatelessWidget {
                     color3: AppColors.appColors,
                     titleColor1: AppColors.white,
                     titleColor2: AppColors.white,
-                    titleColor3: AppColors.white),
+                    titleColor3: AppColors.white,
+                from: "three",
+                ),
                 PlanSelectionWidgetThree(),
               ],
             ),
@@ -98,8 +100,8 @@ class PaymentScreenThree extends StatelessWidget {
                     ],
                   ),
                 )),
-            Positioned(
-              bottom: 10,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(

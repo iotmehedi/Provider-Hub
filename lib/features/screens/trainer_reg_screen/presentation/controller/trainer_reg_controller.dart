@@ -7,5 +7,5 @@ class TrainerRegController extends GetxController{
   var emailController = TextEditingController().obs;
   var officeAddressController = TextEditingController().obs;
   var isChecked = false.obs;
-  var selectedValue = 'A'.obs;
+  var selectedValue = "Select Training's".obs;
 }

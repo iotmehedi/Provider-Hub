@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/controller/payment_controller.dart';
@@ -32,6 +33,7 @@ var controller = Get.put(PaymentController());
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+
                 PlanBar(
                     title1: "Choose Plan",
                     title2: "Review Details",
@@ -41,13 +43,14 @@ var controller = Get.put(PaymentController());
                     color3: AppColors.slightGrey,
                     titleColor1: AppColors.white,
                     titleColor2: AppColors.slightDeepGrey,
-                    titleColor3: AppColors.slightDeepGrey
+                    titleColor3: AppColors.slightDeepGrey,
+                  from: "one"
                 ),
                 PlanSelectionWidgetOne(controller: controller),
               ],
             ),
-            Positioned(
-              bottom: 10,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 10),
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: SizedBox(
@@ -64,70 +67,12 @@ var controller = Get.put(PaymentController());
                       backgroundColor: AppColors.appColors,
                       elevatedButtonSideBorderColor:AppColors.appColors),
                 ),
-              ),)
+              ),
+            )
           ],
         ),
       ),
     );
   }
 }
-// Flexible(
-//   flex: 2,
-//   child: ClipPath(
-//     clipper: RightTriangel(),
-//     child: Container(
-//       color: Colors.blue,
-//       height: 28.0, // Set the height of the button
-//       child: Center(
-//         child: Text(
-//           'Choose plan',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 20.0,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//       ),
-//     ),
-//   ),
-// ),
-// Flexible(
-//   flex: 2,
-//   child: ClipPath(
-//     clipper: BothTriangle(),
-//     child: Container(
-//       color: Colors.blue,
-//       height: 28.0, // Set the height of the button
-//       child: Center(
-//         child: Text(
-//           'Choose plan',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 20.0,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//       ),
-//     ),
-//   ),
-// ),
-// Flexible(
-//   flex: 2,
-//   child: ClipPath(
-//     clipper: LeftTriangle(),
-//     child: Container(
-//       color: Colors.blue,
-//       height: 28.0, // Set the height of the button
-//       child: Center(
-//         child: Text(
-//           'Choose plan',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontSize: 20.0,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//       ),
-//     ),
-//   ),
-// ),
+

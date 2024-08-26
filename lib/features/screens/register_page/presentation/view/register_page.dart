@@ -43,6 +43,8 @@ class RegisterPage extends StatelessWidget {
                                   : AppColors.white,
                         ),
                         onPress: () {
+                          controller.firstPrice.value = "50";
+                          controller.secondPrice.value = "500";
                           controller.selectRegistrationOptions.value = "0";
                           RouteGenerator.pushNamed(context,Routes.providerRegScreen);
                         },
@@ -65,6 +67,8 @@ class RegisterPage extends StatelessWidget {
                                   : AppColors.white,
                         ),
                         onPress: () {
+                          controller.firstPrice.value = "20";
+                          controller.secondPrice.value = "220";
                           controller.selectRegistrationOptions.value = "1";
                           RouteGenerator.pushNamed(context,Routes.trainerRegScreen);
                         },
@@ -87,6 +91,8 @@ class RegisterPage extends StatelessWidget {
                                   : AppColors.white,
                         ),
                         onPress: () {
+                          controller.firstPrice.value = "20";
+                          controller.secondPrice.value = "220";
                           controller.selectRegistrationOptions.value = "2";
                           RouteGenerator.pushNamed(context,Routes.consultantRegScreen);
                         },
@@ -109,6 +115,8 @@ class RegisterPage extends StatelessWidget {
                                   : AppColors.white,
                         ),
                         onPress: () {
+                          controller.firstPrice.value = "30";
+                          controller.secondPrice.value = "330";
                           controller.selectRegistrationOptions.value = "3";
                           RouteGenerator.pushNamed(context,Routes.qddpRegScreen);
                         },

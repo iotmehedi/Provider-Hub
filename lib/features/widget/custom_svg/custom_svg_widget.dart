@@ -12,6 +12,7 @@ class CustomSvgWidget extends StatelessWidget {
       image,
       width: width, // Specify width
       height: height, // Specify height
+      fit: BoxFit.cover,
     );
   }
 }

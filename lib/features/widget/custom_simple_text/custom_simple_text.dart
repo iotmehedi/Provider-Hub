@@ -7,13 +7,21 @@ class CustomSimpleText extends StatelessWidget {
   final FontWeight? fontWeight;
   final double? fontSize;
   final TextAlign? textAlign;
-  const CustomSimpleText({super.key, required this.text, this.fontWeight, this.color, this.fontSize, this.textAlign});
+  final int? maxLines;
+  const CustomSimpleText(
+      {super.key,
+      required this.text,
+      this.fontWeight,
+      this.color,
+      this.fontSize,
+      this.textAlign,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      maxLines: 2,
+      maxLines: maxLines ?? 2,
       textAlign: textAlign ?? TextAlign.start,
       style: GoogleFonts.roboto(
         letterSpacing: 0.2,

@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/consts/app_sizes.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
+import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/controller/payment_controller.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 
 class PlanSelectionTwo extends StatelessWidget {
-  const PlanSelectionTwo({super.key});
-
+   PlanSelectionTwo({super.key});
+var controller = Get.find<PaymentController>();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -39,12 +41,12 @@ class PlanSelectionTwo extends StatelessWidget {
                   color: AppColors.white,
                   fontWeight: FontWeight.w500,
                 ),
-                CustomSimpleText(
-                  text: "US \$50",
+                Obx(()=> CustomSimpleText(
+                  text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                   fontSize: AppSizes.newSize(2.5),
                   color: AppColors.white,
                   fontWeight: FontWeight.bold,
-                ),
+                ),),
                 CustomSimpleText(
                   text: "Next Payment 5th January, 2024",
                   fontSize: AppSizes.newSize(1.3),
