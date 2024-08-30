@@ -14,6 +14,7 @@ import '../../../../../../const/routes/router.dart';
 import '../../../../../../const/utils/consts/app_assets.dart';
 import '../../../../../widget/custom_elevatedButton/custom_eleveted_button.dart';
 import '../../../../../widget/custom_svg/custom_svg_widget.dart';
+import '../services/stripe_service.dart';
 import '../widget/custom_textformfield_widget.dart';
 
 class CreditCardEnrollScreen extends StatelessWidget {
@@ -214,8 +215,9 @@ class CreditCardEnrollScreen extends StatelessWidget {
                               color: AppColors.white,
                             ),
                             onPress: () {
-                              RouteGenerator.pushNamed(
-                                  context, Routes.inbox);
+                              StripeService.instance.makePayment();
+                              // RouteGenerator.pushNamed(
+                              //     context, Routes.inbox);
                             },
                             backgroundColor: AppColors.appColors,
                             elevatedButtonSideBorderColor: AppColors.appColors),
