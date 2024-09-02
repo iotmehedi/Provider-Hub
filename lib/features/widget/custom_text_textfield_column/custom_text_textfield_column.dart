@@ -9,7 +9,19 @@ class CustomTextTextfieldColumn extends StatelessWidget {
   final String text, hint;
   final TextEditingController textEditingController;
   final bool? isNeedIcon;
-  const CustomTextTextfieldColumn({super.key, required this.text, required this.hint, required this.textEditingController, this.isNeedIcon});
+  final IconData? suffixIcon;
+  final VoidCallback? onPress;
+  final bool? obscureText;
+  const CustomTextTextfieldColumn(
+      {super.key,
+      required this.text,
+      required this.hint,
+      required this.textEditingController,
+      this.isNeedIcon,
+      this.onPress,
+        this.suffixIcon,
+        this.obscureText,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -20,16 +32,24 @@ class CustomTextTextfieldColumn extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            globalText14(text: text, fontWeight: FontWeight.w500, color: AppColors.white),
+            globalText14(
+                text: text,
+                fontWeight: FontWeight.w500,
+                color: AppColors.white),
             Visibility(
                 visible: isNeedIcon == true ? true : false,
-                child: Icon(Icons.info, size: 20,color: HexColor("525252"),))
+                child: Icon(
+                  Icons.info,
+                  size: 20,
+                  color: HexColor("525252"),
+                ))
           ],
         ),
         const SizedBox(
           height: 5,
         ),
         CustomSimpleTextField(
+            obscureText: obscureText,
             fontWeight: FontWeight.normal,
             fontSize: 16.0,
             hexColor: HexColor('80848A'),
@@ -37,6 +57,7 @@ class CustomTextTextfieldColumn extends StatelessWidget {
             keyboardType: TextInputType.text,
             paddingNeed: true,
             hint: hint,
+            suffixIcon: IconButton(onPressed: onPress, icon: Icon(suffixIcon)),
             textAlign: TextAlign.start),
       ],
     );

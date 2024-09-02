@@ -44,3 +44,47 @@ void errorToast({required BuildContext context, required String msg,  Color? col
     ),
   ));
 }
+
+successToast(
+    {required BuildContext context, required String msg, String? title}) {
+  return ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    elevation: 6.0,
+    backgroundColor: Colors.green,
+    behavior: SnackBarBehavior.floating,
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20))),
+    content: Row(
+      children: [
+        Icon(
+          Icons.done,
+          size: 50,
+          color: Colors.white,
+        ),
+        const SizedBox(width: 16),
+        Flexible(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title ?? "Success",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              Text(
+                msg,
+                overflow: TextOverflow.ellipsis,
+                //textDirection: TextDirection.rtl,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  ));
+}
+
+

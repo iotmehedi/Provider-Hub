@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -38,11 +40,21 @@ class ProviderRegistrationScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 10.ph,
-                CustomSvgWidget(
-                  image: AppAssets.uploadPictureAveter,
-                  height: AppSizes.newSize(10.0),
-                  width: AppSizes.newSize(10.0),
-                ),
+                InkWell(
+                 onTap:() => controller.showImageSourceDialog(context),
+                 child: controller.imagePickerGallery.value.path.isNotEmpty ? ClipRRect(
+                   borderRadius: BorderRadius.circular(5),
+                   child: Image.file(File(controller.imagePickerGallery.value.path),
+                     height: AppSizes.newSize(10.0),
+                     width: AppSizes.newSize(10.0),
+                     fit: BoxFit.fill,
+                   ),
+                 ) : CustomSvgWidget(
+                    image: AppAssets.uploadPictureAveter,
+                    height: AppSizes.newSize(10.0),
+                    width: AppSizes.newSize(10.0),
+                  ),
+               ),
                 10.ph,
                 CustomSimpleText(
                   text: "Upload Picture",
@@ -98,6 +110,30 @@ class ProviderRegistrationScreen extends StatelessWidget {
                     hint: "Enter NPI Number",
                     textEditingController:
                         controller.npiNumberController.value),
+                10.ph,
+                CustomTextTextfieldColumn(
+                    text: "Password",
+                    hint: "Enter password",
+                    onPress: (){
+                      controller.passwordVisible.value = !controller.passwordVisible.value;
+                    },
+                    textEditingController:
+                        controller.passwordController.value,
+                suffixIcon: controller.passwordVisible.value == true ? Icons.visibility_off : Icons.visibility,
+                  obscureText: controller.passwordVisible.value,
+                ),
+                10.ph,
+                CustomTextTextfieldColumn(
+                    text: "Confirm Password",
+                    hint: "Enter confirm password",
+                    textEditingController:
+                        controller.confirmationPasswordController.value,
+                  onPress: (){
+                    controller.confirmPasswordVisible.value = !controller.confirmPasswordVisible.value;
+                  },
+                  suffixIcon: controller.confirmPasswordVisible.value == true ? Icons.visibility_off : Icons.visibility,
+                  obscureText: controller.confirmPasswordVisible.value,
+                ),
                 10.ph,
                 Row(
                   children: [

@@ -12,6 +12,7 @@ import '../../../../../widget/custom_elevatedButton/custom_eleveted_button.dart'
 import '../../../../../widget/custom_simple_text/custom_simple_text.dart';
 import '../../../registration_screen/presentation/triangles/triangles.dart';
 import '../plan_bar/plan_bar.dart';
+import '../services/stripe_service.dart';
 import '../widget/plan_selection_one.dart';
 import '../widget/plan_selection_three.dart';
 
@@ -67,7 +68,7 @@ class PaymentScreenThree extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             CustomSimpleText(
-                              text: "US \$50",
+                              text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                               fontSize: AppSizes.size12,
                               color: AppColors.textGreyColor,
                               fontWeight: FontWeight.bold,
@@ -88,7 +89,7 @@ class PaymentScreenThree extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             CustomSimpleText(
-                              text: "US \$50",
+                              text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                               fontSize: AppSizes.size16,
                               color: AppColors.appColors,
                               fontWeight: FontWeight.bold,
@@ -113,7 +114,8 @@ class PaymentScreenThree extends StatelessWidget {
                         color: AppColors.white,
                       ),
                       onPress: () {
-                        RouteGenerator.pushNamed(context,Routes.creditCardEnroll);
+                        StripeService.instance.makePayment(money: controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value);
+                        // RouteGenerator.pushNamed(context,Routes.creditCardEnroll);
                       },
                       backgroundColor: AppColors.appColors,
                       elevatedButtonSideBorderColor: AppColors.appColors),

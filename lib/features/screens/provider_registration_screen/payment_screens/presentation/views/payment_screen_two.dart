@@ -75,7 +75,7 @@ class PaymentScreenTwo extends StatelessWidget {
                                 fontSize: AppSizes.newSize(1.5),
                               ),
                               CustomSimpleText(
-                                text: "US \$50",
+                                text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                                 color: AppColors.slightDeepGrey,
                                 fontSize: AppSizes.newSize(1.5),
                               ),
@@ -97,7 +97,7 @@ class PaymentScreenTwo extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                               CustomSimpleText(
-                                text: "US \$50",
+                                text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                                 color: AppColors.white,
                                 fontSize: AppSizes.newSize(1.8),
                                 fontWeight: FontWeight.bold,
