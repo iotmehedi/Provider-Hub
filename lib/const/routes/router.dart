@@ -92,22 +92,36 @@ class RouteGenerator {
           builder: (context) =>  ConsultantRegistrationScreen(),
         );
         case Routes.qddpRegScreen:
-        return MaterialPageRoute(
-          builder: (context) =>  QDDPRegistrationScreen(),
-        );
-        case Routes.paymentScreen:
-        return MaterialPageRoute(
-          builder: (context) =>  PaymentScreen(),
-        );
-        case Routes.paymentScreenTwo:
-        return MaterialPageRoute(
-          builder: (context) =>  PaymentScreenTwo(),
-        );
-        case Routes.paymentScreenThree:
-        return MaterialPageRoute(
-          builder: (context) =>  PaymentScreenThree(),
-        );
-        case Routes.creditCardEnroll:
+          {
+
+          return MaterialPageRoute(
+            builder: (context) => QDDPRegistrationScreen(),
+          );
+        }
+      case Routes.paymentScreen:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) => PaymentScreen(
+              from: arguments[0] as String
+            ),
+          );
+        }
+      case Routes.paymentScreenTwo:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) => PaymentScreenTwo(from: arguments[0] as String),
+          );
+        }
+      case Routes.paymentScreenThree:
+        {
+          final arguments = routeSettings.arguments as List;
+          return MaterialPageRoute(
+            builder: (context) => PaymentScreenThree(from: arguments[0] as String),
+          );
+        }
+      case Routes.creditCardEnroll:
         return MaterialPageRoute(
           builder: (context) =>  CreditCardEnrollScreen(),
         );

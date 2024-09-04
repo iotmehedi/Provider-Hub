@@ -14,6 +14,7 @@ class AppAssets {
   static const String provider = 'assets/provider.png';
   static const String trainings = 'assets/trainings.png';
   static const String updates = 'assets/updates.png';
+  static const String success = 'assets/success.png';
   static const String inHome = 'assets/ddService_pictures/inhome.png';
   static const String daySupport = 'assets/ddService_pictures/day_support.png';
   static const String groupHome = 'assets/ddService_pictures/group_home.png';

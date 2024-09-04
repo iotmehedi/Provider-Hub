@@ -16,7 +16,8 @@ import '../widget/plan_selection_one.dart';
 import '../widget/plan_selection_two.dart';
 
 class PaymentScreenTwo extends StatelessWidget {
-  PaymentScreenTwo({super.key});
+  final String from;
+  PaymentScreenTwo({super.key, required this.from});
   var controller = Get.put(PaymentController());
   @override
   Widget build(BuildContext context) {
@@ -125,8 +126,10 @@ class PaymentScreenTwo extends StatelessWidget {
                         color: AppColors.white,
                       ),
                       onPress: () {
-                        RouteGenerator.pushNamed(
-                            context, Routes.paymentScreenThree);
+                        RouteGenerator().pushNamedSms(
+                            context, Routes.paymentScreenThree, arguments: [
+                              from
+                        ]);
                       },
                       backgroundColor: AppColors.appColors,
                       elevatedButtonSideBorderColor: AppColors.appColors),

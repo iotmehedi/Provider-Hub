@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/consts/app_sizes.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/controller/payment_controller.dart';
+import 'package:provider_hub/features/screens/provider_registration_screen/registration_screen/presentation/controller/provider_reg_controller.dart';
 
 import '../../../../../../const/routes/route_name.dart';
 import '../../../../../../const/routes/router.dart';
@@ -17,8 +20,10 @@ import '../widget/plan_selection_one.dart';
 import '../widget/plan_selection_three.dart';
 
 class PaymentScreenThree extends StatelessWidget {
-  PaymentScreenThree({super.key});
+  final String from;
+  PaymentScreenThree({super.key, required this.from});
   var controller = Get.put(PaymentController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,16 +41,16 @@ class PaymentScreenThree extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 PlanBar(
-                    title1: "Choose Plan",
-                    title2: "Review Details",
-                    title3: "Checkout",
-                    color1: AppColors.appColors,
-                    color2: AppColors.appColors,
-                    color3: AppColors.appColors,
-                    titleColor1: AppColors.white,
-                    titleColor2: AppColors.white,
-                    titleColor3: AppColors.white,
-                from: "three",
+                  title1: "Choose Plan",
+                  title2: "Review Details",
+                  title3: "Checkout",
+                  color1: AppColors.appColors,
+                  color2: AppColors.appColors,
+                  color3: AppColors.appColors,
+                  titleColor1: AppColors.white,
+                  titleColor2: AppColors.white,
+                  titleColor3: AppColors.white,
+                  from: "three",
                 ),
                 PlanSelectionWidgetThree(),
               ],
@@ -68,7 +73,8 @@ class PaymentScreenThree extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             CustomSimpleText(
-                              text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
+                              text:
+                                  "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                               fontSize: AppSizes.size12,
                               color: AppColors.textGreyColor,
                               fontWeight: FontWeight.bold,
@@ -89,7 +95,8 @@ class PaymentScreenThree extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             CustomSimpleText(
-                              text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
+                              text:
+                                  "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                               fontSize: AppSizes.size16,
                               color: AppColors.appColors,
                               fontWeight: FontWeight.bold,
@@ -114,7 +121,14 @@ class PaymentScreenThree extends StatelessWidget {
                         color: AppColors.white,
                       ),
                       onPress: () {
-                        StripeService.instance.makePayment(money: controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value);
+
+                        StripeService.instance
+                            .makePayment(
+                                money: controller.planSelection.value == false
+                                    ? controller
+                                        .registerController.firstPrice.value
+                                    : controller
+                                        .registerController.secondPrice.value, from: from);
                         // RouteGenerator.pushNamed(context,Routes.creditCardEnroll);
                       },
                       backgroundColor: AppColors.appColors,
@@ -127,6 +141,8 @@ class PaymentScreenThree extends StatelessWidget {
       ),
     );
   }
+
+
 }
 // Flexible(
 //   flex: 2,

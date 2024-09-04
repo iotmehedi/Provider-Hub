@@ -185,13 +185,17 @@ class ProviderRegistrationScreen extends StatelessWidget {
                 SizedBox(
                   height: 48,
                   child: CustomElevatedButton(
-                      text: CustomSimpleText(
+                      text: controller.isLoadingRegistration.value == true ? const Center(
+                        child: CircularProgressIndicator(),
+                      ) : CustomSimpleText(
                         text: "Next",
                         fontSize: 20,
                         color: AppColors.white,
                       ),
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.paymentScreen);
+                        RouteGenerator().pushNamedSms(context, Routes.paymentScreen, arguments: [
+                          "provider"
+                        ]);
                       },
                       backgroundColor: AppColors.appColors,
                       elevatedButtonSideBorderColor: AppColors.appColors),

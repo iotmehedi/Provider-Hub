@@ -215,7 +215,7 @@ class CreditCardEnrollScreen extends StatelessWidget {
                               color: AppColors.white,
                             ),
                             onPress: () {
-                              StripeService.instance.makePayment(money: "l");
+                              // StripeService.instance.makePayment(money: "l");
                               // RouteGenerator.pushNamed(
                               //     context, Routes.inbox);
                             },

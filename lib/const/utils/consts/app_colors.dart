@@ -11,5 +11,6 @@ class AppColors {
   static final Color textGreyColor = HexColor('#BCBCBC');
   static final Color hintTextColor = HexColor('#525252');
   static final Color yellow = HexColor('#F47E05');
+  static final Color green = HexColor('#008D00');
 
 }

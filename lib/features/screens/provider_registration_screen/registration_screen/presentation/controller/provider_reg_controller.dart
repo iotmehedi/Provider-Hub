@@ -12,6 +12,9 @@ import 'package:provider_hub/features/screens/provider_registration_screen/regis
 import 'package:provider_hub/features/widget/toast/toast.dart';
 import 'package:provider_hub/main.dart';
 
+import '../../../../../../const/routes/route_name.dart';
+import '../../../../../../const/routes/router.dart';
+
 class ProviderRegController extends GetxController {
   var providerNameController = TextEditingController().obs;
   var serviceController = TextEditingController().obs;
@@ -28,6 +31,7 @@ class ProviderRegController extends GetxController {
   var confirmPasswordVisible = false.obs;
   var imagePickerGallery = File('').obs;
   var imagePickerCamera = File('').obs;
+  var isLoadingRegistration = false.obs;
   final ImagePicker picker = ImagePicker();
 
   Future<void> pickProfileImage() async {
@@ -62,7 +66,7 @@ class ProviderRegController extends GetxController {
     update();
   }
 
-  void handleRegistration() async {
+  Future handleRegistration() async {
     if (imagePickerGallery.value.path.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!,
@@ -105,27 +109,36 @@ class ProviderRegController extends GetxController {
           context: navigatorKey.currentContext!,
           msg: "Confirm password not matched.");
     } else {
-      String result = await registerUser(
-          name: providerNameController.value.text,
-          services: serviceController.value.text,
-          contactName: contactNameController.value.text,
-          contactNumber: contactController.value.text,
-          email: emailController.value.text,
-          password: passwordController.value.text,
-          officeAddress: officeAddressController.value.text,
-          licenseNumber: licenseNumberController.value.text,
-          npiNumber: npiNumberController.value.text,
-          profileImage: imagePickerGallery.value);
+      try{
+        isLoadingRegistration.value = true;
+        String result = await registerUser(
+            name: providerNameController.value.text,
+            services: serviceController.value.text,
+            contactName: contactNameController.value.text,
+            contactNumber: contactController.value.text,
+            email: emailController.value.text,
+            password: passwordController.value.text,
+            officeAddress: officeAddressController.value.text,
+            licenseNumber: licenseNumberController.value.text,
+            npiNumber: npiNumberController.value.text,
+            profileImage: imagePickerGallery.value);
 
-      if (result == 'Registration successful') {
-        successToast(
-            context: navigatorKey.currentContext!,
-            msg: "Registration successful");
-      } else {
-        // Show an error message
-        print(result);
+        if (result == 'Registration successful') {
+          successToast(
+              context: navigatorKey.currentContext!,
+              msg: "Registration successful");
+          RouteGenerator.pushNamed(navigatorKey.currentContext!, Routes.inbox);
+        } else {
+          // Show an error message
+          print(result);
+        }
+      }catch(e){
+        print("Registration error $e");
+      }finally{
+        isLoadingRegistration.value = false;
       }
     }
+    update();
   }
 
   Future<String> registerUser({
@@ -143,22 +156,22 @@ class ProviderRegController extends GetxController {
     String? imageUrl;
     try {
       // Check if the email or phone number already exists in Firestore
-      QuerySnapshot emailCheck = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: email)
-          .get();
-      QuerySnapshot phoneCheck = await FirebaseFirestore.instance
-          .collection('users')
-          .where('contactNumber', isEqualTo: contactNumber)
-          .get();
-
-      if (emailCheck.docs.isNotEmpty) {
-        return 'This email is already registered';
-      }
-
-      if (phoneCheck.docs.isNotEmpty) {
-        return 'This phone number is already registered';
-      }
+      // QuerySnapshot emailCheck = await FirebaseFirestore.instance
+      //     .collection('provider')
+      //     .where('email', isEqualTo: email)
+      //     .get();
+      // QuerySnapshot phoneCheck = await FirebaseFirestore.instance
+      //     .collection('provider')
+      //     .where('contactNumber', isEqualTo: contactNumber)
+      //     .get();
+      //
+      // if (emailCheck.docs.isNotEmpty) {
+      //   return 'This email is already registered';
+      // }
+      //
+      // if (phoneCheck.docs.isNotEmpty) {
+      //   return 'This phone number is already registered';
+      // }
 
       // Register the user with Firebase Authentication
       UserCredential userCredential = await FirebaseAuth.instance
@@ -196,7 +209,7 @@ class ProviderRegController extends GetxController {
 
         // Save the user data to Firestore
         await FirebaseFirestore.instance
-            .collection('users')
+            .collection('provider')
             .doc(user.uid)
             .set(newUser.toMap());
 
