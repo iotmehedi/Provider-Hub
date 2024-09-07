@@ -68,4 +68,5 @@ class AppAssets {
   static const String msg_arrow_grey = 'assets/plan_image/msg_arrow_grey.png';
   static const String viewService = 'assets/plan_image/view_service.png';
   static const String suggestion = 'assets/plan_image/suggestion.png';
+  static const String success = 'assets/success.png';
 }

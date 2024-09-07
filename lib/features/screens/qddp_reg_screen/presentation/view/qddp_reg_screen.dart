@@ -38,11 +38,31 @@ class QDDPRegistrationScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 10.ph,
-                CustomSvgWidget(
-                  image: AppAssets.uploadPictureAveter,
-                  height: AppSizes.newSize(10.0),
-                  width: AppSizes.newSize(10.0),
-                ),
+                Center(
+                      child: InkWell(
+                          onTap: () => controller.showImageSourceDialog(context),
+                          child: controller.pickedImage.value.path.isNotEmpty
+                    ? Container(
+                              height: AppSizes.newSize(10.0),
+                              width: AppSizes.newSize(10.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: Image.file(
+                                controller.pickedImage.value,
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                              )) : InkWell(
+                        onTap: () => controller.showImageSourceDialog(context),
+                        child: CustomSvgWidget(
+                          image: AppAssets.uploadPictureAveter,
+                          height: AppSizes.newSize(10.0),
+                          width: AppSizes.newSize(10.0),
+                        ),
+                      ),
+                        ),
+                    ),
                 10.ph,
                 CustomSimpleText(
                   text: "Upload Picture",
@@ -164,6 +184,12 @@ class QDDPRegistrationScreen extends StatelessWidget {
                 CustomTextTextfieldColumn(
                     text: "New Password",
                     hint: "Enter your password",
+                    isNeedIcon: true,
+                    textEditingController: controller.passwordController.value),
+                10.ph,
+                CustomTextTextfieldColumn(
+                    text: "confirmation password",
+                    hint: "Enter confirmation password",
                     isNeedIcon: true,
                     textEditingController: controller.passwordController.value),
                 10.ph,

@@ -38,11 +38,30 @@ class ProviderRegistrationScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 10.ph,
-                CustomSvgWidget(
-                  image: AppAssets.uploadPictureAveter,
-                  height: AppSizes.newSize(10.0),
-                  width: AppSizes.newSize(10.0),
-                ),
+                controller.pickedImage.value.path.isNotEmpty
+                    ? InkWell(
+                        onTap: () => controller.showImageSourceDialog(context),
+                        child: Container(
+                            height: AppSizes.newSize(10.0),
+                            width: AppSizes.newSize(10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Image.file(
+                              controller.pickedImage.value,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            )),
+                      )
+                    : InkWell(
+                        onTap: () => controller.showImageSourceDialog(context),
+                        child: CustomSvgWidget(
+                          image: AppAssets.uploadPictureAveter,
+                          height: AppSizes.newSize(10.0),
+                          width: AppSizes.newSize(10.0),
+                        ),
+                      ),
                 10.ph,
                 CustomSimpleText(
                   text: "Upload Picture",
@@ -60,8 +79,7 @@ class ProviderRegistrationScreen extends StatelessWidget {
                 CustomTextTextfieldColumn(
                     text: "Services",
                     hint: "Enter Services that you provide",
-                    textEditingController:
-                        controller.serviceController.value),
+                    textEditingController: controller.serviceController.value),
                 10.ph,
                 CustomTextTextfieldColumn(
                     text: "Contact Name",
@@ -72,14 +90,12 @@ class ProviderRegistrationScreen extends StatelessWidget {
                 CustomTextTextfieldColumn(
                     text: "Contact Number",
                     hint: "Enter contact number",
-                    textEditingController:
-                        controller.contactController.value),
+                    textEditingController: controller.contactController.value),
                 10.ph,
                 CustomTextTextfieldColumn(
                     text: "Contact Email",
                     hint: "Enter contact email",
-                    textEditingController:
-                        controller.emailController.value),
+                    textEditingController: controller.emailController.value),
                 10.ph,
                 CustomTextTextfieldColumn(
                     text: "Office Address",
@@ -98,6 +114,17 @@ class ProviderRegistrationScreen extends StatelessWidget {
                     hint: "Enter NPI Number",
                     textEditingController:
                         controller.npiNumberController.value),
+                10.ph,
+                CustomTextTextfieldColumn(
+                    text: "Password",
+                    hint: "Enter Your Password",
+                    textEditingController: controller.passwordController.value),
+                10.ph,
+                CustomTextTextfieldColumn(
+                    text: "Confirm Password",
+                    hint: "Enter Confirm Password",
+                    textEditingController:
+                        controller.confirmPasswordController.value),
                 10.ph,
                 Row(
                   children: [
@@ -155,7 +182,7 @@ class ProviderRegistrationScreen extends StatelessWidget {
                         color: AppColors.white,
                       ),
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.paymentScreen);
+                        controller.validation();
                       },
                       backgroundColor: AppColors.appColors,
                       elevatedButtonSideBorderColor: AppColors.appColors),

@@ -29,25 +29,27 @@ var controller = Get.put(PaymentController());
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Stack(
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-
-                PlanBar(
-                    title1: "Choose Plan",
-                    title2: "Review Details",
-                    title3: "Checkout",
-                    color1: AppColors.appColors,
-                    color2: AppColors.slightGrey,
-                    color3: AppColors.slightGrey,
-                    titleColor1: AppColors.white,
-                    titleColor2: AppColors.slightDeepGrey,
-                    titleColor3: AppColors.slightDeepGrey,
-                  from: "one"
-                ),
-                PlanSelectionWidgetOne(controller: controller),
-              ],
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+              
+                  PlanBar(
+                      title1: "Choose Plan",
+                      title2: "Review Details",
+                      title3: "Checkout",
+                      color1: AppColors.appColors,
+                      color2: AppColors.slightGrey,
+                      color3: AppColors.slightGrey,
+                      titleColor1: AppColors.white,
+                      titleColor2: AppColors.slightDeepGrey,
+                      titleColor3: AppColors.slightDeepGrey,
+                    from: "one"
+                  ),
+                  PlanSelectionWidgetOne(controller: controller),
+                ],
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
