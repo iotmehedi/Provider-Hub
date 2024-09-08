@@ -152,6 +152,7 @@ var controller = Get.put(HomepageContorller());
           final gridItem = controller.gridItems[gridIndex];
           return InkWell(
             onTap: (){
+              controller.selectedIndex.value = gridIndex;
               RouteGenerator.pushNamed(context,Routes.allService);
             },
             child: Card(

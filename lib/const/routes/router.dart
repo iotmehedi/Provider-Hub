@@ -3,10 +3,14 @@ import 'package:get/get.dart';
 import 'package:provider_hub/const/routes/route_name.dart';
 import 'package:provider_hub/features/screens/authentication/signin/view/sign_in_page.dart';
 import 'package:provider_hub/features/screens/consultant_reg_screen/presentation/view/consultant_reg_screen.dart';
+import 'package:provider_hub/features/screens/homepage/presentation/sub_item_page/crc_screen.dart';
+import 'package:provider_hub/features/screens/homepage/presentation/sub_item_page/human_rights_screen.dart';
 import 'package:provider_hub/features/screens/inbox_page/presentation/view/inbox_page.dart';
 import 'package:provider_hub/features/screens/nearest_provider/presentation/view/nearest_provider_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_three.dart';
+import '../../features/screens/homepage/presentation/sub_item_page/dbhds_screen.dart';
+import '../../features/screens/homepage/presentation/sub_item_page/license_specialist_screen.dart';
 import '../../features/screens/homepage/presentation/view/all_services_screen.dart';
 import '../../features/screens/homepage/presentation/view/homepage.dart';
 import '../../features/screens/message_screen/presentation/view/message_screen.dart';
@@ -118,7 +122,7 @@ class RouteGenerator {
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
-            builder: (context) => PaymentScreenThree(from: arguments[0] as String),
+            builder: (context) => PaymentScreenThree(),
           );
         }
       case Routes.creditCardEnroll:
@@ -148,6 +152,22 @@ class RouteGenerator {
         case Routes.profile:
         return MaterialPageRoute(
           builder: (context) =>  ProfilePage(),
+        );
+        case Routes.dbhdsScreen:
+        return MaterialPageRoute(
+          builder: (context) =>  DbhdsScreen(),
+        );
+        case Routes.licenseSpecialistScreen:
+        return MaterialPageRoute(
+          builder: (context) =>  LicenseSpecialistScreen(),
+        );
+        case Routes.humanRightScreen:
+        return MaterialPageRoute(
+          builder: (context) =>  HumanRightsScreen(),
+        );
+        case Routes.crcScreen:
+        return MaterialPageRoute(
+          builder: (context) =>  CRCScreen(),
         );
 
     }
