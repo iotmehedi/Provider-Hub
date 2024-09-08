@@ -136,62 +136,64 @@ class NearestProviderPage extends StatelessWidget {
                             image: item['image'], // Fill the container
                           ),
                           10.pw,
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              CustomSimpleText(
-                                text: item['title'],
-                                fontSize: AppSizes.size13,
-                                fontWeight: FontWeight.normal,
-                                color: AppColors.white,
-                              ),
-                              3.ph,
-                              CustomSimpleText(
-                                text: item['message'],
-                                fontSize: AppSizes.size13,
-                                fontWeight: FontWeight.normal,
-                                color: AppColors.white,
-                              ),
-                              3.ph,
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.79,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(Icons.star, color: AppColors.yellow,size: 10,),
-                                        5.pw,
-                                        CustomSimpleText(
-                                          text: item['hour'],
-                                          fontSize: AppSizes.size11,
-                                          fontWeight: FontWeight.normal,
-                                          color: AppColors.yellow,
-                                          textAlign: TextAlign.end,
-                                        ),
-                                      ],
-                                    ),
-                                    InkWell(
-                                      onTap: (){
-                                        controller.name.value = item['title'];
-                                        RouteGenerator.pushNamed(context,Routes.messageScreen);
-                                      },
-                                      child: Container(
-                                        height: 22,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(100),
-                                          color: AppColors.appColors
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                                          child: Center(child: CustomSimpleText(text: "Send Message", fontSize: AppSizes.size11, color: AppColors.white,)),
-                                        ),
-                                      ),
-                                    )
-                                  ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                CustomSimpleText(
+                                  text: item['title'],
+                                  fontSize: AppSizes.size13,
+                                  fontWeight: FontWeight.normal,
+                                  color: AppColors.white,
                                 ),
-                              ),
-                            ],
+                                3.ph,
+                                CustomSimpleText(
+                                  text: item['message'],
+                                  fontSize: AppSizes.size13,
+                                  fontWeight: FontWeight.normal,
+                                  color: AppColors.white,
+                                ),
+                                3.ph,
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * 0.79,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Icon(Icons.star, color: AppColors.yellow,size: 10,),
+                                          5.pw,
+                                          CustomSimpleText(
+                                            text: item['hour'],
+                                            fontSize: AppSizes.size11,
+                                            fontWeight: FontWeight.normal,
+                                            color: AppColors.yellow,
+                                            textAlign: TextAlign.end,
+                                          ),
+                                        ],
+                                      ),
+                                      InkWell(
+                                        onTap: (){
+                                          controller.name.value = item['title'];
+                                          RouteGenerator.pushNamed(context,Routes.messageScreen);
+                                        },
+                                        child: Container(
+                                          height: 22,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(100),
+                                            color: AppColors.appColors
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                                            child: Center(child: CustomSimpleText(text: "Send Message", fontSize: AppSizes.size11, color: AppColors.white,)),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),

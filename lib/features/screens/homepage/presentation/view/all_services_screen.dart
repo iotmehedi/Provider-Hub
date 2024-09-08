@@ -7,11 +7,18 @@ import 'package:provider_hub/features/screens/homepage/presentation/controller/c
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 
+import '../../../../../const/routes/route_name.dart';
+import '../../../../../const/routes/router.dart';
+
 class AllServicesScreen extends StatelessWidget {
   AllServicesScreen({super.key});
   var controller = Get.find<HomepageContorller>();
+  final ScrollController _horizontalScrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scrollToSelectedItem(controller.selectedIndex.value);
+    });
     return Obx(() => Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(
@@ -26,12 +33,14 @@ class AllServicesScreen extends StatelessWidget {
             SizedBox(
               height: 130.2, // Adjust as needed
               child: ListView.builder(
+                controller: _horizontalScrollController,
                 scrollDirection: Axis.horizontal,
                 itemCount: controller.gridItems.length,
                 itemBuilder: (context, index) {
                   final item = controller.gridItems[index];
                   return GestureDetector(
                     onTap: () {
+                      _scrollToSelectedItem(index);
                       controller.selectedIndex.value = index;
                     },
                     child: Card(
@@ -105,40 +114,55 @@ class AllServicesScreen extends StatelessWidget {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
-                        child: SizedBox(
-                          height: 68,
-                          child: Card(
-                            elevation: 0.0,
-                            color: AppColors.slightGrey.withOpacity(0.04),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            // width: 100, // Adjust as needed
-                            margin: EdgeInsets.symmetric(horizontal: 14.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  subItem['image'],
-                                  fit: BoxFit.cover,
-                                  height: 52,
-                                  width: 52,
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Text(
-                                      subItem['title'],
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.normal,
-                                        color: AppColors.white,
-                                        fontSize: AppSizes.size13,
+                        child: InkWell(
+                          onTap:(){
+                            if(controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" && subItem['title'] == "Regions"){
+                              RouteGenerator.pushNamed(context,Routes.dbhdsScreen);
+                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" && subItem['title'] == "License Specialist"){
+                              RouteGenerator.pushNamed(context,Routes.licenseSpecialistScreen);
+                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" && subItem['title'] == "Human Rights"){
+                              RouteGenerator.pushNamed(context,Routes.humanRightScreen);
+                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" && subItem['title'] == "CRC"){
+                              RouteGenerator.pushNamed(context,Routes.crcScreen);
+                            }else{
+                              print(subItem['title']);
+                            }
+                          },
+                          child: SizedBox(
+                            height: 68,
+                            child: Card(
+                              elevation: 0.0,
+                              color: AppColors.slightGrey.withOpacity(0.04),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              // width: 100, // Adjust as needed
+                              margin: EdgeInsets.symmetric(horizontal: 14.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    subItem['image'],
+                                    fit: BoxFit.cover,
+                                    height: 52,
+                                    width: 52,
+                                  ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Text(
+                                        subItem['title'],
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.normal,
+                                          color: AppColors.white,
+                                          fontSize: AppSizes.size13,
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -150,5 +174,15 @@ class AllServicesScreen extends StatelessWidget {
             ),
           ],
         )));
+  }
+  void _scrollToSelectedItem(int index) {
+    final double itemWidth = 104.8; // Adjust according to the width of each item
+    final double scrollPosition = index * itemWidth; // Calculate scroll position
+
+    _horizontalScrollController.animateTo(
+      scrollPosition,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 }

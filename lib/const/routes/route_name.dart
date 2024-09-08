@@ -16,5 +16,9 @@ class Routes {
   static const nearestProvider = "/nearestProvider";
   static const messageScreen = "/messageScreen";
   static const profile = "/profile";
+  static const dbhdsScreen = "/dbhdsScreen";
+  static const licenseSpecialistScreen = "/licenseSpecialistScreen";
+  static const humanRightScreen = "/humanRightScreen";
+  static const crcScreen = "/crcScreen";
 
 }

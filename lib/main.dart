@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:open_filex/open_filex.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'const/routes/route_name.dart';
 import 'const/routes/router.dart';
@@ -24,9 +27,43 @@ Future<void> _setup() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 }
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
+
+  @override
+  void initState() {
+    super.initState();
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    initializeNotifications();
+  }
+
+  // Initialize the notification plugin
+  Future<void> initializeNotifications() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+    const InitializationSettings initializationSettings =
+    InitializationSettings(android: initializationSettingsAndroid);
+
+    await flutterLocalNotificationsPlugin?.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: onNotificationSelect,
+    );
+  }
+
+  // Handle notification click
+  void onNotificationSelect(NotificationResponse response) async {
+    final directory = await getApplicationDocumentsDirectory();
+    final filePath = '${directory.path}/sample.pdf';
+
+    OpenFilex.open(filePath);
+  }
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
