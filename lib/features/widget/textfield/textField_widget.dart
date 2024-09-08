@@ -70,6 +70,7 @@ class CustomSimpleTextField extends StatelessWidget {
   final MaterialColor? color;
   final HexColor? hexColor;
   final String? Function(String?)? validator;
+  final bool? obscureText;
   CustomSimpleTextField(
       {super.key,
       this.hint,
@@ -90,7 +91,9 @@ class CustomSimpleTextField extends StatelessWidget {
       this.hintTextFontSize,
       this.hintFontWeight,
       this.hintTextColor,
-      this.onlyNeedSuffix});
+      this.onlyNeedSuffix,
+      this.obscureText,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +105,7 @@ class CustomSimpleTextField extends StatelessWidget {
         border: Border.all(color: AppColors.appColors, width: 1)
       ),
       child: TextFormField(
+        obscureText: obscureText ?? false,
         keyboardType: keyboardType ?? TextInputType.number,
         textInputAction: textInputAction,
         textAlign: textAlign ?? TextAlign.start,

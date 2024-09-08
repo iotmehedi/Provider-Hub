@@ -3,19 +3,17 @@ import 'package:get/get.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
-import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/controller/payment_controller.dart';
-
 import '../../../../../../const/routes/route_name.dart';
 import '../../../../../../const/routes/router.dart';
 import '../../../../../widget/custom_elevatedButton/custom_eleveted_button.dart';
 import '../../../../../widget/custom_simple_text/custom_simple_text.dart';
-import '../../../registration_screen/presentation/triangles/triangles.dart';
 import '../plan_bar/plan_bar.dart';
 import '../widget/plan_selection_one.dart';
 
 class PaymentScreen extends StatelessWidget {
-   PaymentScreen({super.key});
+  final String from;
+   PaymentScreen({super.key, required this.from});
 var controller = Get.put(PaymentController());
   @override
   Widget build(BuildContext context) {
@@ -64,7 +62,9 @@ var controller = Get.put(PaymentController());
                         color: AppColors.white,
                       ),
                       onPress: () {
-                        RouteGenerator.pushNamed(context,Routes.paymentScreenTwo);
+                        RouteGenerator().pushNamedSms(context,Routes.paymentScreenTwo, arguments: [
+                            from
+                        ]);
                       },
                       backgroundColor: AppColors.appColors,
                       elevatedButtonSideBorderColor:AppColors.appColors),

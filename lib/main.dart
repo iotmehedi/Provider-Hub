@@ -20,6 +20,9 @@ Future<void> _setup() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Stripe.publishableKey = stripePublishableKey;
+   await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

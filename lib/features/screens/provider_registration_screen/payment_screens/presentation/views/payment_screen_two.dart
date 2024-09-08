@@ -16,7 +16,8 @@ import '../widget/plan_selection_one.dart';
 import '../widget/plan_selection_two.dart';
 
 class PaymentScreenTwo extends StatelessWidget {
-  PaymentScreenTwo({super.key});
+  final String from;
+  PaymentScreenTwo({super.key, required this.from});
   var controller = Get.put(PaymentController());
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,7 @@ class PaymentScreenTwo extends StatelessWidget {
                                 fontSize: AppSizes.newSize(1.5),
                               ),
                               CustomSimpleText(
-                                text: "US \$50",
+                                text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                                 color: AppColors.slightDeepGrey,
                                 fontSize: AppSizes.newSize(1.5),
                               ),
@@ -97,7 +98,7 @@ class PaymentScreenTwo extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                               CustomSimpleText(
-                                text: "US \$50",
+                                text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                                 color: AppColors.white,
                                 fontSize: AppSizes.newSize(1.8),
                                 fontWeight: FontWeight.bold,
@@ -125,8 +126,10 @@ class PaymentScreenTwo extends StatelessWidget {
                         color: AppColors.white,
                       ),
                       onPress: () {
-                        RouteGenerator.pushNamed(
-                            context, Routes.paymentScreenThree);
+                        RouteGenerator().pushNamedSms(
+                            context, Routes.paymentScreenThree, arguments: [
+                              from
+                        ]);
                       },
                       backgroundColor: AppColors.appColors,
                       elevatedButtonSideBorderColor: AppColors.appColors),
