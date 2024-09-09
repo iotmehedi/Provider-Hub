@@ -27,6 +27,7 @@ class HomepageContorller extends GetxController{
   var flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin().obs;
   var imageFromImage = "".obs;
   var progress = 0.obs;
+  var showLoading = false.obs;
   final List<Map<String, dynamic>> gridItems = [
     {
       'title': 'DD Services',

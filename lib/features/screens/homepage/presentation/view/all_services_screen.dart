@@ -124,6 +124,8 @@ class AllServicesScreen extends StatelessWidget {
                               RouteGenerator.pushNamed(context,Routes.humanRightScreen);
                             }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" && subItem['title'] == "CRC"){
                               RouteGenerator.pushNamed(context,Routes.crcScreen);
+                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "Licensing"){
+                              RouteGenerator.pushNamed(context,Routes.licensingPage);
                             }else{
                               print(subItem['title']);
                             }

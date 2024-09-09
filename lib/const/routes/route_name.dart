@@ -20,5 +20,6 @@ class Routes {
   static const licenseSpecialistScreen = "/licenseSpecialistScreen";
   static const humanRightScreen = "/humanRightScreen";
   static const crcScreen = "/crcScreen";
+  static const licensingPage = "/licensingPage";
 
 }

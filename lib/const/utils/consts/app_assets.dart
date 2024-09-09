@@ -73,4 +73,7 @@ class AppAssets {
   static const String regionPage = 'assets/region_page.png';
   static const String humanRight = 'assets/human_right.png';
   static const String crc = 'assets/crc.png';
+  static const String connect = 'assets/connect.png';
+  static const String conrrespondence = 'assets/conrrespondence.png';
+  static const String relations = 'assets/relations.png';
 }

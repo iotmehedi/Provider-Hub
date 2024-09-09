@@ -9,6 +9,7 @@ class CustomSimpleText extends StatelessWidget {
   final TextAlign? textAlign;
   final int? maxLines;
   final TextDecoration? textDecoration;
+  final Alignment? alignment;
   const CustomSimpleText(
       {super.key,
       required this.text,
@@ -18,22 +19,26 @@ class CustomSimpleText extends StatelessWidget {
       this.textAlign,
       this.maxLines,
       this.textDecoration,
-        this.decorationColor
+        this.decorationColor,
+        this.alignment
       });
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      maxLines: maxLines ?? 2,
-      textAlign: textAlign ?? TextAlign.start,
-      style: GoogleFonts.roboto(
-        letterSpacing: 0.2,
-        color: color ?? Colors.black,
-        fontSize: fontSize ?? 16.0,
-        fontWeight: fontWeight ?? FontWeight.w600,
-        decoration: textDecoration ?? TextDecoration.none,
-        decorationColor: decorationColor ?? Colors.transparent
+    return Align(
+      alignment: alignment ?? Alignment.centerLeft,
+      child: Text(
+        text,
+        maxLines: maxLines ?? 2,
+        textAlign: textAlign ?? TextAlign.start,
+        style: GoogleFonts.roboto(
+          letterSpacing: 0.2,
+          color: color ?? Colors.black,
+          fontSize: fontSize ?? 16.0,
+          fontWeight: fontWeight ?? FontWeight.w600,
+          decoration: textDecoration ?? TextDecoration.none,
+          decorationColor: decorationColor ?? Colors.transparent,
+        ),
       ),
     );
   }

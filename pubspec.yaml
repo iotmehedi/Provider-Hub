@@ -50,6 +50,8 @@ dependencies:
   flutter_local_notifications:
   path_provider:
   open_filex:
+  flutter_inappwebview:
+  syncfusion_flutter_pdfviewer:
 
 dev_dependencies:
   flutter_test:

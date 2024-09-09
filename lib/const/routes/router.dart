@@ -11,6 +11,7 @@ import 'package:provider_hub/features/screens/provider_registration_screen/payme
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_three.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/dbhds_screen.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/license_specialist_screen.dart';
+import '../../features/screens/homepage/presentation/sub_item_page/updates/licensing_page.dart';
 import '../../features/screens/homepage/presentation/view/all_services_screen.dart';
 import '../../features/screens/homepage/presentation/view/homepage.dart';
 import '../../features/screens/message_screen/presentation/view/message_screen.dart';
@@ -22,7 +23,7 @@ import '../../features/screens/qddp_reg_screen/presentation/view/qddp_reg_screen
 import '../../features/screens/register_page/presentation/view/register_page.dart';
 import '../../features/screens/splash_screen/splash_screen.dart';
 import '../../features/screens/trainer_reg_screen/presentation/view/trainer_reg_screen.dart';
-
+import '../../features/widget/common_webview/custom_webview.dart';
 
 class RouteGenerator {
   Future<dynamic> pushNamedSms(BuildContext context, String pageName,
@@ -67,6 +68,20 @@ class RouteGenerator {
     return Navigator.of(context).popUntil(ModalRoute.withName(pageName));
   }
 
+  static gotoWebPage(
+      {required BuildContext context,
+      String? pageTitle,
+      required String url}) {
+    return Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => WebPage(
+          pageTitle: pageTitle,
+          url: url,
+        ),
+      ),
+    );
+  }
   // ================================== Routing =============================================
 
   static Route<dynamic>? onRouteGenerate(RouteSettings routeSettings) {
@@ -77,27 +92,26 @@ class RouteGenerator {
         );
       case Routes.registrationPage:
         return MaterialPageRoute(
-          builder: (context) =>  RegisterPage(),
+          builder: (context) => RegisterPage(),
         );
-        case Routes.signinPage:
+      case Routes.signinPage:
         return MaterialPageRoute(
-          builder: (context) =>  SignInPage(),
+          builder: (context) => SignInPage(),
         );
-        case Routes.providerRegScreen:
+      case Routes.providerRegScreen:
         return MaterialPageRoute(
-          builder: (context) =>  ProviderRegistrationScreen(),
+          builder: (context) => ProviderRegistrationScreen(),
         );
-        case Routes.trainerRegScreen:
+      case Routes.trainerRegScreen:
         return MaterialPageRoute(
-          builder: (context) =>  TrainerRegistrationScreen(),
+          builder: (context) => TrainerRegistrationScreen(),
         );
-        case Routes.consultantRegScreen:
+      case Routes.consultantRegScreen:
         return MaterialPageRoute(
-          builder: (context) =>  ConsultantRegistrationScreen(),
+          builder: (context) => ConsultantRegistrationScreen(),
         );
-        case Routes.qddpRegScreen:
-          {
-
+      case Routes.qddpRegScreen:
+        {
           return MaterialPageRoute(
             builder: (context) => QDDPRegistrationScreen(),
           );
@@ -106,16 +120,15 @@ class RouteGenerator {
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
-            builder: (context) => PaymentScreen(
-              from: arguments[0] as String
-            ),
+            builder: (context) => PaymentScreen(from: arguments[0] as String),
           );
         }
       case Routes.paymentScreenTwo:
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
-            builder: (context) => PaymentScreenTwo(from: arguments[0] as String),
+            builder: (context) =>
+                PaymentScreenTwo(from: arguments[0] as String),
           );
         }
       case Routes.paymentScreenThree:
@@ -127,54 +140,56 @@ class RouteGenerator {
         }
       case Routes.creditCardEnroll:
         return MaterialPageRoute(
-          builder: (context) =>  CreditCardEnrollScreen(),
+          builder: (context) => CreditCardEnrollScreen(),
         );
-        case Routes.homepage:
+      case Routes.homepage:
         return MaterialPageRoute(
-          builder: (context) =>  HomepageScreen(),
+          builder: (context) => HomepageScreen(),
         );
-        case Routes.allService:
+      case Routes.allService:
         return MaterialPageRoute(
-          builder: (context) =>  AllServicesScreen(),
+          builder: (context) => AllServicesScreen(),
         );
-        case Routes.inbox:
+      case Routes.inbox:
         return MaterialPageRoute(
-          builder: (context) =>  InboxPage(),
+          builder: (context) => InboxPage(),
         );
-        case Routes.nearestProvider:
+      case Routes.nearestProvider:
         return MaterialPageRoute(
-          builder: (context) =>  NearestProviderPage(),
+          builder: (context) => NearestProviderPage(),
         );
-        case Routes.messageScreen:
+      case Routes.messageScreen:
         return MaterialPageRoute(
-          builder: (context) =>  MessageScreen(),
+          builder: (context) => MessageScreen(),
         );
-        case Routes.profile:
+      case Routes.profile:
         return MaterialPageRoute(
-          builder: (context) =>  ProfilePage(),
+          builder: (context) => ProfilePage(),
         );
-        case Routes.dbhdsScreen:
+      case Routes.dbhdsScreen:
         return MaterialPageRoute(
-          builder: (context) =>  DbhdsScreen(),
+          builder: (context) => DbhdsScreen(),
         );
-        case Routes.licenseSpecialistScreen:
+      case Routes.licenseSpecialistScreen:
         return MaterialPageRoute(
-          builder: (context) =>  LicenseSpecialistScreen(),
+          builder: (context) => LicenseSpecialistScreen(),
         );
-        case Routes.humanRightScreen:
+      case Routes.humanRightScreen:
         return MaterialPageRoute(
-          builder: (context) =>  HumanRightsScreen(),
+          builder: (context) => HumanRightsScreen(),
         );
-        case Routes.crcScreen:
+      case Routes.crcScreen:
         return MaterialPageRoute(
-          builder: (context) =>  CRCScreen(),
+          builder: (context) => CRCScreen(),
         );
-
+        case Routes.licensingPage:
+        return MaterialPageRoute(
+          builder: (context) => LicensingPage(),
+        );
     }
     return null;
   }
 }
-
 
 //      adjHourlyRate = 84961 / adjustedWorkingHours;
 //       adjDailyRate = adjHourlyRate * (hoursPerWeek / daysPerWeek);
