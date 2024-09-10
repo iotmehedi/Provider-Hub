@@ -69,9 +69,10 @@ class WebPageState extends State<WebPage> {
         },
       ),
       backgroundColor: AppColors.backgroundColor,
-      body: widget.url?.contains(".pdf") ?? false
-          ? SfPdfViewer.network(widget.url ?? '')
-          : widget.url?.contains(".pdf") ?? false ? Center(child: Text("Opening PowerPoint file...")) : Stack(
+      body:  widget.url?.contains(".pdf") ?? false
+          ? SfPdfViewer.network(
+              widget.url ?? '')
+          : Stack(
               children: <Widget>[
                 Container(
                   child: InAppWebView(
@@ -84,8 +85,42 @@ class WebPageState extends State<WebPage> {
                         supportZoom: true,
                       ),
                     ),
+                    initialSettings: InAppWebViewSettings(
+                      clearCache: true,
+                      allowContentAccess: true,
+                      allowFileAccess: true,
+                      javaScriptEnabled: true,
+                      allowUniversalAccessFromFileURLs: true,
+                      cacheEnabled: true,
+                      pageZoom: 0.3,
+                      mixedContentMode:
+                          MixedContentMode.MIXED_CONTENT_ALWAYS_ALLOW,
+                    ),
+                    onReceivedServerTrustAuthRequest:
+                        (controller, challenge) async {
+                      // Accept all SSL certificates (for debugging only)
+                      return ServerTrustAuthResponse(
+                          action: ServerTrustAuthResponseAction.PROCEED);
+                    },
+                    onLoadError: (controller, url, code, message) {
+                      print('Failed to load: $message');
+                    },
+                    onLoadHttpError:
+                        (controller, url, statusCode, description) {
+                      print('HTTP error: $description');
+                    },
                     onLoadStart: (controller, url) {
-                      // Optionally handle start of load
+                      setState(() {
+                        homepageController.showLoading.value = true;
+                      });
+                    },
+                    onProgressChanged:
+                        (InAppWebViewController controller, int progress) {
+                      if (progress > 60) {
+                        setState(() {
+                          homepageController.showLoading.value = false;
+                        });
+                      }
                     },
                     onLoadStop: (controller, url) {
                       // Optionally handle stop of load

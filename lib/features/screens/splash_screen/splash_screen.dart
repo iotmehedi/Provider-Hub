@@ -83,6 +83,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                           text: CustomSimpleText(
                             text: "Directory",
                             fontSize: 21,
+                            alignment: Alignment.center,
                             color: controller.selectRegistrationOptions.value != "0"
                                 ? AppColors.appColors
                                 : AppColors.white,
@@ -102,6 +103,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                           text: CustomSimpleText(
                             text: "Register",
                             fontSize: 21,
+                            alignment: Alignment.center,
                             color: controller.selectRegistrationOptions.value != "1"
                                 ? AppColors.appColors
                                 : AppColors.white,
@@ -121,6 +123,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                           text: CustomSimpleText(
                             text: "Sign In",
                             fontSize: 21,
+                            alignment: Alignment.center,
                             color: controller.selectRegistrationOptions.value != "2"
                                 ? AppColors.appColors
                                 : AppColors.white,

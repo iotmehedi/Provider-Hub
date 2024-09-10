@@ -10,6 +10,7 @@ class CustomSimpleText extends StatelessWidget {
   final int? maxLines;
   final TextDecoration? textDecoration;
   final Alignment? alignment;
+  final double? heightOfStyle;
   const CustomSimpleText(
       {super.key,
       required this.text,
@@ -20,7 +21,8 @@ class CustomSimpleText extends StatelessWidget {
       this.maxLines,
       this.textDecoration,
         this.decorationColor,
-        this.alignment
+        this.alignment,
+        this.heightOfStyle
       });
 
   @override
@@ -38,6 +40,7 @@ class CustomSimpleText extends StatelessWidget {
           fontWeight: fontWeight ?? FontWeight.w600,
           decoration: textDecoration ?? TextDecoration.none,
           decorationColor: decorationColor ?? Colors.transparent,
+          height: heightOfStyle ?? 0,
         ),
       ),
     );
