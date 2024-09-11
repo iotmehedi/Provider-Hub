@@ -10,6 +10,7 @@ import 'package:provider_hub/features/screens/nearest_provider/presentation/view
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_three.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/dbhds_screen.dart';
+import '../../features/screens/homepage/presentation/sub_item_page/provider_resources_screen/provider_resources_screen.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/updates/biu_screen.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/updates/dmas_screen.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/updates/human_rights_trainings_screen.dart';
@@ -200,6 +201,10 @@ class RouteGenerator {
         case Routes.dmasScreen:
         return MaterialPageRoute(
           builder: (context) => DmasScreen(),
+        );
+        case Routes.providerResourcesScreen:
+        return MaterialPageRoute(
+          builder: (context) => ProviderResourcesScreen(),
         );
     }
     return null;

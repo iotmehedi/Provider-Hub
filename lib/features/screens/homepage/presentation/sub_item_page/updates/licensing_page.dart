@@ -45,6 +45,7 @@ class LicensingPage extends StatelessWidget {
                 fontSize: AppSizes.size24,
                 fontWeight: FontWeight.normal,
               ),
+              15.ph,
               CustomDivider(),
               15.ph,
               Row(

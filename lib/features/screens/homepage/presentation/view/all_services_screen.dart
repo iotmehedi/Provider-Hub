@@ -132,6 +132,8 @@ class AllServicesScreen extends StatelessWidget {
                               RouteGenerator.pushNamed(context,Routes.biuScreen);
                             }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "DMAS"){
                               RouteGenerator.pushNamed(context,Routes.dmasScreen);
+                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Provider Resources" && subItem['title'] == "Jump Start Fundings"){
+                              RouteGenerator.pushNamed(context,Routes.providerResourcesScreen);
                             }else{
                               print(subItem['title']);
                             }

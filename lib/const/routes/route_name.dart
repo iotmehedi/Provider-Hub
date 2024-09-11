@@ -24,5 +24,6 @@ class Routes {
   static const humanRightsTrainingsScreen = "/humanRightsTrainingsScreen";
   static const biuScreen = "/biuScreen";
   static const dmasScreen = "/dmasScreen";
+  static const providerResourcesScreen = "/providerResourcesScreen";
 
 }
