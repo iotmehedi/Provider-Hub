@@ -9,6 +9,7 @@ import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
 import 'package:provider_hub/features/screens/homepage/presentation/controller/controller.dart';
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
+import 'package:provider_hub/main.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../const/routes/router.dart';
@@ -772,26 +773,24 @@ class ProviderResourcesScreen extends StatelessWidget {
 
             CustomSimpleText(
               text: "Questions regarding Jump-Start can be sent to ",
-              textAlign: TextAlign.center,
-              alignment: Alignment.center,
+              textAlign: TextAlign.start,
+              alignment: Alignment.centerLeft,
               color: AppColors.white,
-              fontSize: AppSizes.size24,
+              fontSize: AppSizes.size12,
               fontWeight: FontWeight.normal,
             ),
 
-            InkWell(
-              onTap: (){
-                _sendEmail("Jumpstart@dbhds.virginia.gov");
-              },
-              child: CustomSimpleText(
+            CustomRichText(
                 text: "Jumpstart@dbhds.virginia.gov",
-                textAlign: TextAlign.center,
-                alignment: Alignment.center,
-                color: AppColors.white,
-                fontSize: AppSizes.size24,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
+                date: '',
+                text1: "",
+                textDecoration1: TextDecoration.underline,
+                textDecoration2: TextDecoration.none,
+                textDecoration3: TextDecoration.underline,
+                dotNeedOrNot: false,
+                onPress: () async {
+                  _sendEmail("Jumpstart@dbhds.virginia.gov");
+                }),
 
           ],
         ),
@@ -803,13 +802,16 @@ class ProviderResourcesScreen extends StatelessWidget {
       scheme: 'mailto',
       path: email,
       queryParameters: {
-        'subject': "",
-        'body': "",
+        'subject': 'Your Subject Here',
+        'body': 'Your email body here.',
       },
     );
 
     if (await canLaunchUrl(emailLaunchUri)) {
-      await launchUrl(emailLaunchUri);
+      await launchUrl(
+        emailLaunchUri,
+        mode: LaunchMode.externalApplication, // Ensures the mail app opens externally
+      );
     } else {
       throw 'Could not launch $emailLaunchUri';
     }

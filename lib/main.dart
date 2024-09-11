@@ -48,14 +48,32 @@ class _MyAppState extends State<MyApp> {
   Future<void> initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('@mipmap/ic_launcher');
-    const InitializationSettings initializationSettings =
-    InitializationSettings(android: initializationSettingsAndroid);
+    const DarwinInitializationSettings iOSInitializationSettings = DarwinInitializationSettings();
 
+     InitializationSettings initializationSettings = const InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: iOSInitializationSettings,
+    );
     await flutterLocalNotificationsPlugin?.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onNotificationSelect,
     );
+
+    await flutterLocalNotificationsPlugin
+        ?.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
   }
+  // Future<void> initializeNotifications() async {
+  //   const AndroidInitializationSettings initializationSettingsAndroid =
+  //   AndroidInitializationSettings('@mipmap/ic_launcher');
+  //   const InitializationSettings initializationSettings =
+  //   InitializationSettings(android: initializationSettingsAndroid);
+  //
+  //   await flutterLocalNotificationsPlugin?.initialize(
+  //     initializationSettings,
+  //     onDidReceiveNotificationResponse: onNotificationSelect,
+  //   );
+  // }
 
   // Handle notification click
   void onNotificationSelect(NotificationResponse response) async {

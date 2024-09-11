@@ -298,13 +298,20 @@ class HomepageContorller extends GetxController{
   Future<void> initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('@mipmap/ic_launcher');
-    const InitializationSettings initializationSettings =
-    InitializationSettings(android: initializationSettingsAndroid);
+    const DarwinInitializationSettings iOSInitializationSettings = DarwinInitializationSettings();
 
-    await flutterLocalNotificationsPlugin.value.initialize(
+    InitializationSettings initializationSettings = const InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: iOSInitializationSettings,
+    );
+    await flutterLocalNotificationsPlugin.value?.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onNotificationSelect,
     );
+
+    await flutterLocalNotificationsPlugin.value
+        ?.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.requestNotificationsPermission();
   }
 
   // Handle notification click

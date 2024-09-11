@@ -51,34 +51,38 @@ var controller = Get.put(HomepageContorller());
                   controller.imageFromImage.value = AppAssets.regionPage;
                   await controller.saveImageAndShowNotification(imageUrl: AppAssets.regionPage);
                 },
-                child: Container(
-                  width: 116,
-                  padding: EdgeInsets.symmetric(horizontal: 2, vertical: 7),
-                  alignment: Alignment.centerRight,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                        color: AppColors.white,
-                      )),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        AppAssets.downloadIcon,
-                        height: 16.5,
-                        width: 16.5,
+                child: Row(
+                  children: [
+                    Expanded(child: SizedBox()),
+                    Container(
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+                      alignment: Alignment.centerRight,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(
+                            color: AppColors.white,
+                          )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            AppAssets.downloadIcon,
+                            height: 16.5,
+                            width: 16.5,
+                          ),
+                          10.pw,
+                          CustomSimpleText(
+                            text: "Download PDF",
+                            fontSize: AppSizes.size12,
+                            textDecoration: TextDecoration.underline,
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.white,
+                            decorationColor: AppColors.white,
+                          ),
+                        ],
                       ),
-                      10.pw,
-                      CustomSimpleText(
-                        text: "Download PDF",
-                        fontSize: AppSizes.size12,
-                        textDecoration: TextDecoration.underline,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.white,
-                        decorationColor: AppColors.white,
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
