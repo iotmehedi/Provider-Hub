@@ -10,6 +10,9 @@ import 'package:provider_hub/features/screens/nearest_provider/presentation/view
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_three.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/dbhds_screen.dart';
+import '../../features/screens/homepage/presentation/sub_item_page/updates/biu_screen.dart';
+import '../../features/screens/homepage/presentation/sub_item_page/updates/dmas_screen.dart';
+import '../../features/screens/homepage/presentation/sub_item_page/updates/human_rights_trainings_screen.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/license_specialist_screen.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/updates/licensing_page.dart';
 import '../../features/screens/homepage/presentation/view/all_services_screen.dart';
@@ -185,6 +188,18 @@ class RouteGenerator {
         case Routes.licensingPage:
         return MaterialPageRoute(
           builder: (context) => LicensingPage(),
+        );
+        case Routes.humanRightsTrainingsScreen:
+        return MaterialPageRoute(
+          builder: (context) => HumanRightsTrainingsScreen(),
+        );
+        case Routes.biuScreen:
+        return MaterialPageRoute(
+          builder: (context) => BiuScreen(),
+        );
+        case Routes.dmasScreen:
+        return MaterialPageRoute(
+          builder: (context) => DmasScreen(),
         );
     }
     return null;

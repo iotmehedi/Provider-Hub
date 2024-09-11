@@ -76,4 +76,22 @@ class AppAssets {
   static const String connect = 'assets/connect.png';
   static const String conrrespondence = 'assets/conrrespondence.png';
   static const String relations = 'assets/relations.png';
+  static const String biu = 'assets/biu.png';
+  static const String forProvider = 'assets/for_provider.png';
+  static const String transport = 'assets/transport.png';
+  static const String health = 'assets/health.png';
+  static const String school = 'assets/school.png';
+  static const String rate = 'assets/rate.png';
+  static const String plan = 'assets/plan.png';
+  static const String medicine = 'assets/medicine.png';
+  static const String doctor = 'assets/doctor.png';
+  static const String child = 'assets/child.png';
+  static const String menu1 = 'assets/menu.png';
+  static const String care = 'assets/care.png';
+  static const String info = 'assets/info.png';
+  static const String hand = 'assets/hand.png';
+  static const String dental = 'assets/dental.png';
+  static const String arrow = 'assets/arrow.png';
+  static const String brain = 'assets/brain.png';
+  static const String addiction = 'assets/addiction.png';
 }

@@ -31,7 +31,7 @@ class CustomSimpleText extends StatelessWidget {
       alignment: alignment ?? Alignment.centerLeft,
       child: Text(
         text,
-        maxLines: maxLines ?? 2,
+        // maxLines: maxLines ,
         textAlign: textAlign ?? TextAlign.start,
         style: GoogleFonts.roboto(
           letterSpacing: 0.2,

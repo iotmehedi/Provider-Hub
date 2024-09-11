@@ -126,6 +126,12 @@ class AllServicesScreen extends StatelessWidget {
                               RouteGenerator.pushNamed(context,Routes.crcScreen);
                             }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "Licensing"){
                               RouteGenerator.pushNamed(context,Routes.licensingPage);
+                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "Human Rights Trainings"){
+                              RouteGenerator.pushNamed(context,Routes.humanRightsTrainingsScreen);
+                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "BIU"){
+                              RouteGenerator.pushNamed(context,Routes.biuScreen);
+                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "DMAS"){
+                              RouteGenerator.pushNamed(context,Routes.dmasScreen);
                             }else{
                               print(subItem['title']);
                             }

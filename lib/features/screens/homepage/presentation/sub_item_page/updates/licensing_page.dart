@@ -9,6 +9,7 @@ import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
 import 'package:provider_hub/features/screens/homepage/presentation/controller/controller.dart';
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../../const/routes/router.dart';
 
@@ -278,161 +279,161 @@ class LicensingPage extends StatelessWidget {
               15.ph,
               CustomRichText(
                   text:
-                      ' 2024 Annual Inspections for Providers of Developmental Services Memo ',
+                      '2024 Annual Inspections for Providers of Developmental Services Memo ',
                   date: "(December 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/12/Memo-to-Providers-and-Chart-for-2024-DD-Inspections-1.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' Expectations Regarding Provider Reporting Measures for Residential and Day Support Providers of Developmental Services and Expectations of Provider Risk Management Programs for All Providers of Developmental Services  ',
+                      'Expectations Regarding Provider Reporting Measures for Residential and Day Support Providers of Developmental Services and Expectations of Provider Risk Management Programs for All Providers of Developmental Services  ',
                   date: "(November 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/12/Expectations-regarding-provider-reporting-measures-and-risk-management-programs2.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' Incident Management Unit Look Behind Process and Provider Responsibilities  ',
+                      'Incident Management Unit Look Behind Process and Provider Responsibilities  ',
                   date: "(October 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/10/IMU-Look-Behind-Provider-Notification-Memo-10.6.2023.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' Computerized Human Rights Information System (CHRIS) Enhancement Memo ',
+                      'Computerized Human Rights Information System (CHRIS) Enhancement Memo ',
                   date: "(September 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/09/CHRIS-Enhancement-to-the-Service-Program-Code-and-the-Service-Description_8.31.2023-FINAL.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' General Information and Opportunity to Comment DBHDS 2023 Combined-Study-Workgroup ',
+                      'General Information and Opportunity to Comment DBHDS 2023 Combined-Study-Workgroup ',
                   date: "(July 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/07/General-Information-and-Opportunity-to-Comment-DBHDS-2023-Combined-Study-Workgroup.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' Upcoming Webinars for Initial Applicants and New & Experienced DBHDS Licensed Providers ',
+                      'Upcoming Webinars for Initial Applicants and New & Experienced DBHDS Licensed Providers ',
                   date: "(June 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/06/Upcoming-Webinars-for-Initial-Applicants-and-New-Experienced-DBHDS-Licensed-Providers.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' Changes from the Emergency BHE Regulations to the Final BHE Regulations Memo ',
+                      'Changes from the Emergency BHE Regulations to the Final BHE Regulations Memo ',
                   date: "(February 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/02/Final-BHE-Memo-1-1.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' Changes from the Emergency ASAM Regulations to the Final ASAM Regulations Memo ',
+                      'Changes from the Emergency ASAM Regulations to the Final ASAM Regulations Memo ',
                   date: "(February 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/02/Final-ASAM-Memo.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' Changes from the Emergency Children’s ASAM Regulations to the Final Children’s ASAM Regulations Memo ',
+                      'Changes from the Emergency Children’s ASAM Regulations to the Final Children’s ASAM Regulations Memo ',
                   date: "(February 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/02/Final-ASAM-46-Memo.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' Revised-Care-Concern-Criteria-Level-I-Serious-Incidents-Memo ',
+                      'Revised-Care-Concern-Criteria-Level-I-Serious-Incidents-Memo ',
                   date: "(February 2023)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/02/Revised-Care-Concern-Criteria-Level-I-Serious-Incidents-Memo-2.14.23.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' Medication Assisted Opioid Treatment Services (MAT) legislative changes effective January 1, 2023 Memo ',
+                      'Medication Assisted Opioid Treatment Services (MAT) legislative changes effective January 1, 2023 Memo ',
                   date: "(December 2022)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2022/12/12-16-22-MAT-Memo.pdf",
                     );
                   }),
               CustomRichText(
-                  text: ' TDT and Outpatient Memo ',
+                  text: 'TDT and Outpatient Memo ',
                   date: "(August 2022)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/01/TDT-and-Outpatient-Memo-8.11.22.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' New Regulation Affecting 12VAC35-46 Effective 1-10-22 Memo ',
+                      'New Regulation Affecting 12VAC35-46 Effective 1-10-22 Memo ',
                   date: "(December 2021)",
                   onPress: () {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/02/New-Regulation-Affecting-12VAC35-46-Effective-1-10-22.Memo_.pdf",
                     );
                   }),
               CustomRichText(
-                  text: ' Word Version of the Sponsor Certification Form ',
+                  text: 'Word Version of the Sponsor Certification Form ',
                   date: "",
                   onPress: () async {
                     await controller.saveImageAndShowNotification(
@@ -440,35 +441,35 @@ class LicensingPage extends StatelessWidget {
                             "https://www.figma.com/exit?url=https%3A%2F%2Fdbhds.virginia.gov%2Fassets%2Fdoc%2FQMD%2FOL%2Fsponsor-certification-form-word-version.docx");
                   }),
               CustomRichText(
-                  text: ' Sponsored Provider Certification Process ',
+                  text: 'Sponsored Provider Certification Process ',
                   date: "",
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/assets/doc/QMD/OL/sponsored-provider-certification-process_final-11-23-21.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      ' December 1, 2021 Behavioral Health Enhancement (BHE)Licensed Services ',
+                      'December 1, 2021 Behavioral Health Enhancement (BHE)Licensed Services ',
                   date: "(October 2021)",
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/assets/doc/QMD/OL/final-december-1-2021-bhe-memo.pdf",
                     );
                   }),
               CustomRichText(
-                  text: ' Memo – Grace Period for Documentation of ISPs ',
+                  text: 'Memo – Grace Period for Documentation of ISPs ',
                   date: "(March 2021)",
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/assets/doc/QMD/OL/grace-period-for-documentation-of-isps-memo-3-4-2021.pdf",
                     );
@@ -592,56 +593,56 @@ class LicensingPage extends StatelessWidget {
                 maxLines: 50,
               ),
               CustomRichText(
-                  text: " General Chapter – Third Revision",
+                  text: "General Chapter – Third Revision",
                   date: '',
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://www.figma.com/exit?url=https%3A%2F%2Fdbhds.virginia.gov%2Fwp-content%2Fuploads%2F2023%2F06%2FGeneralChapter.THIRD_.rev_.2023RAP.pdf",
                     );
                   }),
               CustomRichText(
-                  text: " Case Management – Second Revision",
+                  text: "Case Management – Second Revision",
                   date: '',
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/06/CaseManagementChapter.SECONDrev.2023.RAP_.pdf",
                     );
                   }),
               CustomRichText(
-                  text: " Center-based Services – Second Revision",
+                  text: "Center-based Services – Second Revision",
                   date: '',
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/06/Center-basedChapter.SECONDRev-2023RAP.pdf",
                     );
                   }),
               CustomRichText(
-                  text: " Home/Noncenter-based Services – Second Revision",
+                  text: "Home/Noncenter-based Services – Second Revision",
                   date: '',
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/06/HomeNoncenter-basedChapterSECONDrev2023RAP.pdf",
                     );
                   }),
               CustomRichText(
-                  text: " Residential Services – Second Revision",
+                  text: "Residential Services – Second Revision",
                   date: '',
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/wp-content/uploads/2023/06/ResidentialChapter.SECONDrev.2023RAP.pdf",
                     );
@@ -655,14 +656,14 @@ class LicensingPage extends StatelessWidget {
               ),
               CustomRichText(
                   text:
-                      " All other previous overhaul drafts and public comment forums since 2019 can be viewed",
+                      "All other previous overhaul drafts and public comment forums since 2019 can be viewed",
                   date: ' here.',
                   textDecoration2: TextDecoration.underline,
                   textDecoration1: TextDecoration.none,
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://www.figma.com/exit?url=https%3A%2F%2Fwww.townhall.virginia.gov%2FL%2FGeneralNotice.cfm%3FBoardID%3D65%26DateSelection%3DExpired",
                     );
@@ -698,7 +699,7 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://townhall.virginia.gov/L/ViewAction.cfm?actionid=6152",
                     );
@@ -715,7 +716,7 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://r20.rs6.net/tn.jsp?f=0017oIteWtGkquLbNx9vTHrZhA98USrHfhbxcrnc1M_XrbuVXIk8TWwbXkYoOD07r9yeQxgoZ3WB3IXYoBY0CYKYsVD0Dgxb1axWzrxcfAquiGTPQc1EwY3MiAHeOC2TyPC7k9WL_Mj6mPsEH0ydmLlCvF58iUo88aHkMAjIGECrYS0QNdGjFv-u3zgjFNwIFDSsVOJ1ehLtRU=&c=Kkm8eoCUTtOLVRcrVsge3LDoLVnC4NiodmJJyIFyXfHpu6wzYL9RbQ==&ch=-GuOtguAl42eGzUWPn2Ww2m327IOUUiFEPQ4QHSFyXCCMOsrtYcDlg==",
                     );
@@ -731,7 +732,7 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://r20.rs6.net/tn.jsp?f=0017oIteWtGkquLbNx9vTHrZhA98USrHfhbxcrnc1M_XrbuVXIk8TWwbXkYoOD07r9yZTdMS_OmYufqAvNitzBUi4v5eUWRYKMo00EXRb_2MBigtNOiXvfBoxKfkgyEgZhCl-y8VVNiJYY1Ofsnmc8NLV3AvMUNzWMxAnK7KAi11j8=&c=Kkm8eoCUTtOLVRcrVsge3LDoLVnC4NiodmJJyIFyXfHpu6wzYL9RbQ==&ch=-GuOtguAl42eGzUWPn2Ww2m327IOUUiFEPQ4QHSFyXCCMOsrtYcDlg==",
                     );
@@ -769,7 +770,7 @@ class LicensingPage extends StatelessWidget {
               20.ph,
               CustomRichText(
                   text:
-                      " Rules and Regulations For Licensing Providers by the Department of Behavioral Health and Developmental Services [12 VAC 35 ‑ 105]",
+                      "Rules and Regulations For Licensing Providers by the Department of Behavioral Health and Developmental Services [12 VAC 35 ‑ 105]",
                   date: '',
                   text1: "",
                   textDecoration2: TextDecoration.underline,
@@ -779,14 +780,14 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://law.lis.virginia.gov/admincode/title12/agency35/chapter105/",
                     );
                   }),
               CustomRichText(
                   text:
-                      " Regulations for Children’s Residential Facilities 12VAC35-46",
+                      "Regulations for Children’s Residential Facilities 12VAC35-46",
                   date: '',
                   text1: "",
                   textDecoration2: TextDecoration.underline,
@@ -796,14 +797,14 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://law.lis.virginia.gov/admincode/title12/agency35/chapter46/",
                     );
                   }),
               CustomRichText(
                   text:
-                      " Emergency/NOIRA:12VAC35-46. Regulations for Children’s Residential Facilities (adding 12VAC35-46-1260, 12VAC35-46-1270) Effective January 10, 2022 – January 8, 2024",
+                      "Emergency/NOIRA:12VAC35-46. Regulations for Children’s Residential Facilities (adding 12VAC35-46-1260, 12VAC35-46-1270) Effective January 10, 2022 – January 8, 2024",
                   date: '',
                   text1: "",
                   textDecoration2: TextDecoration.underline,
@@ -813,7 +814,7 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://register.dls.virginia.gov/details.aspx?id=10028",
                     );
@@ -830,7 +831,7 @@ class LicensingPage extends StatelessWidget {
               ),
               20.ph,
               CustomRichText(
-                  text: " LIC 16: Guidance for A Quality Improvement Program ",
+                  text: "LIC 16: Guidance for A Quality Improvement Program ",
                   date: '(November 2020)',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -840,13 +841,13 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://www.figma.com/exit?url=https%3A%2F%2Fwww.townhall.virginia.gov%2FL%2FViewGDoc.cfm%3Fgdid%3D6414",
                     );
                   }),
               CustomRichText(
-                  text: " LIC 17: Guidance for Serious Incident Reporting ",
+                  text: "LIC 17: Guidance for Serious Incident Reporting ",
                   date: '(November 2020)',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -856,14 +857,14 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://www.figma.com/exit?url=https%3A%2F%2Fwww.townhall.virginia.gov%2FL%2FViewGDoc.cfm%3Fgdid%3D6415",
                     );
                   }),
               CustomRichText(
                   text:
-                      " LIC 18: Individuals with Developmental Disabilities with High Risk Health Conditions ",
+                      "LIC 18: Individuals with Developmental Disabilities with High Risk Health Conditions ",
                   date: '(June 2020 )',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -873,13 +874,13 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://www.figma.com/exit?url=https%3A%2F%2Fwww.townhall.virginia.gov%2FL%2FViewGDoc.cfm%3Fgdid%3D6837",
                     );
                   }),
               CustomRichText(
-                  text: " LIC 19: Corrective Action Plans (CAPs) ",
+                  text: "LIC 19: Corrective Action Plans (CAPs) ",
                   date: '(August 2020)',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -889,13 +890,13 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://www.figma.com/exit?url=https%3A%2F%2Fwww.townhall.virginia.gov%2FL%2FViewGDoc.cfm%3Fgdid%3D6875",
                     );
                   }),
               CustomRichText(
-                  text: " LIC 20: Guidance on Incident Reporting Requirements ",
+                  text: "LIC 20: Guidance on Incident Reporting Requirements ",
                   date: '(August 2020)',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -905,13 +906,13 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://www.figma.com/exit?url=https%3A%2F%2Fwww.townhall.virginia.gov%2FL%2FViewGDoc.cfm%3Fgdid%3D6876",
                     );
                   }),
               CustomRichText(
-                  text: " LIC 21: Guidance for Risk Management ",
+                  text: "LIC 21: Guidance for Risk Management ",
                   date: '(August 2020)',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -921,7 +922,7 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://www.figma.com/exit?url=https%3A%2F%2Fwww.townhall.virginia.gov%2FL%2FViewGDoc.cfm%3Fgdid%3D6874",
                     );
@@ -974,7 +975,7 @@ class LicensingPage extends StatelessWidget {
               20.ph,
               CustomRichText(
                   text:
-                      " OL Approval of Behavioral Health Link Assessment (BHL) Tool for Crisis Services (November 2021) ",
+                      "OL Approval of Behavioral Health Link Assessment (BHL) Tool for Crisis Services (November 2021) ",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -984,14 +985,14 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://www.figma.com/exit?url=https%3A%2F%2Fdbhds.virginia.gov%2Fwp-content%2Fuploads%2F2022%2F08%2FOL-approval-of-BHL-tool-for-crisis-services-11-21.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      " Aligning the Licensing Regulations with ASAM Criteria Training (April 2021)",
+                      "Aligning the Licensing Regulations with ASAM Criteria Training (April 2021)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -1001,14 +1002,14 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/assets/doc/QMD/OL/aligning-the-licensing-regulations-with-the-asam-criteria-4.19.21.pdf",
                     );
                   }),
               CustomRichText(
                   text:
-                      " Memo Behavioral Health Enhancement and American Society of Addiction Medicine (March 2021)",
+                      "Memo Behavioral Health Enhancement and American Society of Addiction Medicine (March 2021)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -1018,13 +1019,13 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/assets/doc/QMD/OL/bhe-emergency-regulation-memo.pdf",
                     );
                   }),
               CustomRichText(
-                  text: " ICT/ACT Licensing Requirements Crosswalk",
+                  text: "ICT/ACT Licensing Requirements Crosswalk",
                   date: '(March 2021)',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -1034,7 +1035,7 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url:
                           "https://dbhds.virginia.gov/assets/doc/QMD/OL/act-ict-licensing-requirements-crosswalk.pdf",
                     );
@@ -1063,7 +1064,7 @@ class LicensingPage extends StatelessWidget {
               20.ph,
               CustomRichText(
                   text:
-                      " Risk Management & Quality Improvement Strategies Training by the Center for Developmental Disabilities Evaluation & Research – Recorded Webinar (December 2020)",
+                      "Risk Management & Quality Improvement Strategies Training by the Center for Developmental Disabilities Evaluation & Research – Recorded Webinar (December 2020)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -1073,13 +1074,13 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url: "https://www.youtube.com/watch?v=NiFyfOjXalI",
                     );
                   }),
               CustomRichText(
                   text:
-                      " QI-RM-RCA Webinar Recording December 2021 (February 2022)",
+                      "QI-RM-RCA Webinar Recording December 2021 (February 2022)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.underline,
@@ -1089,7 +1090,7 @@ class LicensingPage extends StatelessWidget {
                   onPress: () async {
                     RouteGenerator.gotoWebPage(
                       context: context,
-                      pageTitle: '',
+                      pageTitle: 'Licensing',
                       url: "https://www.youtube.com/watch?v=9YepYqRiLzg",
                     );
                   }),
@@ -1105,7 +1106,7 @@ class LicensingPage extends StatelessWidget {
               ),
               5.ph,
               CustomRichText(
-                  text: " Sample(s)",
+                  text: "Sample(s)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1120,7 +1121,7 @@ class LicensingPage extends StatelessWidget {
                   children: [
                     CustomRichText(
                         text:
-                            " Serious Incident Review and RCA Template Example 5 Whys Stories Victor",
+                            "Serious Incident Review and RCA Template Example 5 Whys Stories Victor",
                         date: '(July 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1130,14 +1131,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/12/Serious-Incident-Review-and-RCA-Template-Example-5-Whys-Stories-Victor-July-2023.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Serious Incident Review and RCA Template Example 5 Whys Stories Billy",
+                            "Serious Incident Review and RCA Template Example 5 Whys Stories Billy",
                         date: '(June 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1147,14 +1148,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/12/Serious-Incident-Review-and-RCA-template_Example_5-Whys-Stories_Billy.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Serious Incident Review and RCA Template Example 5 Whys Stories Jasmin",
+                            "Serious Incident Review and RCA Template Example 5 Whys Stories Jasmin",
                         date: '(June 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1164,14 +1165,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/12/Serious-Incident-Review-and-RCA-template_Example_5-Whys-Stories_Jasmine.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Serious Incident Review and RCA Template Example 5 Whys Stories Sam",
+                            "Serious Incident Review and RCA Template Example 5 Whys Stories Sam",
                         date: '(June 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1181,13 +1182,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/12/Serious-Incident-Review-and-RCA-template_Example_5-Whys-Stories_SAM.pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Sample Root Cause Analysis Policy ",
+                        text: "Sample Root Cause Analysis Policy ",
                         date: '(June 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1197,14 +1198,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2022/02/SAMPLE-RCA-Policy-02-2022.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Serious Incident Review and Root Cause Analysis Template  ",
+                            "Serious Incident Review and Root Cause Analysis Template  ",
                         date: '(June 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1214,7 +1215,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/11/Serious-Incident-Review-and-Root-Cause-Analysis-Template-November-2023-1.pdf",
                           );
@@ -1224,7 +1225,7 @@ class LicensingPage extends StatelessWidget {
               ),
               5.ph,
               CustomRichText(
-                  text: " Training(s)",
+                  text: "Training(s)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1238,7 +1239,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " Flow-Chart Incident Reviews (April 2023)",
+                        text: "Flow-Chart Incident Reviews (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1248,13 +1249,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/03/Flow-Chart_Incident-Review_April-2023.pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " QI-RM-RCA Webinar (December 2021)",
+                        text: "QI-RM-RCA Webinar (December 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1264,14 +1265,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/assets/doc/QMD/OL/regulatory-compliance-with-qi-rm-rca-2021-12-16-21-presentation.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Regulatory Compliance with Root Cause Analysis Regulations Training (December 2021)",
+                            "Regulatory Compliance with Root Cause Analysis Regulations Training (December 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1281,14 +1282,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/library/licensing/2022/Regulatory%20Compliance%20with%20RCA%20Regulations%2012-21%20.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Risk Management & Quality Improvement Strategies Training by the Center for Developmental Disabilities Evaluation and Research – Handout (December 2020)",
+                            "Risk Management & Quality Improvement Strategies Training by the Center for Developmental Disabilities Evaluation and Research – Handout (December 2020)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1298,13 +1299,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/assets/doc/QMD/OL/va-dbhds-risk-management-webinar-final-12-10-2020-handout-with-notes-(1).pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Root Cause Analysis Training (October 2020)",
+                        text: "Root Cause Analysis Training (October 2020)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1314,7 +1315,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/02/Root-Cause-Analysis_October-2020.pdf",
                           );
@@ -1324,7 +1325,7 @@ class LicensingPage extends StatelessWidget {
               ),
               5.ph,
               CustomRichText(
-                  text: " FAQs",
+                  text: "FAQs",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1338,7 +1339,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " Root Cause Analysis Q&A’s (Updated July 2022)",
+                        text: "Root Cause Analysis Q&A’s (Updated July 2022)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1348,7 +1349,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/library/licensing/2022/Frequently%20Asked%20Questions%2012VAC35-105-160.E%20(1).pdf",
                           );
@@ -1380,7 +1381,7 @@ class LicensingPage extends StatelessWidget {
               ),
               20.ph,
               CustomRichText(
-                  text: " Sample(s)",
+                  text: "Sample(s)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1395,7 +1396,7 @@ class LicensingPage extends StatelessWidget {
                   children: [
                     CustomRichText(
                         text:
-                            " Systemic Risk Assessment Sample 1 Non Residential Provider",
+                            "Systemic Risk Assessment Sample 1 Non Residential Provider",
                         date: '(August 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1405,14 +1406,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/08/Systemic-Risk-Assessment-Sample-1-Non-Residential-Provider-August-2023.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Systemic Risk Assessment Sample 2 Provider of a 4-Bed Group Home ",
+                            "Systemic Risk Assessment Sample 2 Provider of a 4-Bed Group Home ",
                         date: '(August 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1422,14 +1423,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/08/Systemic-Risk-Assessment-Sample-2-Provider-of-a-4-Bed-Group-Home-August-2023.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Systemic Risk Assessment Sample 3 Intensive In Home Service Provider ",
+                            "Systemic Risk Assessment Sample 3 Intensive In Home Service Provider ",
                         date: '(August 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1439,14 +1440,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/08/Systemic-Risk-Assessment-Sample-3-Intensive-In-Home-Service-Provider-August-2023.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Systemic Risk Assessment Sample 4 Medication Assistance Service",
+                            "Systemic Risk Assessment Sample 4 Medication Assistance Service",
                         date: ' (August 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1456,14 +1457,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/08/Systemic-Risk-Assessment-Sample-4-Medication-Assistance-Services-August-2023.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Sample Provider Risk Management Plan (June 2021)",
+                            "Sample Provider Risk Management Plan (June 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1473,7 +1474,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/assets/doc/QMD/OL/sample-provider-risk-management-plan-6-2021.pdf",
                           );
@@ -1483,7 +1484,7 @@ class LicensingPage extends StatelessWidget {
               ),
               20.ph,
               CustomRichText(
-                  text: " Tools and Templates",
+                  text: "Tools and Templates",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1497,7 +1498,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " Individual Risk Tracking Tool (April 2023)",
+                        text: "Individual Risk Tracking Tool (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1507,13 +1508,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fdbhds.virginia.gov%2Fwp-content%2Fuploads%2F2023%2F05%2FIndividual-Risk-Tracking-Tool-April-2023.xlsx&wdOrigin=BROWSELINK",
                           );
                         }),
                     CustomRichText(
-                        text: " Monthly Risk Tracking Tool (April 2023)",
+                        text: "Monthly Risk Tracking Tool (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1523,14 +1524,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fdbhds.virginia.gov%2Fwp-content%2Fuploads%2F2023%2F05%2FMonthly-Risk-Tracking-Tool-April-2023.xlsx&wdOrigin=BROWSELINK",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Instructional Video-Risk Tracking Tool (April 2023)",
+                            "Instructional Video-Risk Tracking Tool (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1540,13 +1541,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url: "https://www.youtube.com/watch?v=6u9ouDVulec",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Serious Incident Review and Root Cause Analysis Template (November 2023)",
+                            "Serious Incident Review and Root Cause Analysis Template (November 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1556,13 +1557,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/11/Serious-Incident-Review-and-Root-Cause-Analysis-Template-November-2023-1.pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Systemic Risk Assessment Template (April 2023)",
+                        text: "Systemic Risk Assessment Template (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1572,7 +1573,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/05/Systemic-Risk-Assessment-Template_fillable-with-examples.pdf",
                           );
@@ -1582,7 +1583,7 @@ class LicensingPage extends StatelessWidget {
               ),
               20.ph,
               CustomRichText(
-                  text: " Training(s)",
+                  text: "Training(s)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1597,7 +1598,7 @@ class LicensingPage extends StatelessWidget {
                   children: [
                     CustomRichText(
                         text:
-                            " Day 1: Minimizing Risk Session 1 Webinar (April 2023)",
+                            "Day 1: Minimizing Risk Session 1 Webinar (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1607,13 +1608,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url: "https://www.youtube.com/watch?v=KoYiYAkF808",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Minimizing Risk Session 1 PowerPoint (April 2023)",
+                            "Minimizing Risk Session 1 PowerPoint (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1623,14 +1624,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/assets/Office-of-Licensing/2023/Minimizing%20Risk%20Session%201%20PowerPoint%20(April%202023).pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Day 2: Minimizing Risk Session 2 Webinar (April 2023)",
+                            "Day 2: Minimizing Risk Session 2 Webinar (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1640,13 +1641,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url: "https://www.youtube.com/watch?v=Ru14NHoaiVE",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Minimizing Risk Session 2 PowerPoint (April 2023)",
+                            "Minimizing Risk Session 2 PowerPoint (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1656,14 +1657,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/assets/Office-of-Licensing/2023/Minimizing%20Risk%20Session%202%20PowerPoint%20(April%202023).pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Day 3: Minimizing Risk Session 3 Webinar (April 2023)",
+                            "Day 3: Minimizing Risk Session 3 Webinar (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1673,14 +1674,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://www.youtube.com/watch?v=zntmZXu1Zoo&feature=youtu.be",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Minimizing Risk Session 3 PowerPoint (April 2023)",
+                            "Minimizing Risk Session 3 PowerPoint (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1690,13 +1691,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/assets/Office-of-Licensing/2023/Minimizing%20Risk_Day3_FINAL%20(1).pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Flow-Chart Incident Reviews (April 2023)",
+                        text: "Flow-Chart Incident Reviews (April 2023)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1706,13 +1707,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/05/Flow-Chart_Incident-Review_April-2023.pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " QI-RM-RCA Webinar (December 2021)",
+                        text: "QI-RM-RCA Webinar (December 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1722,14 +1723,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/assets/doc/QMD/OL/regulatory-compliance-with-qi-rm-rca-2021-12-16-21-presentation.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Regulatory Compliance with Risk Management Regulations Training (December 2021)",
+                            "Regulatory Compliance with Risk Management Regulations Training (December 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1739,14 +1740,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/library/licensing/2022/Regulatory%20Compliance%20with%20Risk%20Management%20Regulation%2012-21.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Risk Management Tips and Tools Training (June 2021)",
+                            "Risk Management Tips and Tools Training (June 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1756,14 +1757,14 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/library/licensing/2022/Risk%20Management%20Tips%20and%20Tools%20June%202021%20Updated%20June%202022.pdf",
                           );
                         }),
                     CustomRichText(
                         text:
-                            " Risk Management & Quality Improvement Strategies Training by the Center for Developmental Disabilities Evaluation & Research – Recorded Webinar (December 2020)",
+                            "Risk Management & Quality Improvement Strategies Training by the Center for Developmental Disabilities Evaluation & Research – Recorded Webinar (December 2020)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1773,12 +1774,12 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url: "https://www.youtube.com/watch?v=NiFyfOjXalI",
                           );
                         }),
                     CustomRichText(
-                        text: " Risk Management Training (November 2020)",
+                        text: "Risk Management Training (November 2020)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1788,7 +1789,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/library/licensing/2022/Risk%20Management%20Training%20November%202020.pdf",
                           );
@@ -1798,7 +1799,7 @@ class LicensingPage extends StatelessWidget {
               ),
               20.ph,
               CustomRichText(
-                  text: " Care Concerns",
+                  text: "Care Concerns",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1812,7 +1813,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " 2023 Care Concern Threshold Criteria Memo ",
+                        text: "2023 Care Concern Threshold Criteria Memo ",
                         date: '(February 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1822,13 +1823,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/02/2023-Care-Concern-Thresholds-Criteria_OL-MEMO_final.pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " IMU Care Concern PowerPoint Training ",
+                        text: "IMU Care Concern PowerPoint Training ",
                         date: '(February 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1838,13 +1839,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/assets/Office-of-Licensing/2023/IMU_Care%20Concern%20PowerPoint%20Training_Effective%201.1.2023_Final.pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Risk Triggers and Threshold Handout ",
+                        text: "Risk Triggers and Threshold Handout ",
                         date: '(February 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1854,7 +1855,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/wp-content/uploads/2023/02/Risk-Triggers-and-Thresholds-Handout-1.1.23.pdf",
                           );
@@ -1864,7 +1865,7 @@ class LicensingPage extends StatelessWidget {
               ),
               20.ph,
               CustomRichText(
-                  text: " FAQ",
+                  text: "FAQ",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1878,7 +1879,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " Risk Management Q&A’s (Updated July 2022)",
+                        text: "Risk Management Q&A’s (Updated July 2022)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1888,7 +1889,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                                 "https://dbhds.virginia.gov/library/licensing/2022/Frequently%20Asked%20Questions%2012VAC35-105-520%20(1).pdf",
                           );
@@ -1908,7 +1909,7 @@ class LicensingPage extends StatelessWidget {
                 fontWeight: FontWeight.normal,
               ),
               CustomRichText(
-                  text: " Memo(s)",
+                  text: "Memo(s)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1922,7 +1923,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " Tracking of Level I Serious Incidents vs Baseline Behaviors Memo",
+                        text: "Tracking of Level I Serious Incidents vs Baseline Behaviors Memo",
                         date: ' (February 2023)',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1932,7 +1933,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/wp-content/uploads/2023/02/Tracking-of-Level-I-Serious-Incidents-vs.-Baseline-Behaviors-Memo.pdf",
                           );
@@ -1942,7 +1943,7 @@ class LicensingPage extends StatelessWidget {
               ),
               15.ph,
               CustomRichText(
-                  text: " Sample(s)",
+                  text: "Sample(s)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -1956,7 +1957,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " Tools for Developing a Quality Improvement Program (February 2022)",
+                        text: "Tools for Developing a Quality Improvement Program (February 2022)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1966,13 +1967,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/wp-content/uploads/2022/02/Tools-for-Developing-a-Quality-Improvement-Program-02.2022.pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Sample Provider Quality Improvement Plan (June 2021)",
+                        text: "Sample Provider Quality Improvement Plan (June 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -1982,7 +1983,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/assets/doc/QMD/OL/sample-provider-quality-improvement-plan-6-2021.pdf",
                           );
@@ -1992,7 +1993,7 @@ class LicensingPage extends StatelessWidget {
               ),
               15.ph,
               CustomRichText(
-                  text: " Training(s)",
+                  text: "Training(s)",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -2006,7 +2007,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " QI-RM-RCA Webinar (December 2021)",
+                        text: "QI-RM-RCA Webinar (December 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2016,13 +2017,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/assets/doc/QMD/OL/regulatory-compliance-with-qi-rm-rca-2021-12-16-21-presentation.pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Regulatory Compliance with Quality Improvement Regulations Training (December 2021)",
+                        text: "Regulatory Compliance with Quality Improvement Regulations Training (December 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2032,13 +2033,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/library/licensing/2022/Regulatory%20Compliance%20with%20Quality%20Improvement%20Regulations%2012-21.pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Quality Improvement Tips and Tools Training (June 2021)",
+                        text: "Quality Improvement Tips and Tools Training (June 2021)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2048,13 +2049,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/library/licensing/2022/Quality%20Improvement%20Tips%20and%20Tools%206-2021%20(10).pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Risk Management & Quality Improvement Strategies Training by the Center for Developmental Disabilities Evaluation & Research – Recorded Webinar (December 2020)",
+                        text: "Risk Management & Quality Improvement Strategies Training by the Center for Developmental Disabilities Evaluation & Research – Recorded Webinar (December 2020)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2064,13 +2065,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://www.youtube.com/watch?v=NiFyfOjXalI",
                           );
                         }),
                     CustomRichText(
-                        text: " Quality Improvement Training (November 2020)",
+                        text: "Quality Improvement Training (November 2020)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2080,7 +2081,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/library/licensing/2022/Quality%20Improvement%20Training%20November%202022.pdf",
                           );
@@ -2091,7 +2092,7 @@ class LicensingPage extends StatelessWidget {
               ),
               5.ph,
               CustomRichText(
-                  text: " FAQs",
+                  text: "FAQs",
                   date: '',
                   text1: "",
                   textDecoration1: TextDecoration.none,
@@ -2105,7 +2106,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " Quality Improvement Q&A’s (Updated June 2022)",
+                        text: "Quality Improvement Q&A’s (Updated June 2022)",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2115,7 +2116,7 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/library/licensing/2022/Frequently%20Asked%20Questions%2012VAC35-105-620%20(1).pdf",
                           );
@@ -2140,7 +2141,7 @@ class LicensingPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomRichText(
-                        text: " Licensed Provider Coaching Seminar I",
+                        text: "Licensed Provider Coaching Seminar I",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2150,13 +2151,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/assets/Office-of-Licensing/2023/Licensed%20Provider%20Coaching%20Seminar%20I%20(June%202023).pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Licensed Provider Coaching Seminar I YouTube Video",
+                        text: "Licensed Provider Coaching Seminar I YouTube Video",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2166,13 +2167,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://www.youtube.com/watch?v=ko8LxgC74Lw",
                           );
                         }),
                     CustomRichText(
-                        text: " Licensed Provider Coaching Seminar II",
+                        text: "Licensed Provider Coaching Seminar II",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2182,13 +2183,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/assets/Office-of-Licensing/2023/Licensed%20Provider%20Coaching%20Seminar%20II%20(July%202023).pdf",
                           );
                         }),
                     CustomRichText(
-                        text: " Licensed Provider Coaching Seminar II YouTube Video",
+                        text: "Licensed Provider Coaching Seminar II YouTube Video",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2198,13 +2199,13 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://www.youtube.com/watch?v=UgVCX-Ra8T0",
                           );
                         }),
                     CustomRichText(
-                        text: " Licensed Provider Coaching Seminar III",
+                        text: "Licensed Provider Coaching Seminar III",
                         date: '',
                         text1: "",
                         textDecoration1: TextDecoration.underline,
@@ -2214,12 +2215,525 @@ class LicensingPage extends StatelessWidget {
                         onPress: () async {
                           RouteGenerator.gotoWebPage(
                             context: context,
-                            pageTitle: '',
+                            pageTitle: 'Licensing',
                             url:
                             "https://dbhds.virginia.gov/assets/Office-of-Licensing/2023/Licensed%20Provider%20Coaching%20Seminar%20III%20(July%202023).pdf",
                           );
                         }),
+                    15.ph,
+                    CustomDivider(),
+                    15.ph,
+                    CustomRichText(
+                        text: "A collection of guides, toolkits and training resources to help build quality improvement (QI) knowledge and skills has been posted to the DBHDS Office of Clinical Quality Management webpage:",
+                        date: ' Office of Clinical Quality Management',
+                        text1: "",
+                        textDecoration1: TextDecoration.none,
+                        textDecoration2: TextDecoration.underline,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: false,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/clinical-and-quality-management/office-of-clinical-quality-management/",
+                          );
+                        }),
+                    15.ph,
+                    CustomDivider(),
+                    15.ph,
+                    CustomSimpleText(
+                      text: "SERIOUS INCIDENT REPORTING AND CHRIS TRAINING",
+                      textAlign: TextAlign.center,
+                      alignment: Alignment.center,
+                      color: AppColors.white,
+                      fontSize: AppSizes.size24,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    15.ph,
+                    CustomRichText(
+                        text: "Serious Incident Reporting-Covid-19 (December 2022)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/wp-content/uploads/2022/12/serious-incident-report_covid-19_-11-2022-1.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Individual and Systematic Risk – How to Report and Respond to Incidents (April 2022)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://www.youtube.com/watch?v=CnMPO3FNXWE",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Memo – Revoking A User Access (February 2020)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/assets/doc/QMD/OL/revoking-a-user-access.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "CHRIS System Training (May 2021)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/assets/doc/QMD/human-rights/shrc/chris/chris_system_training_may-2021-final.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Creating A New Serious Incident Case (August 2019)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/assets/doc/QMD/human-rights/shrc/chris/creating-a-new-serious-incident.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Creating A New Death Case (August 2019)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/assets/doc/QMD/human-rights/shrc/chris/creating-a-new-death.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Updating A Serious Incident (August 2019)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/assets/doc/QMD/human-rights/shrc/chris/updating-a-serious-incident.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Updating A Death Record (August 2019)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/assets/doc/QMD/human-rights/shrc/chris/updating-a-death.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "DELTA Overview",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/assets/Office-of-Licensing/2023/DELTA%20Overview.pdf",
+                          );
+                        }),
+                    15.ph,
+                    CustomDivider(),
+                    15.ph,
+                    CustomSimpleText(
+                      text: "MORTALITY REVIEW COMMITTEE",
+                      textAlign: TextAlign.center,
+                      alignment: Alignment.center,
+                      color: AppColors.white,
+                      fontSize: AppSizes.size24,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    15.ph,
+                    CustomRichText(
+                        text: "Mortality Review Committee Submission Checklist (July 2022)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/wp-content/uploads/2022/06/mrc-submission-checklist_7.1.22.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Mortality Review Document Submission Process (January 2023)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/wp-content/uploads/2023/01/mrc-doc-submission-process-1.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Mortality Review Committee Document Submission Memorandum (July 2019)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/assets/doc/QMD/OL/MRC-Memo-July-2019.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Contacting 911 Emergency Services (December 2019)",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/assets/doc/QMD/OL/ol-external-memo-contacting-911-emergency-services.pdf",
+                          );
+                        }),
+                    15.ph,
+                    CustomDivider(),
+                    15.ph,
+                    CustomSimpleText(
+                      text: "ARCHIVED DOCUMENTS",
+                      textAlign: TextAlign.center,
+                      alignment: Alignment.center,
+                      color: AppColors.white,
+                      fontSize: AppSizes.size24,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    15.ph,
+                    CustomRichText(
+                        text: "Archived Documents",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: false,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/quality-management/Office-of-Licensing/archived-documents",
+                          );
+                        }),
+                    15.ph,
+                    CustomDivider(),
+                    15.ph,
+                    CustomSimpleText(
+                      text: "OFFICE OF LICENSING CONTACT INFORMATION",
+                      textAlign: TextAlign.center,
+                      alignment: Alignment.center,
+                      color: AppColors.white,
+                      fontSize: AppSizes.size24,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    15.ph,
+                    CustomDivider(),
+                    15.ph,
+                    CustomRichText(
+                        text: "P.O. Box 1797Richmond, VA 23218Office (804) 786-1747 Fax (804) 692-0066",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.none,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: false,
+                        onPress: null),
+                    CustomRichText(
+                        text: "Office of Licensing Staff Contact Information",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: false,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/quality-management/office-of-licensing/ol-contact-info/",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Licensing Regional Contacts",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: false,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/wp-content/uploads/2023/03/Licensing-Regional-Contacts-3-14-2023.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Incident Management Unit Regional Contact",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: false,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/wp-content/uploads/2023/01/IMU-Regional-Map-Contacts_1.3.2023.pdf",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "Specialized Investigation Unit Regional Contact",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: false,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/wp-content/uploads/2023/12/specialized-investigation-unit-regional-contacts-12.1.23.pdf",
+                          );
+                        }),
+                    15.ph,
+                    CustomDivider(),
+                    15.ph,
 
+                    CustomSimpleText(
+                      text: "FOIA",
+                      textAlign: TextAlign.center,
+                      alignment: Alignment.center,
+                      color: AppColors.white,
+                      fontSize: AppSizes.size24,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    20.ph,
+                    CustomSimpleText(
+                      text: "The Virginia Freedom of Information Act (FOIA), located § 2.2-3700 et. seq. of the Code of Virginia, guarantees citizens of the Commonwealth and representatives of the media access to public records held by public bodies, public officials, and public employees.",
+                      textAlign: TextAlign.start,
+                      alignment: Alignment.center,
+                      color: AppColors.white,
+                      fontSize: AppSizes.size12,
+                      fontWeight: FontWeight.normal,
+                      maxLines: 100,
+                    ),
+                    20.ph,
+                    CustomRichText(
+                        text: "A list of all DBHDS licensed providers can be found here. Corrective Action Plans for DBHDS licensed providers can be found here.",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.underline,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://vadbhdsprod.glsuite.us/GLSuiteWeb/Clients/vadbhds/Public/ProviderSearch/ProviderSearchSearch.aspx",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "A FOIA request is required for information regarding closed providers.",
+                        date: '',
+                        text1: "",
+                        textDecoration1: TextDecoration.none,
+                        textDecoration2: TextDecoration.none,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: null),
+                    CustomRichText(
+                        text: "To request additional records from the DBHDS Office of Licensing,please submit a request directly to Chesna Gore or through the ",
+                        date: 'CONNECT FOIA Portal.',
+                        text1: "",
+                        textDecoration1: TextDecoration.none,
+                        textDecoration2: TextDecoration.underline,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://vadbhdsprod.glsuite.us/GLSuiteWeb/Clients/vadbhds/Private/FOIARequests/FOIARequestsLogin.aspx",
+                          );
+                        }),
+                    CustomRichText(
+                        text: "To request records from any other office within the Department of Behavioral Health and Developmental Services, please direct your request to Elisa Fulton at ",
+                        date: 'FOIA@dbhds.virginia.gov,',
+                        text1: " 804-786-3921 or fax at 804-371-6638. In addition, the Department has a Voice/TDD, (804) 371-8977.",
+                        textDecoration1: TextDecoration.none,
+                        textDecoration2: TextDecoration.underline,
+                        textDecoration3: TextDecoration.none,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          // RouteGenerator.gotoWebPage(
+                          //   context: context,
+                          //   pageTitle: 'Licensing',
+                          //   url:
+                          //   "FOIA@dbhds.virginia.gov",
+                          // );
+                          _sendEmail("FOIA@dbhds.virginia.gov");
+                        }),
+                    15.ph,
+                    CustomDivider(),
+                    15.ph,
+                    CustomSimpleText(
+                      text: "Complaints",
+                      textAlign: TextAlign.center,
+                      alignment: Alignment.center,
+                      color: AppColors.white,
+                      fontSize: AppSizes.size24,
+                      fontWeight: FontWeight.normal,
+                    ),
+                    15.ph,
+                    CustomSimpleText(
+                      text: "The Department of Behavioral Health and Developmental Services (DBHDS) values the citizens of Virginia and the feedback from the community at large and service providers. As such, DBHDS is dedicated to providing the best service possible to all stake holders. Information provided by citizens and employees helps with fulfilling DBHDS’ mission. If you choose to make a complaint, we will use a formal process to ensure that your complaint is addressed in a timely manner.",
+                      textAlign: TextAlign.justify,
+                      alignment: Alignment.center,
+                      color: AppColors.white,
+                      fontSize: AppSizes.size12,
+                      fontWeight: FontWeight.normal,
+                      maxLines: 100,
+                    ),
+                    15.ph,
+                    CustomSimpleText(
+                      text: "Please note, that the Office of Licensing will only investigate complaints that allege a violation of the Rules and Regulations for Licensed Providers by DBHDS or the Standards for the Regulation of Children’s Residential Facilities. While we will not investigate, the Office of Licensing may refer your allegation to the appropriate enforcement agency if the complaint does not allege a violation of the Licensing Regulations, but we believe that you have alleged a violation within their jurisdiction.",
+                      textAlign: TextAlign.justify,
+                      alignment: Alignment.center,
+                      color: AppColors.white,
+                      fontSize: AppSizes.size12,
+                      fontWeight: FontWeight.normal,
+                      maxLines: 100,
+                    ),
+                    15.ph,
+
+                    CustomRichText(
+                        text: "To file a complaint for the Office of Licensing through the ",
+                        date: 'CONNECT portal.',
+                        text1: "",
+                        textDecoration1: TextDecoration.none,
+                        textDecoration2: TextDecoration.underline,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://vadbhdsprod.glsuite.us/GLSuiteWeb/Clients/vadbhds/Public/Complaints/ComplaintInformation.aspx",
+                          );
+                        }),15.ph,
+
+                    CustomRichText(
+                        text: "To report allegations of abuse, neglect and exploitation or other potential human rights violations involving a licensed provider,please contact the Office of Human Rights directly.",
+                        date: 'Please click here.',
+                        text1: "",
+                        textDecoration1: TextDecoration.none,
+                        textDecoration2: TextDecoration.underline,
+                        textDecoration3: TextDecoration.underline,
+                        dotNeedOrNot: true,
+                        onPress: () async {
+                          RouteGenerator.gotoWebPage(
+                            context: context,
+                            pageTitle: 'Licensing',
+                            url:
+                            "https://dbhds.virginia.gov/clinical-and-quality-management/human-rights/",
+                          );
+                        }),
+                    10.ph,
                   ],
                 ),
               ),
@@ -2229,76 +2743,100 @@ class LicensingPage extends StatelessWidget {
       ),
     );
   }
-
-  Widget CustomDivider() {
-    return Column(
-      children: [
-        const Divider(height: 0.0, thickness: 1.0),
-        5.ph,
-        const Divider(height: 0.0, thickness: 1.0),
-      ],
+  void _sendEmail(email) async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+      queryParameters: {
+        'subject': "",
+        'body': "",
+      },
     );
+
+    if (await canLaunchUrl(emailLaunchUri)) {
+      await launchUrl(emailLaunchUri);
+    } else {
+      throw 'Could not launch $emailLaunchUri';
+    }
   }
 
-  Widget CustomRichText({
-    required String text,
-    String? text1,
-    required String date,
-    VoidCallback? onPress,
-    TextDecoration? textDecoration2,
-    TextDecoration? textDecoration1,
-    TextDecoration? textDecoration3,
-    Color? textColor1,
-    Color? textColor2,
-    Color? textColor3,
-    bool? dotNeedOrNot,
-  }) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: onPress,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: RichText(
-              text: TextSpan(
-                text: dotNeedOrNot == false ? "" : '•',
-                style: GoogleFonts.roboto(
-                  letterSpacing: 0.2,
-                  color: Colors.white,
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.w500,
-                  decoration: TextDecoration.none,
-                  decorationColor: Colors.transparent,
-                ),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: text,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        decoration: textDecoration1 ?? TextDecoration.underline,
-                        color: textColor1 ?? Colors.white,
-                      )),
-                  TextSpan(
-                      text: date,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        decoration: textDecoration2 ?? TextDecoration.none,
-                        color: textColor2 ?? Colors.white,
-                      )),
-                  TextSpan(
-                      text: text1,
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        decoration: textDecoration3 ?? TextDecoration.none,
-                        color: textColor3 ?? Colors.white,
-                      )),
-                ],
+
+
+}
+Widget CustomDivider() {
+  return Column(
+    children: [
+      const Divider(height: 0.0, thickness: 1.0),
+      5.ph,
+      const Divider(height: 0.0, thickness: 1.0),
+    ],
+  );
+}
+Widget CustomRichText({
+  required String text,
+  String? text1,
+  required String date,
+  VoidCallback? onPress,
+  TextDecoration? textDecoration2,
+  TextDecoration? textDecoration1,
+  TextDecoration? textDecoration3,
+  Color? textColor1,
+  Color? textColor2,
+  Color? textColor3,
+  bool? dotNeedOrNot,
+  Alignment? alignment,
+  double? textSize1, textSize2,textSize3,
+  TextAlign? textAlign,
+}) {
+  return Column(
+    children: [
+      InkWell(
+        onTap: onPress,
+        child: Align(
+          alignment: alignment ?? Alignment.centerLeft,
+          child: RichText(
+            textAlign: textAlign ?? TextAlign.start,
+            text: TextSpan(
+              text: dotNeedOrNot == false ? "" : '• ',
+              style: GoogleFonts.roboto(
+                letterSpacing: 0.2,
+                color: Colors.white,
+                fontSize: textSize1 ?? 12.0,
+                fontWeight: FontWeight.normal,
+                decoration: TextDecoration.none,
+                decorationColor: Colors.transparent,
               ),
+              children: <TextSpan>[
+                TextSpan(
+                    text: text,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      decoration: textDecoration1 ?? TextDecoration.underline,
+                      color: textColor1 ?? Colors.white,
+                      fontSize: textSize1 ?? 12.0,
+                    )),
+                TextSpan(
+                    text: date,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      decoration: textDecoration2 ?? TextDecoration.none,
+                      color: textColor2 ?? Colors.white,
+                      fontSize: textSize1 ?? 12.0,
+                    )),
+                TextSpan(
+                    text: text1,
+                    style: TextStyle(
+                      fontWeight: FontWeight.normal,
+                      decoration: textDecoration3 ?? TextDecoration.none,
+                      color: textColor3 ?? Colors.white,
+                      fontSize: textSize1 ?? 12.0,
+                    )),
+              ],
             ),
           ),
         ),
-        5.ph,
-      ],
-    );
-  }
+      ),
+      5.ph,
+    ],
+  );
 }

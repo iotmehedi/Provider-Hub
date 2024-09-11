@@ -60,7 +60,7 @@ class WebPageState extends State<WebPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "License",
+        title: widget.pageTitle ?? '',
         fontSize: AppSizes.size20,
         needTitleCenter: false,
         textColor: AppColors.white,

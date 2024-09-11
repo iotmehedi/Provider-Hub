@@ -21,5 +21,8 @@ class Routes {
   static const humanRightScreen = "/humanRightScreen";
   static const crcScreen = "/crcScreen";
   static const licensingPage = "/licensingPage";
+  static const humanRightsTrainingsScreen = "/humanRightsTrainingsScreen";
+  static const biuScreen = "/biuScreen";
+  static const dmasScreen = "/dmasScreen";
 
 }
