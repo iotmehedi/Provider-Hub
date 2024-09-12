@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -79,8 +81,21 @@ class _MyAppState extends State<MyApp> {
   void onNotificationSelect(NotificationResponse response) async {
     final directory = await getApplicationDocumentsDirectory();
     final filePath = '${directory.path}/sample.pdf';
+print(filePath);
+    final file = File(filePath);
+    if (await file.exists()) {
+      // Open the file using OpenFilex
+      final result = await OpenFilex.open(filePath);
 
-    OpenFilex.open(filePath);
+      // Optionally handle the result (you can print/log the result or check for errors)
+      if (result.type == ResultType.done) {
+        print('File opened successfully.');
+      } else {
+        print('Error opening file: ${result.message}');
+      }
+    } else {
+      print("File does not exist.");
+    }
   }
   @override
   Widget build(BuildContext context) {

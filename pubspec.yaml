@@ -52,6 +52,7 @@ dependencies:
   flutter_inappwebview:
   syncfusion_flutter_pdfviewer:
   url_launcher:
+  path:
 
 dev_dependencies:
   flutter_test:

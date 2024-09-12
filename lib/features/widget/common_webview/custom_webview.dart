@@ -69,7 +69,7 @@ class WebPageState extends State<WebPage> {
         },
       ),
       backgroundColor: AppColors.backgroundColor,
-      body:  widget.url?.contains(".pdf") ?? false
+      body:  (widget.url?.contains(".pdf") ?? false)
           ? SfPdfViewer.network(
               widget.url ?? '')
           : Stack(

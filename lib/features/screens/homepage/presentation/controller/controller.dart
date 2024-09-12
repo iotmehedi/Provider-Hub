@@ -8,8 +8,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:flutter/services.dart' show ByteData, rootBundle;
-
+import 'package:http/http.dart' as http;
 import '../../model/license_specialist_model.dart';
+import 'package:path/path.dart' as path;
 class HomepageContorller extends GetxController{
   var selectedIndex = 0.obs;
   var selectIndexForItem = 0.obs;
@@ -324,43 +325,76 @@ class HomepageContorller extends GetxController{
 
   // Method to save image with download progress and trigger notification
   Future<void> saveImageAndShowNotification({required String imageUrl}) async {
-    print("imageUrl ${imageUrl.replaceAll("assets/", "")}");
     // Request permission to access storage
     if (await Permission.storage.request().isGranted) {
-      ByteData data = await rootBundle.load(imageUrl);
-      final directory = await getApplicationDocumentsDirectory();
-      final file = File('${directory.path}/${imageUrl.replaceAll("assets/", "")}');
+      Directory? directory;
 
-      int totalBytes = data.lengthInBytes;
-      int bytesWritten = 0;
-
-      // Start downloading in chunks to simulate progress
-      var sink = file.openWrite();
-
-      // Chunk size for progress simulation
-      final int chunkSize = totalBytes ~/ 100;
-
-      // Show the initial progress notification
-      await showProgressNotification(progress.value, imageUrl);
-
-      // Simulate writing in chunks
-      for (int i = 0; i < totalBytes; i += chunkSize) {
-        final int end = (i + chunkSize < totalBytes) ? i + chunkSize : totalBytes;
-        sink.add(data.buffer.asUint8List(i, end - i));
-
-        bytesWritten += chunkSize;
-        progress.value = ((bytesWritten / totalBytes) * 100).toInt();
-
-        // Update the notification with the progress
-        await showProgressNotification(progress.value,imageUrl);
-        await Future.delayed(Duration(milliseconds: 100));  // Simulate delay for progress
+      // Use the Downloads folder for Android
+      if (Platform.isAndroid) {
+        directory = await getExternalStorageDirectory();
+      } else {
+        // Use application directory for iOS or other platforms
+        directory = await getApplicationDocumentsDirectory();
       }
 
-      await sink.flush();
-      await sink.close();
+      if (directory == null) {
+        print("Unable to get directory.");
+        return;
+      }
 
-      // When download is complete, show the final notification
-      await showCompleteNotification(imageUrl);
+      final fileName = imageUrl.split('/').last; // Extract the file name from the URL
+      final filePath = '${directory.path}/$fileName';
+      final file = File(filePath);
+      print("Saving file to: $filePath");
+
+      if (imageUrl.startsWith("assets/")) {
+        // Load from assets
+        ByteData data = await rootBundle.load(imageUrl);
+        int totalBytes = data.lengthInBytes;
+        int bytesWritten = 0;
+
+        // Start writing the file
+        var sink = file.openWrite();
+        final int chunkSize = totalBytes ~/ 100;
+
+        for (int i = 0; i < totalBytes; i += chunkSize) {
+          final int end = (i + chunkSize < totalBytes) ? i + chunkSize : totalBytes;
+          sink.add(data.buffer.asUint8List(i, end - i));
+
+          bytesWritten += chunkSize;
+          progress.value = ((bytesWritten / totalBytes) * 100).toInt();
+          await showProgressNotification(progress.value, imageUrl);
+          await Future.delayed(Duration(milliseconds: 100)); // Simulate delay for progress
+        }
+
+        await sink.flush();
+        await sink.close();
+        await showCompleteNotification(imageUrl);
+      } else {
+        // Download from network
+        final response = await http.get(Uri.parse(imageUrl));
+        final totalBytes = response.contentLength ?? 0;
+        int bytesWritten = 0;
+
+        var sink = file.openWrite();
+        final chunkSize = totalBytes ~/ 100;
+
+        for (int i = 0; i < response.bodyBytes.length; i += chunkSize) {
+          final int end = (i + chunkSize < totalBytes) ? i + chunkSize : totalBytes;
+          sink.add(response.bodyBytes.sublist(i, end));
+
+          bytesWritten += chunkSize;
+          progress.value = ((bytesWritten / totalBytes) * 100).toInt();
+          await showProgressNotification(progress.value, imageUrl);
+          await Future.delayed(Duration(milliseconds: 100)); // Simulate delay for progress
+        }
+
+        await sink.flush();
+        await sink.close();
+        await showCompleteNotification(imageUrl);
+      }
+
+      print("File saved at: $filePath");
     } else {
       print("Storage permission not granted.");
     }
@@ -373,12 +407,12 @@ class HomepageContorller extends GetxController{
       'download_channel',
       'Download Notification',
       channelDescription: 'Notification while downloading the image',
-      importance: Importance.max,
-      priority: Priority.high,
+      importance: Importance.low,
+      priority: Priority.low,
       showProgress:  progress == 100 ? false : true,
       maxProgress: 100,
       progress: progress,
-      indeterminate: false,
+      playSound: false,
     );
     NotificationDetails platformChannelSpecifics =
     NotificationDetails(android: androidPlatformChannelSpecifics);
