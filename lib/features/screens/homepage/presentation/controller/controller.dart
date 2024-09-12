@@ -78,6 +78,7 @@ class HomepageContorller extends GetxController{
         {'title': 'Eastern Shore', 'image': AppAssets.easternShore},
         {'title': 'Fairfax-Falls Church', 'image': AppAssets.fairefaxFall},
         {'title': 'Goochland-Powhatan', 'image': AppAssets.goochland},
+        {'title': 'Hampton-Newport', 'image': AppAssets.hampton},
         {'title': 'Hanover', 'image': AppAssets.hanover},
         {'title': 'Harrisonburg Rockingham', 'image': AppAssets.harrisonburg},
         {'title': 'Henrico Area', 'image': AppAssets.henrico_area},
