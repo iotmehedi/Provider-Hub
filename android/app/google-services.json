@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "530107834672",
+    "firebase_url": "https://prov-3cee0-default-rtdb.firebaseio.com",
     "project_id": "prov-3cee0",
     "storage_bucket": "prov-3cee0.appspot.com"
   },
@@ -12,7 +13,12 @@
           "package_name": "com.example.provider_hub"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "530107834672-ak0nvnrsatei1lqnn0tb1krana795pdu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDftVxWouArtbhMRLGSIoA0VQPql4_AD7c"
@@ -20,7 +26,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530107834672-ak0nvnrsatei1lqnn0tb1krana795pdu.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "530107834672-57d2t60lnhocsgnf7fvgqj9g52ke4m10.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.providerHub"
+              }
+            }
+          ]
         }
       }
     }

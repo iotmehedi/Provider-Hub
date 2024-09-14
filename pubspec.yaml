@@ -53,6 +53,7 @@ dependencies:
   syncfusion_flutter_pdfviewer:
   url_launcher:
   path:
+  firebase_auth:
 
 dev_dependencies:
   flutter_test:

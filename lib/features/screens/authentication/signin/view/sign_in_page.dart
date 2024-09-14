@@ -59,7 +59,8 @@ var controller = Get.put(SigninController());
                         color:  AppColors.white,
                       ),
                       onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.inbox);
+                        controller.signIn();
+                        // RouteGenerator.pushNamed(context, Routes.inbox);
                       },
                       backgroundColor:  AppColors.appColors,
                       elevatedButtonSideBorderColor:  AppColors.appColors,),

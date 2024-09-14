@@ -103,7 +103,7 @@ class TrainerRegController extends GetxController{
     }
   }
   Future addTrainerRegistration() async {
-    CollectionReference users = FirebaseFirestore.instance.collection(commonController.fromPage.value);
+    CollectionReference users = FirebaseFirestore.instance.collection("users");
 
     QuerySnapshot emailQuery =
     await users.where('email', isEqualTo: emailController.value.text).get();
@@ -125,6 +125,7 @@ class TrainerRegController extends GetxController{
         'email': emailController.value.text,
         'officeAddress': officeAddressController.value.text,
         'training': selectedValue.value,
+        'type': "trainer",
         'imageBase64': imageBase64.value,
         'password': passwordController.value.text,
         'createdAt': FieldValue.serverTimestamp(),

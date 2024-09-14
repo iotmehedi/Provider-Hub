@@ -153,6 +153,7 @@ class ProviderRegController extends GetxController {
         'licenseNumber': licenseNumberController.value.text,
         'npiNumber': npiNumberController.value.text,
         'imageBase64': imageBase64.value,
+        'type': "provider",
         'password': passwordController.value.text,
         'createdAt': FieldValue.serverTimestamp(),
       }).then((value) {

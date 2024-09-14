@@ -138,8 +138,8 @@ class CustomSimpleTextField extends StatelessWidget {
 
           contentPadding: EdgeInsets.only(
               left: 10,
-              bottom:  17,
-              right: 10),
+              bottom:  0,
+              right: 10, top: 5),
           hintStyle: GoogleFonts.roboto(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,

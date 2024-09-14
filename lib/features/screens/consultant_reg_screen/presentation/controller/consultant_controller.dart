@@ -97,7 +97,7 @@ class ConsultantRegController extends GetxController{
     }
   }
   Future addConsultantRegistration() async {
-    CollectionReference users = FirebaseFirestore.instance.collection(commonController.fromPage.value);
+    CollectionReference users = FirebaseFirestore.instance.collection("users");
 
     QuerySnapshot emailQuery =
     await users.where('email', isEqualTo: emailController.value.text).get();
@@ -120,6 +120,7 @@ class ConsultantRegController extends GetxController{
         'consults': selectedValue.value,
         'imageBase64': imageBase64.value,
         'password': passwordController.value.text,
+        'type': "consultant",
         'createdAt': FieldValue.serverTimestamp(),
       }).then((value) {
         print("User Added");
