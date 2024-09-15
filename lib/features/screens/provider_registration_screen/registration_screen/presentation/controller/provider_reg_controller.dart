@@ -12,6 +12,7 @@ import 'package:provider_hub/const/utils/consts/common_controller.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 import 'package:provider_hub/features/widget/custom_toast/custom_toast.dart';
 import 'package:provider_hub/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../const/routes/route_name.dart';
 import '../../../../../../const/routes/router.dart';
@@ -28,8 +29,6 @@ class ProviderRegController extends GetxController {
   var passwordController = TextEditingController(text: "mehedi").obs;
   var confirmPasswordController = TextEditingController(text: "mehedi").obs;
   var isChecked = false.obs;
-
-
   var commonController = Get.put(CommonController());
   final ImagePicker _picker = ImagePicker();
   var imageBase64 = ''.obs;
@@ -116,10 +115,14 @@ class ProviderRegController extends GetxController {
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
     } else {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', emailController.value.text);
+      await prefs.setString('password', passwordController.value.text);
       commonController.fromPage.value = "provider";
       commonController.email.value = emailController.value.text;
       commonController.phone.value = contactController.value.text;
-      RouteGenerator.pushNamed(
+
+      RouteGenerator.pushNamedSms(
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
   }
@@ -143,7 +146,7 @@ class ProviderRegController extends GetxController {
           msg: "Phone number already exists");
     } else {
       print(providerNameController.value.text);
-      users.add({
+      Map<String, dynamic> providerData = {
         'providerName': providerNameController.value.text,
         'service': serviceController.value.text,
         'contactName': contactNameController.value.text,
@@ -156,10 +159,13 @@ class ProviderRegController extends GetxController {
         'type': "provider",
         'password': passwordController.value.text,
         'createdAt': FieldValue.serverTimestamp(),
-      }).then((value) {
+      };
+      users.add(providerData).then((value) {
         print("User Added");
+        successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
       }).catchError((error) {
         print("Failed to add user: $error");
+        errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
       });
     }
   }

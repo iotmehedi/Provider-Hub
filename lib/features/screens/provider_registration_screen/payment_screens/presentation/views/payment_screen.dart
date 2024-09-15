@@ -12,8 +12,8 @@ import '../plan_bar/plan_bar.dart';
 import '../widget/plan_selection_one.dart';
 
 class PaymentScreen extends StatelessWidget {
-  final String from;
-   PaymentScreen({super.key, required this.from});
+
+   PaymentScreen({super.key});
 var controller = Get.put(PaymentController());
   @override
   Widget build(BuildContext context) {
@@ -60,11 +60,10 @@ var controller = Get.put(PaymentController());
                         text: "Next",
                         fontSize: 20,
                         color: AppColors.white,
+                        alignment: Alignment.center,
                       ),
                       onPress: () {
-                        RouteGenerator().pushNamedSms(context,Routes.paymentScreenTwo, arguments: [
-                            from
-                        ]);
+                        RouteGenerator.pushNamedSms(context,Routes.paymentScreenTwo);
                       },
                       backgroundColor: AppColors.appColors,
                       elevatedButtonSideBorderColor:AppColors.appColors),

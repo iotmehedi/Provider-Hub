@@ -49,6 +49,7 @@ class PlanBar extends StatelessWidget {
                           color: titleColor2,
                           fontWeight: FontWeight.w400,
                           fontSize: AppSizes.size12,
+                          alignment: Alignment.center,
                         )
                       ],
                     )
@@ -75,6 +76,7 @@ class PlanBar extends StatelessWidget {
                       color: titleColor3,
                       fontWeight: FontWeight.w400,
                       fontSize: AppSizes.size12,
+                      alignment: Alignment.center,
                     )
                   ],
                 ),

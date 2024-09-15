@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../const/routes/route_name.dart';
 import '../../../../../const/routes/router.dart';
@@ -95,10 +96,13 @@ class TrainerRegController extends GetxController{
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
     } else {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', emailController.value.text);
+      await prefs.setString('password', passwordController.value.text);
       commonController.fromPage.value = "trainer";
       commonController.email.value = emailController.value.text;
       commonController.phone.value = phoneNumberController.value.text;
-      RouteGenerator.pushNamed(
+      RouteGenerator.pushNamedSms(
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
   }
@@ -126,6 +130,7 @@ class TrainerRegController extends GetxController{
         'officeAddress': officeAddressController.value.text,
         'training': selectedValue.value,
         'type': "trainer",
+        'service': "Trainer",
         'imageBase64': imageBase64.value,
         'password': passwordController.value.text,
         'createdAt': FieldValue.serverTimestamp(),

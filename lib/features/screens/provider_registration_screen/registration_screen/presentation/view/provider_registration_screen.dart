@@ -177,6 +177,7 @@ class ProviderRegistrationScreen extends StatelessWidget {
                   height: 48,
                   child: CustomElevatedButton(
                       text: CustomSimpleText(
+                        alignment: Alignment.center,
                         text: "Next",
                         fontSize: 20,
                         color: AppColors.white,

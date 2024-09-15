@@ -30,7 +30,7 @@ import '../../features/screens/trainer_reg_screen/presentation/view/trainer_reg_
 import '../../features/widget/common_webview/custom_webview.dart';
 
 class RouteGenerator {
-  Future<dynamic> pushNamedSms(BuildContext context, String pageName,
+  static pushNamedSms(BuildContext context, String pageName,
       {List arguments = const []}) {
     return Navigator.pushNamed(context, pageName, arguments: arguments);
   }
@@ -124,7 +124,7 @@ class RouteGenerator {
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
-            builder: (context) => PaymentScreen(from: arguments[0] as String),
+            builder: (context) => PaymentScreen(),
           );
         }
       case Routes.paymentScreenTwo:
@@ -132,7 +132,7 @@ class RouteGenerator {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
             builder: (context) =>
-                PaymentScreenTwo(from: arguments[0] as String),
+                PaymentScreenTwo(),
           );
         }
       case Routes.paymentScreenThree:

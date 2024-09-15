@@ -14,6 +14,7 @@ import 'package:provider_hub/const/utils/consts/common_controller.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 import 'package:provider_hub/features/widget/custom_toast/custom_toast.dart';
 import 'package:provider_hub/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class QDDPRegController extends GetxController{
   var fullNameController = TextEditingController().obs;
@@ -77,7 +78,7 @@ class QDDPRegController extends GetxController{
           msg: "Please enter your email");
     }  else if (selectedValue.value == "Select Degree field") {
       errorToast(
-          context: navigatorKey.currentContext!, msg: "Please select training's");
+          context: navigatorKey.currentContext!, msg: "Please select degree field");
     } else if (selectedDegree.value == "Select degree") {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Please select degree");
@@ -94,10 +95,13 @@ class QDDPRegController extends GetxController{
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
     } else {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', emailController.value.text);
+      await prefs.setString('password', passwordController.value.text);
       commonController.fromPage.value = "qddp";
       commonController.email.value = emailController.value.text;
       commonController.phone.value = phoneNumberController.value.text;
-      RouteGenerator.pushNamed(
+      RouteGenerator.pushNamedSms(
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
   }
@@ -124,6 +128,7 @@ class QDDPRegController extends GetxController{
         'email': emailController.value.text,
         'consults': selectedValue.value,
         'type': "qddp",
+        'service': "QDDP",
         'imageBase64': imageBase64.value,
         'password': passwordController.value.text,
         'createdAt': FieldValue.serverTimestamp(),

@@ -24,16 +24,7 @@ Future<void> _setup() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await Firebase.initializeApp(
-    options: FirebaseOptions(
-      apiKey: "AIzaSyDftVxWouArtbhMRLGSIoA0VQPql4_AD7c",
-      // authDomain: "530107834672-g083fsp8992h222m88fhenadh1cidsn5.apps.googleusercontent.com",
-      projectId: "prov-3cee0",
-      // storageBucket: "your-app-id.appspot.com",
-      messagingSenderId: "530107834672",
-      appId: "1:530107834672:android:d1d9eda426c596c38ba8f5",
-    ),
-  );
+
   Stripe.publishableKey = stripePublishableKey;
    await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

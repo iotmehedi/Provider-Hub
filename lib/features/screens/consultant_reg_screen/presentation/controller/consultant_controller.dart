@@ -14,6 +14,7 @@ import 'package:provider_hub/const/utils/consts/common_controller.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 import 'package:provider_hub/features/widget/custom_toast/custom_toast.dart';
 import 'package:provider_hub/main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConsultantRegController extends GetxController{
   var fullNameController = TextEditingController().obs;
@@ -89,10 +90,13 @@ class ConsultantRegController extends GetxController{
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
     } else {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', emailController.value.text);
+      await prefs.setString('password', passwordController.value.text);
       commonController.fromPage.value = "consultant";
       commonController.email.value = emailController.value.text;
       commonController.phone.value = phoneNumberController.value.text;
-      RouteGenerator.pushNamed(
+      RouteGenerator.pushNamedSms(
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
   }
@@ -119,6 +123,7 @@ class ConsultantRegController extends GetxController{
         'email': emailController.value.text,
         'consults': selectedValue.value,
         'imageBase64': imageBase64.value,
+        'service': selectedValue.value,
         'password': passwordController.value.text,
         'type': "consultant",
         'createdAt': FieldValue.serverTimestamp(),

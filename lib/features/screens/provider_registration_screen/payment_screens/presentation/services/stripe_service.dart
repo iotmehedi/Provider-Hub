@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider_hub/const/utils/consts/common_controller.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
+import 'package:provider_hub/features/screens/authentication/signin/controller/controller.dart';
 import 'package:provider_hub/features/screens/consultant_reg_screen/presentation/controller/consultant_controller.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/registration_screen/presentation/controller/provider_reg_controller.dart';
 import 'package:provider_hub/features/screens/qddp_reg_screen/presentation/controller/qddp_controller.dart';
@@ -27,67 +28,61 @@ class StripeService {
 
   static final StripeService instance = StripeService._();
   var providerController = Get.put(ProviderRegController());
+  var signinController = Get.put(SigninController());
   var consultantController = Get.put(ConsultantRegController());
   var trainerController = Get.put(TrainerRegController());
   var qddpController = Get.put(QDDPRegController());
   var commonController = Get.put(CommonController());
-  Future<void> makePayment() async {
+  Future<void> makePayment({required String money}) async {
     try {
       String? paymentIntentClientSecret = await _createPaymentIntent(
-        100,
+        int.parse(money), // amount in the smallest unit of currency (e.g., cents)
         "usd",
       );
       if (paymentIntentClientSecret == null) return;
+
       await Stripe.instance.initPaymentSheet(
         paymentSheetParameters: SetupPaymentSheetParameters(
           paymentIntentClientSecret: paymentIntentClientSecret,
           merchantDisplayName: "Hussain Mustafa",
         ),
       );
-      await Stripe.instance.confirmPayment(
-        data: PaymentMethodParams.card(
-          paymentMethodData: PaymentMethodData(
-            billingDetails: BillingDetails(
-              email: commonController.email.value,
-              phone: commonController.phone.value,
-            ),
-          ),
-        ),
-        paymentIntentClientSecret: stripeSecretKey,
-      );
-      try {
-        await Stripe.instance.presentPaymentSheet().then((value) {
-          successToast(
-              context: navigatorKey.currentContext!, msg: "Payment Successful");
 
-          if (commonController.fromPage.value == "provider") {
-            providerController.addProviderRegistration().then((porviderValue) {
-              showImageSourceDialog(navigatorKey.currentContext!);
-            });
-          } else if (commonController.fromPage.value == "consultant") {
-            consultantController
-                .addConsultantRegistration()
-                .then((porviderValue) {
-              showImageSourceDialog(navigatorKey.currentContext!);
-            });
-          } else if (commonController.fromPage.value == "trainer") {
-            trainerController.addTrainerRegistration().then((porviderValue) {
-              showImageSourceDialog(navigatorKey.currentContext!);
-            });
-          } else {
-            qddpController.addQDDPRegistration().then((porviderValue) {
-              showImageSourceDialog(navigatorKey.currentContext!);
-            });
-          }
-        });
-      } catch (e) {
-        print("error $e");
-      }
-      await _processPayment();
+      print("${commonController.email.value} ${commonController.fromPage.value}");
+
+      // Present the payment sheet to the user
+      await Stripe.instance.presentPaymentSheet().then((value) async {
+        successToast(context: navigatorKey.currentContext!, msg: "Payment Successful");
+
+        // Handle registration based on the page type
+        if (commonController.fromPage.value == "provider") {
+          await providerController.addProviderRegistration();
+          await signinController.signIn();
+          showImageSourceDialog(navigatorKey.currentContext!);
+        } else if (commonController.fromPage.value == "consultant") {
+          await consultantController.addConsultantRegistration();
+          await signinController.signIn();
+          showImageSourceDialog(navigatorKey.currentContext!);
+        } else if (commonController.fromPage.value == "trainer") {
+          await trainerController.addTrainerRegistration();
+          await signinController.signIn();
+          showImageSourceDialog(navigatorKey.currentContext!);
+        } else {
+          await qddpController.addQDDPRegistration();
+          await signinController.signIn();
+          showImageSourceDialog(navigatorKey.currentContext!);
+        }
+      }).catchError((e) {
+        print("Error presenting payment sheet: $e");
+        errorToast(context: navigatorKey.currentContext!, msg: "Payment Cancel");
+      });
+
     } catch (e) {
-      print(e);
+      print("StripeException: $e");
+      // errorToast(context: navigatorKey.currentContext!, msg: "Payment error: ${e.toString()}");
     }
   }
+
 
   Future<String?> _createPaymentIntent(int amount, String currency) async {
     try {
@@ -165,6 +160,7 @@ class StripeService {
                 fontSize: AppSizes.size20,
                 color: AppColors.green,
                 fontWeight: FontWeight.bold,
+                alignment: Alignment.center,
               ),
               10.ph,
               CustomSimpleText(
@@ -173,6 +169,7 @@ class StripeService {
                 fontSize: AppSizes.size12,
                 color: AppColors.white,
                 fontWeight: FontWeight.normal,
+                alignment: Alignment.center,
               ),
             ],
           ),
@@ -197,6 +194,7 @@ class StripeService {
                 fontSize: AppSizes.size17,
                 color: AppColors.white,
                 fontWeight: FontWeight.w500,
+                alignment: Alignment.center,
               ),
             )),
           ],

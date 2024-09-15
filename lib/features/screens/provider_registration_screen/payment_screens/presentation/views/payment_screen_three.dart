@@ -68,7 +68,7 @@ class PaymentScreenThree extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             CustomSimpleText(
-                              text: "US \$50",
+                              text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                               fontSize: AppSizes.size12,
                               color: AppColors.textGreyColor,
                               fontWeight: FontWeight.bold,
@@ -89,7 +89,7 @@ class PaymentScreenThree extends StatelessWidget {
                               fontWeight: FontWeight.bold,
                             ),
                             CustomSimpleText(
-                              text: "US \$50",
+                              text: "US \$${controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value}",
                               fontSize: AppSizes.size16,
                               color: AppColors.appColors,
                               fontWeight: FontWeight.bold,
@@ -112,9 +112,10 @@ class PaymentScreenThree extends StatelessWidget {
                         text: "Pay Now",
                         fontSize: 20,
                         color: AppColors.white,
+                        alignment: Alignment.center,
                       ),
                       onPress: () {
-                        StripeService.instance.makePayment();
+                        StripeService.instance.makePayment(money: controller.planSelection.value == false ? controller.registerController.firstPrice.value : controller.registerController.secondPrice.value);
                       },
                       backgroundColor: AppColors.appColors,
                       elevatedButtonSideBorderColor: AppColors.appColors),

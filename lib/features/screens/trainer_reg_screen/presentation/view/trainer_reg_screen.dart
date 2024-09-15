@@ -69,6 +69,7 @@ class TrainerRegistrationScreen extends StatelessWidget {
                   fontSize: AppSizes.size16,
                   fontWeight: FontWeight.w400,
                   color: AppColors.white,
+                  alignment: Alignment.center,
                 ),
                 20.ph,
                 CustomTextTextfieldColumn(
@@ -198,6 +199,7 @@ class TrainerRegistrationScreen extends StatelessWidget {
                         text: "Next",
                         fontSize: 20,
                         color: AppColors.white,
+                        alignment: Alignment.center,
                       ),
                       onPress: () {
                         controller.validation();

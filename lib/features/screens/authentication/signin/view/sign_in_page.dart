@@ -57,6 +57,7 @@ var controller = Get.put(SigninController());
                         text: "Sign In",
                         fontSize: 21,
                         color:  AppColors.white,
+                        alignment: Alignment.center,
                       ),
                       onPress: () {
                         controller.signIn();
