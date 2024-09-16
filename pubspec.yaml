@@ -55,6 +55,8 @@ dependencies:
   path:
   firebase_auth:
   shared_preferences: ^2.3.2
+  get_storage: ^2.1.1
+  flutter_pannable_rating_bar: ^2.7.2+1
 
 dev_dependencies:
   flutter_test:

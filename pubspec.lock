@@ -390,6 +390,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.2.0"
+  flutter_pannable_rating_bar:
+    dependency: "direct main"
+    description:
+      name: flutter_pannable_rating_bar
+      sha256: a6ba1f474ccb23e1b0b7d0a0ec28bb31c088bad808fd207b536b3cb46cbcaf7a
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.7.2+1"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -440,6 +448,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.6.6"
+  get_storage:
+    dependency: "direct main"
+    description:
+      name: get_storage
+      sha256: "39db1fffe779d0c22b3a744376e86febe4ade43bf65e06eab5af707dc84185a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
   google_fonts:
     dependency: "direct main"
     description:
