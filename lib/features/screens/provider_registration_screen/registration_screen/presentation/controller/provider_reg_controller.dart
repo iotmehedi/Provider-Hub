@@ -162,6 +162,17 @@ class ProviderRegController extends GetxController {
       };
       users.add(providerData).then((value) {
         print("User Added");
+        String generatedId = value.id;
+
+        // Update the document with the generated ID
+        users.doc(generatedId).update({
+          'id': generatedId,
+        }).then((_) {
+          print("User ID added");
+          successToast(context: navigatorKey.currentContext!, msg: "User successfully added with ID");
+        }).catchError((error) {
+          print("Failed to update user with ID: $error");
+        });
         successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
       }).catchError((error) {
         print("Failed to add user: $error");

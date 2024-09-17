@@ -11,11 +11,15 @@ import 'package:provider_hub/features/screens/authentication/signin/controller/c
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 
+import '../../../../../const/routes/route_name.dart';
+import '../../../../../const/routes/router.dart';
 import '../../../../widget/custom_cached_network_inbox/custom_cached_network.dart';
+import '../../../inbox_page/presentation/controller/controller.dart';
 
 class ProfilePage extends StatelessWidget {
   ProfilePage({super.key});
   var signinController = Get.put(SigninController());
+  var indexController = Get.put(InboxController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -355,21 +359,33 @@ class ProfilePage extends StatelessWidget {
                                       ],
                                     ),
                                     5.ph,
-                                    Container(
-                                      padding: EdgeInsets.symmetric(vertical: 5),
-                                      margin: EdgeInsets.only(bottom: 10),
-                                      width: MediaQuery.of(context).size.width * 0.26,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(6),
-                                        color: AppColors.appColors
-                                      ),
-                                      child: CustomSimpleText(
-                                        text: "View Details",
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: AppSizes.size15,
-                                        color: AppColors.white,
-                                        textAlign: TextAlign.center,
-                                        alignment: Alignment.center,
+                                    InkWell(
+                                      onTap: (){
+                                        RouteGenerator.pushNamedSms(
+                                            context, Routes.messageScreen, arguments: [
+                                              item.id,
+                                          item.imageBase64,
+                                          item.providerName
+                                        ]);
+                                        print("item ${item.id}");
+                                        indexController.fetchMessages(receiverId: item.id ??'');
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.symmetric(vertical: 5),
+                                        margin: EdgeInsets.only(bottom: 10),
+                                        width: MediaQuery.of(context).size.width * 0.26,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(6),
+                                          color: AppColors.appColors
+                                        ),
+                                        child: CustomSimpleText(
+                                          text: "View Details",
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: AppSizes.size15,
+                                          color: AppColors.white,
+                                          textAlign: TextAlign.center,
+                                          alignment: Alignment.center,
+                                        ),
                                       ),
                                     )
                                   ],

@@ -9,6 +9,7 @@ import 'package:provider_hub/features/screens/inbox_page/presentation/view/inbox
 import 'package:provider_hub/features/screens/nearest_provider/presentation/view/nearest_provider_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_three.dart';
+import '../../features/screens/authentication/model/provider_model.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/dbhds_screen.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/provider_resources_screen/provider_resources_screen.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/updates/biu_screen.dart';
@@ -163,8 +164,9 @@ class RouteGenerator {
           builder: (context) => NearestProviderPage(),
         );
       case Routes.messageScreen:
+        final arguments = routeSettings.arguments as List;
         return MaterialPageRoute(
-          builder: (context) => MessageScreen(),
+          builder: (context) => MessageScreen(receiverId: arguments[0] as String, image: arguments[1] as String, name: arguments[2] as String,),
         );
       case Routes.profile:
         return MaterialPageRoute(

@@ -2,13 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:provider_hub/features/screens/inbox_page/model/messageModel.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../../../../const/utils/consts/app_assets.dart';
 import '../../../../../main.dart';
 import '../../../../widget/custom_toast/custom_toast.dart';
 import '../../model/chat_model.dart';
-
+import 'package:rxdart/rxdart.dart' as rx;
 class InboxController extends GetxController{
 var name = ''.obs;
 var isLoading = false.obs;
@@ -16,7 +13,6 @@ var isMessageLoading = false.obs;
 var chatResponseModel = ChatMessageResponse().obs;
 var chatListModel = MessageModelResponse().obs;
 var userId = ''.obs;
-var chatMessageData = ChatMessage().obs;
 var messageController = TextEditingController().obs;
 @override
 void onInit() {
@@ -114,55 +110,97 @@ void onInit() {
     update(); // Trigger a UI update after fetching messages
   }
 
-  Future<void> fetchMessages() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    userId.value = prefs.getString('loginUserId')!;
-    print("this is data ${userId.value}");
+  // Future<void> fetchMessages({String? receiverId}) async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   userId.value = prefs.getString('loginUserId')!;
+  //   print("this is data ${userId.value}");
+  //
+  //   try {
+  //     chatListModel.value = MessageModelResponse(status: 200, data: []);
+  //     isMessageLoading.value = true;
+  //     // Query Firestore for messages where senderId and receiverId match the userId
+  //     final senderQuery = await FirebaseFirestore.instance
+  //         .collection('chats')
+  //         .where('senderId', isEqualTo: userId.value)
+  //         .where('receiverId', isEqualTo: receiverId)
+  //         .orderBy('timestamp', descending: true)
+  //         .get();
+  //
+  //     // Query Firestore for messages where receiverId matches userId
+  //     final receiverQuery = await FirebaseFirestore.instance
+  //         .collection('chats')
+  //         .where('senderId', isEqualTo: receiverId)
+  //         .where('receiverId', isEqualTo: userId.value)
+  //         .orderBy('timestamp', descending: true)
+  //         .get();
+  //
+  //     // Combine the results and remove duplicates based on document ID
+  //     final allDocs = {...senderQuery.docs, ...receiverQuery.docs}; // Using a Set to remove duplicates
+  //
+  //     // Map the result to your model and display
+  //     final messages = allDocs.map((doc) {
+  //       return MessageModel.fromJson(doc.data() as Map<String, dynamic>);
+  //     }).toList();
+  //
+  //     print("this is hudai mesg $messages");
+  //
+  //     // Update the chatListModel with the new unique messages
+  //     // chatListModel.value.data?.clear();
+  //     chatListModel.value = MessageModelResponse(
+  //       status: 200, // assuming status is always 200 for successful fetch
+  //       data: messages,
+  //     );
+  //     isMessageLoading.value = false;
+  //
+  //   } catch (e) {
+  //     isMessageLoading.value = false;
+  //     print('Error fetching messages: $e');
+  //   }
+  //
+  //   update(); // Notify UI of changes
+  // }
 
-    try {
-      isMessageLoading.value = true;
-      // Query Firestore for messages where senderId and receiverId match the userId
-      final senderQuery = await FirebaseFirestore.instance
-          .collection('chats')
-          .where('senderId', isEqualTo: userId.value)
-          .orderBy('timestamp', descending: true)
-          .get();
+  Stream<List<QueryDocumentSnapshot>> fetchMessages({required String receiverId}) {
+  print("this is receiverId $receiverId");
+    final senderStream = FirebaseFirestore.instance
+        .collection('chats')
+        .where('senderId', isEqualTo: userId.value)
+        .where('receiverId', isEqualTo: receiverId)
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs);
 
-      // Query Firestore for messages where receiverId matches userId
-      final receiverQuery = await FirebaseFirestore.instance
-          .collection('chats')
-          .where('receiverId', isEqualTo: userId.value)
-          .orderBy('timestamp', descending: true)
-          .get();
+    final receiverStream = FirebaseFirestore.instance
+        .collection('chats')
+        .where('senderId', isEqualTo: receiverId)
+        .where('receiverId', isEqualTo: userId.value)
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .map((snapshot) => snapshot.docs);
 
-      // Combine the results and remove duplicates based on document ID
-      final allDocs = {...senderQuery.docs, ...receiverQuery.docs}; // Using a Set to remove duplicates
+    return rx.Rx.combineLatest2(
+      senderStream,
+      receiverStream,
+          (List<QueryDocumentSnapshot> senderDocs, List<QueryDocumentSnapshot> receiverDocs) {
+        final allDocs = <QueryDocumentSnapshot>{};
+        allDocs.addAll(senderDocs);
+        allDocs.addAll(receiverDocs);
 
-      // Map the result to your model and display
-      final messages = allDocs.map((doc) {
-        return MessageModel.fromJson(doc.data() as Map<String, dynamic>);
-      }).toList();
+        // Sort documents by timestamp
+        allDocs.toList().sort((a, b) {
+          final timestampA = a['timestamp'] as Timestamp;
+          final timestampB = b['timestamp'] as Timestamp;
+          return timestampA.compareTo(timestampB);
+        });
 
-      print("this is hudai mesg $messages");
-
-      // Update the chatListModel with the new unique messages
-      chatListModel.value.data?.clear();
-      chatListModel.value = MessageModelResponse(
-        status: 200, // assuming status is always 200 for successful fetch
-        data: messages,
-      );
-      isMessageLoading.value = false;
-for(var item in chatListModel.value.data ?? []){
-  print("this is hudai mesg222 ${item.message}");
-}
-
-    } catch (e) {
-      isMessageLoading.value = false;
-      print('Error fetching messages: $e');
-    }
-
-    update(); // Notify UI of changes
+        return allDocs.toList();
+      },
+    );
   }
+
+
+
+
   Future<void> sendMessage({MessageModel? item}) async{
   CollectionReference chats = FirebaseFirestore.instance.collection('chats');
   Map<String, dynamic> providerData = {
@@ -178,7 +216,7 @@ for(var item in chatListModel.value.data ?? []){
   chats.add(providerData).then((value) {
     print("User Added");
     successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
-    fetchMessages();
+    // fetchMessages();
     fetchLastMessages();
   }).catchError((error) {
     print("Failed to add user: $error");

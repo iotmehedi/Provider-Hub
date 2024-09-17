@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
@@ -31,6 +32,19 @@ Future<void> _setup() async {
    await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // if(!kDebugMode) {
+  //   await FirebaseAppCheck.instance.activate(
+  //     androidProvider: AndroidProvider.playIntegrity,
+  //     appleProvider: AppleProvider.appAttest,
+  //     webProvider: ReCaptchaV3Provider('recaptcha-v3-site-key'),
+  //   );
+  // await FirebaseStorage.instance.useStorageEmulator(emulatorHost, 9199);
+  // } else {
+  //   await FirebaseAppCheck.instance.activate(
+  //     androidProvider: AndroidProvider.debug,
+  //     appleProvider: AppleProvider.debug,
+  //   );
+  // }
 }
 class MyApp extends StatefulWidget {
   const MyApp({super.key});

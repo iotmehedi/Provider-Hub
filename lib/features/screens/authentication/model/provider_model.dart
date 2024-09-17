@@ -13,6 +13,7 @@ class ProviderModel {
   final String? providerName;
   final String? service;
   final String? type;
+  final String? id;
 
   ProviderModel({
     this.contactName,
@@ -27,6 +28,7 @@ class ProviderModel {
     this.providerName,
     this.service,
     this.type,
+    this.id,
   });
 
   // Factory method to create a ProviderModel from Firestore data
@@ -44,6 +46,7 @@ class ProviderModel {
       providerName: data['providerName'] ?? '',
       service: data['service'] ?? '',
       type: data['type'] ?? '',
+      id: data['id'] ?? '',
     );
   }
 }

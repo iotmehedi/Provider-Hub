@@ -87,11 +87,14 @@ class InboxPage extends StatelessWidget {
                 // visible: isSender ? false : true,
                 child: GestureDetector(
                   onTap: () {
-                    RouteGenerator.pushNamed(
-                        context, Routes.messageScreen);
+                    RouteGenerator.pushNamedSms(
+                        context, Routes.messageScreen, arguments: [
+                      item?.receiverId ?? '',
+                      item?.receiverImage ?? '',
+                      item?.receiverName
+                    ]);
                     print("item ${item.runtimeType}");
-                    controller.chatMessageData.value = item ?? ChatMessage();
-                    controller.fetchMessages();
+                    controller.fetchMessages(receiverId: item?.receiverId ?? '');
 
                   },
                   child: Card(

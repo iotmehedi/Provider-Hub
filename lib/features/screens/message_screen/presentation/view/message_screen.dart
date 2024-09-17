@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
+import 'package:provider_hub/features/screens/authentication/model/provider_model.dart';
 import 'package:provider_hub/features/screens/inbox_page/presentation/controller/controller.dart';
 import 'package:provider_hub/features/screens/message_screen/presentation/controller/message_controller.dart';
 
@@ -17,7 +18,8 @@ import '../../../nearest_provider/presentation/controller/controller.dart';
 import 'message_widget.dart';
 
 class MessageScreen extends StatelessWidget {
-  MessageScreen({super.key});
+  final String receiverId, image, name;
+  MessageScreen({super.key, required this.receiverId, required this.image, required this.name});
   var controller = Get.put(InboxController());
   final FirebaseFirestore fs = FirebaseFirestore.instance;
   @override
@@ -57,7 +59,7 @@ class MessageScreen extends StatelessWidget {
           children: [
             Container(
                 height: MediaQuery.of(context).size.height * 0.79,
-                child: MessageWidget(controller: controller)),
+                child: MessageWidget(controller: controller, senderid: controller.userId.value, receiverId: receiverId)),
             10.ph,
             Padding(
               padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
@@ -83,12 +85,12 @@ class MessageScreen extends StatelessWidget {
                         //     controller.chatListModel.value.data?.first);
                         if (controller.messageController.value.text.isNotEmpty) {
                           fs.collection('chats').doc().set({
-                            'senderId':controller.chatListModel.value.data?.first?.senderId ?? '',
-                            'senderImage': controller.chatListModel.value.data?.first?.senderImage ?? '',
-                            'senderName': controller.chatListModel.value.data?.first?.senderName ?? '',
-                            'receiverId': controller.chatListModel.value.data?.first?.receiverId ?? '',
-                            'receiverImage': controller.chatListModel.value.data?.first?.receiverImage ?? '',
-                            'receiverName': controller.chatListModel.value.data?.first?.receiverName ?? '',
+                            'senderId':controller.chatResponseModel.value.data?.first?.senderId ?? '',
+                            'senderImage': controller.chatResponseModel.value.data?.first?.senderImage ?? '',
+                            'senderName': controller.chatResponseModel.value.data?.first?.senderName ?? '',
+                            'receiverId': receiverId,
+                            'receiverImage': image,
+                            'receiverName': name,
                             'message': controller.messageController.value.text,
                             'timestamp': DateTime.now(),
                           });
