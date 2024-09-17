@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,10 +16,13 @@ import '../../../../../const/routes/router.dart';
 import '../../../../../const/utils/consts/app_assets.dart';
 import '../../../../widget/custom_cached_network_inbox/custom_cached_network.dart';
 import '../../../../widget/custom_svg/custom_svg_widget.dart';
+import '../../../authentication/signin/controller/controller.dart';
 
 class NearestProviderPage extends StatelessWidget {
   NearestProviderPage({super.key});
   var controller = Get.put(NearestProviderController());
+  var signinController = Get.put(SigninController());
+  var indexController = Get.put(InboxController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +50,9 @@ class NearestProviderPage extends StatelessWidget {
                 fontSize: 14,
                 fontWeight: FontWeight.w300,
               ),
-
+              onChanged: (value) {
+                signinController.filterProviders(value);
+              },
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(vertical: 0),
                 hintText: 'Search',
@@ -111,11 +118,11 @@ class NearestProviderPage extends StatelessWidget {
           ),
           10.ph,
           Expanded(
-            child: ListView.builder(
+            child: Obx(()=> ListView.builder(
               scrollDirection: Axis.vertical,
-              itemCount: controller.inboxItems.length,
+              itemCount: signinController.filteredList.length,
               itemBuilder: (context, index) {
-                final item = controller.inboxItems[index];
+                final item = signinController.filteredList[index];
                 return GestureDetector(
                   onTap: () {
                     // controller.selectedIndex.value = index;
@@ -132,8 +139,18 @@ class NearestProviderPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          CustomCachedNetwork(
-                            image: item['image'], // Fill the container
+                          Center(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: SizedBox(
+                                height: AppSizes.newSize(8.0),
+                                width: AppSizes.newSize(8.0),
+                                child: Image.memory(
+                                  base64Decode( item.imageBase64 ?? ''),
+                                  fit: BoxFit.cover, // Adjust image display
+                                ),
+                              ),
+                            ),
                           ),
                           10.pw,
                           Expanded(
@@ -141,14 +158,14 @@ class NearestProviderPage extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 CustomSimpleText(
-                                  text: item['title'],
+                                  text: item.contactName ?? '',
                                   fontSize: AppSizes.size13,
                                   fontWeight: FontWeight.normal,
                                   color: AppColors.white,
                                 ),
                                 3.ph,
                                 CustomSimpleText(
-                                  text: item['message'],
+                                  text: item.service ?? '',
                                   fontSize: AppSizes.size13,
                                   fontWeight: FontWeight.normal,
                                   color: AppColors.white,
@@ -164,7 +181,7 @@ class NearestProviderPage extends StatelessWidget {
                                           Icon(Icons.star, color: AppColors.yellow,size: 10,),
                                           5.pw,
                                           CustomSimpleText(
-                                            text: item['hour'],
+                                            text: "4.5",
                                             fontSize: AppSizes.size11,
                                             fontWeight: FontWeight.normal,
                                             color: AppColors.yellow,
@@ -174,14 +191,20 @@ class NearestProviderPage extends StatelessWidget {
                                       ),
                                       InkWell(
                                         onTap: (){
-                                          controller.name.value = item['title'];
-                                          RouteGenerator.pushNamed(context,Routes.messageScreen);
+                                          // RouteGenerator.pushNamed(context,Routes.messageScreen);
+                                          RouteGenerator.pushNamedSms(
+                                              context, Routes.messageScreen, arguments: [
+                                            item.id,
+                                            item.imageBase64,
+                                            item.providerName
+                                          ]);
+                                          indexController.fetchMessages(receiverId: item.id ??'');
                                         },
                                         child: Container(
                                           height: 22,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(100),
-                                            color: AppColors.appColors
+                                              borderRadius: BorderRadius.circular(100),
+                                              color: AppColors.appColors
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -201,7 +224,7 @@ class NearestProviderPage extends StatelessWidget {
                   ),
                 );
               },
-            ),
+            )),
           ),
         ],
       ),

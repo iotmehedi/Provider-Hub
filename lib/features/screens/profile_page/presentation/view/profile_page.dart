@@ -361,11 +361,15 @@ class ProfilePage extends StatelessWidget {
                                     5.ph,
                                     InkWell(
                                       onTap: (){
+                                        // RouteGenerator.pushNamedSms(
+                                        //     context, Routes.messageScreen, arguments: [
+                                        //       item.id,
+                                        //   item.imageBase64,
+                                        //   item.providerName
+                                        // ]);
                                         RouteGenerator.pushNamedSms(
-                                            context, Routes.messageScreen, arguments: [
-                                              item.id,
-                                          item.imageBase64,
-                                          item.providerName
+                                            context, Routes.providerDetailsProfile, arguments: [
+                                              item
                                         ]);
                                         print("item ${item.id}");
                                         indexController.fetchMessages(receiverId: item.id ??'');

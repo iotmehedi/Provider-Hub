@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/consts/app_sizes.dart';
+import 'package:provider_hub/features/screens/authentication/signin/controller/controller.dart';
 import 'package:provider_hub/features/screens/homepage/presentation/controller/controller.dart';
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
@@ -12,6 +13,7 @@ import 'package:provider_hub/features/widget/custom_svg/custom_svg_widget.dart';
 
 import '../../../../../const/routes/route_name.dart';
 import '../../../../../const/routes/router.dart';
+import '../../../inbox_page/presentation/controller/controller.dart';
 
 class HomepageScreen extends StatefulWidget {
   const HomepageScreen({super.key});
@@ -24,7 +26,7 @@ class _HomepageScreenState extends State<HomepageScreen> {
   
 
 var controller = Get.put(HomepageContorller());
-
+var signInController = Get.put(SigninController());
   @override
   Widget build(BuildContext context) {
     var size1 = MediaQuery.of(context).size;
@@ -45,6 +47,9 @@ var controller = Get.put(HomepageContorller());
             Expanded(
               child: InkWell(
                 onTap: () {
+                  signInController.fetchProviders();
+                  signInController.getToken();
+                  signInController.saveFCMToken();
                   // Navigate to the desired page when the TextField is tapped
                   RouteGenerator.pushNamed(context,Routes.nearestProvider);
                 },
@@ -54,6 +59,7 @@ var controller = Get.put(HomepageContorller());
                     height: 28, // Adjust the height as needed
                     child: InkWell(
                       onTap: (){
+
                         RouteGenerator.pushNamed(context,Routes.nearestProvider);
                       },
                       child: TextField(
@@ -153,6 +159,7 @@ var controller = Get.put(HomepageContorller());
           return InkWell(
             onTap: (){
               controller.selectedIndex.value = gridIndex;
+
               RouteGenerator.pushNamed(context,Routes.allService);
             },
             child: Card(

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,14 @@ class SigninController extends GetxController {
   RxList<ProviderModel> providerList = <ProviderModel>[].obs;
   var consultantModel = ConsultantModel().obs;
   var qddpModel = QDDPModel().obs;
+  var filteredList = <ProviderModel>[].obs;
   var userData = {}.obs; // Store user data
+  @override
+  void onInit() {
+    fetchProviders();
+    super.onInit();
+  }
+
   Future<void> signIn() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var emailFromSession = box.read('email');
@@ -41,7 +49,7 @@ class SigninController extends GetxController {
         // Extract user data from the document
         DocumentSnapshot userDoc = querySnapshot.docs.first;
         Map<String, dynamic> userDocData =
-            querySnapshot.docs.first.data() as Map<String, dynamic>;
+        querySnapshot.docs.first.data() as Map<String, dynamic>;
 
         // Check if the provided password matches the one stored in Firestore
         if (userDocData['password'] == passwordController.value.text) {
@@ -89,30 +97,133 @@ class SigninController extends GetxController {
   }
 
   Future<void> fetchProviders() async {
+    print("this is data");
     try {
+      print("this is data");
       // Initialize the collection reference for 'users'
-      CollectionReference users = FirebaseFirestore.instance.collection('users');
+      CollectionReference users = FirebaseFirestore.instance.collection(
+          'users');
 
       // Fetch all user documents from Firestore
       QuerySnapshot querySnapshot = await users.get();
 
       // Clear the providerList before adding new data
       providerList.clear();
+      filteredList.clear();
 
       // Loop through each document in the snapshot
       querySnapshot.docs.forEach((doc) {
         // Check if the user type is "provider"
         if (doc['type'] == "provider") {
+          print("this is data2");
           // Convert the document data to ProviderModel and add it to the list
-          providerList.add(ProviderModel.fromMap(doc.data() as Map<String, dynamic>));
+          ProviderModel provider = ProviderModel.fromMap(
+              doc.data() as Map<String, dynamic>);
+
+          providerList.add(provider);
+          filteredList.add(provider);
         }
       });
 
       // Print the number of providers fetched
       print("Number of providers: ${providerList.first.contactName}");
-
+      print("Number of providers: ${filteredList.first.contactName}");
     } catch (e) {
       print('Error fetching providers: $e');
+    }
+  }
+
+  void filterProviders(String query) {
+    if (query.isEmpty) {
+      filteredList.value =
+          providerList; // Show all items if the search query is empty
+    } else {
+      filteredList.value = providerList
+          .where((provider) =>
+          provider.contactName
+          !.toLowerCase()
+              .contains(query
+              .toLowerCase())) // Assuming `name` is a field in your ProviderModel
+          .toList();
+    }
+  }
+
+  Future<void> getToken() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    var currentId = FirebaseAuth.instance.currentUser;
+    // Get the token each time the application loads
+    String? token = await messaging.getToken();
+    print("FCM Token: $token");
+    print("user: ${currentId?.uid}");
+
+    // Save this token to Firestore or your backend database
+    if (token != null) {
+      // You can save the token for the logged-in user in Firestore
+      // Example:
+      await FirebaseFirestore.instance.collection('users')
+          .doc("HYW4gHICTvrLXdxAFwRH")
+          .update({
+        'fcmToken': token,
+      });
+    }
+
+    // Handle when the token is updated
+    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) {
+      print("New FCM Token: $newToken");
+
+      // Save new token
+      FirebaseFirestore.instance.collection('users').doc(currentId!.uid).update(
+          {
+            'fcmToken': newToken,
+          });
+    });
+  }
+
+  Future<void> saveFCMToken() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+    var user = "HYW4gHICTvrLXdxAFwRH";
+print("auth $user");
+    if (user != null) {
+      String userId = "HYW4gHICTvrLXdxAFwRH";
+      String? token = await messaging.getToken();
+      print("fcm token $token");
+      if (token != null) {
+        await updateFCMToken(userId, token);
+      } else {
+        print("Failed to get FCM token.");
+      }
+
+      // Listen for token refresh
+      messaging.onTokenRefresh.listen((newToken) {
+        updateFCMToken(userId, newToken);
+      });
+    } else {
+      print("User is not authenticated.");
+    }
+  }
+
+  Future<void> updateFCMToken(String userId, String token) async {
+    try {
+      // Check if the document exists
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+      if (userDoc.exists) {
+        // Document exists, update the FCM token
+        await FirebaseFirestore.instance.collection('users').doc(userId).update({
+          'fcmToken': token,
+        });
+        print("FCM token updated successfully.");
+      } else {
+        // Document does not exist, create it
+        await FirebaseFirestore.instance.collection('users').doc(userId).set({
+          'fcmToken': token,
+        });
+        print("User document created and FCM token set.");
+      }
+    } catch (e) {
+      print("Error updating FCM token: $e");
     }
   }
 }

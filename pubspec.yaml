@@ -59,6 +59,7 @@ dependencies:
   flutter_pannable_rating_bar: ^2.7.2+1
   rxdart: ^0.27.3
   async: ^2.8.1
+  firebase_messaging:
 
 dev_dependencies:
   flutter_test:

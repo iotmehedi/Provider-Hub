@@ -21,6 +21,7 @@ import '../../features/screens/homepage/presentation/view/all_services_screen.da
 import '../../features/screens/homepage/presentation/view/homepage.dart';
 import '../../features/screens/message_screen/presentation/view/message_screen.dart';
 import '../../features/screens/profile_page/presentation/view/profile_page.dart';
+import '../../features/screens/profile_page/presentation/view/provider_profile_details.dart';
 import '../../features/screens/provider_registration_screen/payment_screens/presentation/views/credit_card_enroll.dart';
 import '../../features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_two.dart';
 import '../../features/screens/provider_registration_screen/registration_screen/presentation/view/provider_registration_screen.dart';
@@ -207,6 +208,11 @@ class RouteGenerator {
         case Routes.providerResourcesScreen:
         return MaterialPageRoute(
           builder: (context) => ProviderResourcesScreen(),
+        );
+        case Routes.providerDetailsProfile:
+          final arguments = routeSettings.arguments as List;
+        return MaterialPageRoute(
+          builder: (context) => ProviderProfileDetails(providerModel: arguments[0] as ProviderModel),
         );
     }
     return null;
