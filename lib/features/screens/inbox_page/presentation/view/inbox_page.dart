@@ -21,7 +21,7 @@ class InboxPage extends StatelessWidget {
   var signinController = Get.put(SigninController());
   @override
   Widget build(BuildContext context) {
-    controller.fetchLastMessages();
+    // controller.fetchLastMessages();
     return GetBuilder(
       init: InboxController(),
       builder: (controller) {

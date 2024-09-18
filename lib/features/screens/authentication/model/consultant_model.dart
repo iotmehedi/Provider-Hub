@@ -10,6 +10,7 @@ class ConsultantModel {
   final String? password;
   final String? type;
   final DateTime? createdAt;
+  final String? id;
 
   ConsultantModel({
     this.fullName,
@@ -21,9 +22,9 @@ class ConsultantModel {
     this.password,
     this.type,
     this.createdAt,
+    this.id,
   });
 
-  // Factory method to create a ConsultantModel object from JSON
   factory ConsultantModel.fromJson(Map<String, dynamic> json) {
     return ConsultantModel(
       fullName: json['fullName'],
@@ -34,6 +35,7 @@ class ConsultantModel {
       service: json['service'],
       password: json['password'],
       type: json['type'],
+      id: json['id'],
       createdAt: json['createdAt'] != null
           ? (json['createdAt'] as Timestamp).toDate()
           : null, // Handle null timestamp
@@ -51,6 +53,7 @@ class ConsultantModel {
       'service': service,
       'password': password,
       'type': type,
+      'id': id,
       'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : FieldValue.serverTimestamp(),
     };
   }

@@ -155,7 +155,7 @@ var signInController = Get.put(SigninController());
           mainAxisSpacing: 3,
           crossAxisSpacing: 3,
           crossAxisCount: 2,
-          childAspectRatio: (itemWidth / itemHeight),
+          // childAspectRatio: (itemWidth / itemHeight),
         ),
         itemCount: controller.gridItems.length,
         itemBuilder: (context, gridIndex) {
@@ -177,7 +177,7 @@ var signInController = Get.put(SigninController());
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 70,
+                    // height: 90,
                     child: Image.asset(
                       gridItem['image'],
                       fit: BoxFit.fitWidth,

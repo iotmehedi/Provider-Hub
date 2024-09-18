@@ -137,17 +137,17 @@ class MessageScreen extends StatelessWidget {
     required String title,
     required String body,
   }) async {
-    final String serverKey = 'YOUR_SERVER_KEY_FROM_FIREBASE'; // Replace with your FCM server key
+    // final String serverKey = 'YOUR_SERVER_KEY_FROM_FIREBASE'; // Replace with your FCM server key
 
     try {
       var response = await http.post(
         Uri.parse('https://fcm.googleapis.com/fcm/send'),
         headers: <String, String>{
           'Content-Type': 'application/json',
-          'Authorization': 'key=$serverKey',
+          // 'Authorization': 'key=$serverKey',
         },
         body: jsonEncode({
-          'to': fcmToken, // Send to specific user's FCM token
+          'to': "cpQ8itp6Q1GRfHz0oUNW4o:APA91bG_hpUsp3_h96tsry8sOgGpC191KvHbs-VCUu-6Jub-u0l3yRZHznkIJOUaMFb3AbcJqfiqHASnjGsNPTjHozWAjSIcBqQanHbc3mOFRmlChNFaEaeRYTfPhf8df9ZLZXdxQzbj", // Send to specific user's FCM token
           'notification': {
             'title': title,
             'body': body,

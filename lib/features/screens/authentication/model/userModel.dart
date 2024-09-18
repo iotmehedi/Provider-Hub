@@ -10,6 +10,7 @@ class UserModel {
   final String? imageBase64;
   final String? password;
   final DateTime? createdAt;
+  final String? id;
 
   UserModel({
     this.fullName,
@@ -21,6 +22,7 @@ class UserModel {
     this.imageBase64,
     this.password,
     this.createdAt,
+    this.id,
   });
 
   // Factory method to create a UserModel from Firestore data
@@ -35,6 +37,7 @@ class UserModel {
       imageBase64: data['imageBase64'] ?? '',
       password: data['password'] ?? '',
       createdAt: (data['createdAt'] as Timestamp).toDate(),
+      id: data['id'] ?? '',
     );
   }
 }

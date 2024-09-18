@@ -26,6 +26,7 @@ class SigninController extends GetxController {
   var qddpModel = QDDPModel().obs;
   var filteredList = <ProviderModel>[].obs;
   var userData = {}.obs; // Store user data
+  var userId = ''.obs;
   @override
   void onInit() {
     fetchProviders();
@@ -55,13 +56,18 @@ class SigninController extends GetxController {
           userData.value = userDocData; // Store user data for display
           if (userData['type'] == "provider") {
             providerModel.value = ProviderModel.fromMap(userDocData);
+            userId.value = providerModel.value.id ?? '';
           } else if (userData['type'] == "consultant") {
             consultantModel.value = ConsultantModel.fromJson(userDocData);
+            userId.value = consultantModel.value.id ?? '';
           } else if (userData['type'] == "qddp") {
             qddpModel.value = QDDPModel.fromJson(userDocData);
+            userId.value = qddpModel.value.id ?? '';
           } else {
             userModel.value = UserModel.fromMap(userDocData);
+            userId.value = userModel.value.id ?? '';
           }
+           userId.value = userModel.value.id ?? '';
           print('User data: ${userDoc.id} ${userModel.value.officeAddress}');
           box.write('loginUserId', userDoc.id);
           await prefs.setString('loginUserId', userDoc.id);
@@ -156,11 +162,11 @@ class SigninController extends GetxController {
     print("user: ${currentId?.uid}");
 
     // Save this token to Firestore or your backend database
-    if (token != null) {
+    if (token != null && userId.value.isNotEmpty) {
       // You can save the token for the logged-in user in Firestore
       // Example:
       await FirebaseFirestore.instance.collection('users')
-          .doc("HYW4gHICTvrLXdxAFwRH")
+          .doc(userId.value)
           .update({
         'fcmToken': token,
       });
@@ -182,10 +188,10 @@ class SigninController extends GetxController {
     FirebaseAuth auth = FirebaseAuth.instance;
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
-    var user = "HYW4gHICTvrLXdxAFwRH";
+    var user = userId.value;
 print("auth $user");
     if (user != null) {
-      String userId = "HYW4gHICTvrLXdxAFwRH";
+      String userId = user;
       String? token = await messaging.getToken();
       print("fcm token $token");
       if (token != null) {

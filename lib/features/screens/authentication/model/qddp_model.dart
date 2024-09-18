@@ -10,6 +10,7 @@ class QDDPModel {
   final String? imageBase64;
   final String? password;
   final DateTime? createdAt;
+  final String? id;
 
   QDDPModel({
     this.fullName,
@@ -21,6 +22,7 @@ class QDDPModel {
     this.imageBase64,
     this.password,
     this.createdAt,
+    this.id,
   });
 
   // Factory method to create a QDDPModel object from JSON
@@ -34,6 +36,7 @@ class QDDPModel {
       service: json['service'],
       imageBase64: json['imageBase64'],
       password: json['password'],
+      id: json['id'],
       createdAt: json['createdAt'] != null
           ? (json['createdAt'] as Timestamp).toDate()
           : null, // Handle null timestamp
@@ -51,6 +54,7 @@ class QDDPModel {
       'service': service,
       'imageBase64': imageBase64,
       'password': password,
+      'id': id,
       'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : FieldValue.serverTimestamp(),
     };
   }
