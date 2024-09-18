@@ -7,6 +7,7 @@ import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/consts/app_sizes.dart';
 import 'package:provider_hub/features/screens/authentication/signin/controller/controller.dart';
 import 'package:provider_hub/features/screens/homepage/presentation/controller/controller.dart';
+import 'package:provider_hub/features/screens/message_screen/presentation/get_service/get_service_key.dart';
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 import 'package:provider_hub/features/widget/custom_svg/custom_svg_widget.dart';
@@ -46,12 +47,15 @@ var signInController = Get.put(SigninController());
             ),
             Expanded(
               child: InkWell(
-                onTap: () {
-                  signInController.fetchProviders();
+                onTap: () async {
+                  // signInController.fetchProviders();
                   signInController.getToken();
                   signInController.saveFCMToken();
+                  GetServiceKey getServerKey = GetServiceKey();
+                  String accessToken = await getServerKey.getServiceKeyToken();
+                  print(accessToken);
                   // Navigate to the desired page when the TextField is tapped
-                  RouteGenerator.pushNamed(context,Routes.nearestProvider);
+                  // RouteGenerator.pushNamed(context,Routes.nearestProvider);
                 },
                 child: AbsorbPointer(
                   child: Container(

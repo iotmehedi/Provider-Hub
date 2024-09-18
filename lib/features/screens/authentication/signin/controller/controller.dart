@@ -10,7 +10,6 @@ import 'package:provider_hub/features/screens/authentication/model/provider_mode
 import 'package:provider_hub/features/screens/authentication/model/qddp_model.dart';
 import 'package:provider_hub/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../../../../../const/routes/route_name.dart';
 import '../../../../../const/routes/router.dart';
 import '../../model/userModel.dart';

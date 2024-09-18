@@ -60,6 +60,8 @@ dependencies:
   rxdart: ^0.27.3
   async: ^2.8.1
   firebase_messaging:
+  googleapis_auth: ^1.6.0
+  googleapis:
 
 dev_dependencies:
   flutter_test:
