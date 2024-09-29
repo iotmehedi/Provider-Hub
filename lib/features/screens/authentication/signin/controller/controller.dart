@@ -34,6 +34,7 @@ class SigninController extends GetxController {
   }
 
   Future<void> signIn() async {
+
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var emailFromSession = box.read('email');
     var passwordFromSession = box.read('password');

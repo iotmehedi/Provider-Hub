@@ -16,7 +16,7 @@ import '../../../../widget/custom_simple_text/custom_simple_text.dart';
 import '../../../../widget/custom_text_textfield_column/custom_text_textfield_column.dart';
 import '../../../nearest_provider/presentation/controller/controller.dart';
 import 'message_widget.dart';
-import 'package:http/http.dart' as http;
+
 class MessageScreen extends StatelessWidget {
   final String receiverId, image, name;
   MessageScreen({super.key, required this.receiverId, required this.image, required this.name});
@@ -58,7 +58,7 @@ class MessageScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
-                height: MediaQuery.of(context).size.height * 0.79,
+                height: MediaQuery.of(context).size.height * 0.75,
                 child: MessageWidget(controller: controller, senderid: controller.userId.value, receiverId: receiverId)),
             10.ph,
             Padding(
@@ -67,6 +67,12 @@ class MessageScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 30),
+                    child: IconButton(onPressed: (){
+                      _showBottomDialog(context, receiverId, image, name);
+                    }, icon: Icon(Icons.add_circle_outlined, size: 30,)),
+                  ),
                   Expanded(
                     child: CustomTextTextfieldColumn(
                       text: "",
@@ -91,12 +97,13 @@ class MessageScreen extends StatelessWidget {
                             'receiverId': receiverId,
                             'receiverImage': image,
                             'receiverName': name,
+                            'imageBase64': controller.imageBase64.value,
                             'message': controller.messageController.value.text,
                             'timestamp': DateTime.now(),
                           });
 
                           controller.messageController.value.clear();
-                          await sendNotificationToUser(
+                          await controller.sendNotificationToUser(
                           receiverId, // User ID of the receiver
                           'New Message from ${controller.chatResponseModel.value.data?.first?.senderName ?? 'Someone'}',
                           controller.messageController.value.text,
@@ -118,55 +125,75 @@ class MessageScreen extends StatelessWidget {
     );
 
   }
-  Future<void> sendNotificationToUser(String userId, String title, String body) async {
-    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
-    String? fcmToken = userDoc['fcmToken'];
-
-    if (fcmToken != null) {
-      await sendPushNotification(
-        fcmToken: fcmToken,
-        title: title,
-        body: body,
-      );
-    } else {
-      print("No FCM token found for this user.");
-    }
+  void _showBottomDialog(BuildContext context, String receiverId, String image, String name) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            child: Material(
+              type: MaterialType.transparency,
+              color: AppColors.backgroundColor,
+              child: Container(
+                margin: EdgeInsets.all(20),
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: AppColors.backgroundColor,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            Navigator.pop(context);
+                            controller.pickImageFromGallery(receiverId, image, name);
+                          },
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(500),
+                              color: AppColors.appColors,
+                            ),
+                            child: Center(
+                              child: Icon(Icons.photo, color: AppColors.white,),
+                            ),
+                          ),
+                        ),
+                        10.pw,
+                        InkWell(
+                          onTap: (){
+                            Navigator.pop(context);
+                            controller.pickImageFromCamera(receiverId, image, name);
+                          },
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(500),
+                              color: AppColors.appColors,
+                            ),
+                            child: Center(
+                              child: Icon(Icons.photo_camera, color: AppColors.white,),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
-  Future<void> sendPushNotification({
-    required String fcmToken,
-    required String title,
-    required String body,
-  }) async {
-    // final String serverKey = 'YOUR_SERVER_KEY_FROM_FIREBASE'; // Replace with your FCM server key
 
-    try {
-      var response = await http.post(
-        Uri.parse('https://fcm.googleapis.com/fcm/send'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          // 'Authorization': 'key=$serverKey',
-        },
-        body: jsonEncode({
-          'to': "cpQ8itp6Q1GRfHz0oUNW4o:APA91bG_hpUsp3_h96tsry8sOgGpC191KvHbs-VCUu-6Jub-u0l3yRZHznkIJOUaMFb3AbcJqfiqHASnjGsNPTjHozWAjSIcBqQanHbc3mOFRmlChNFaEaeRYTfPhf8df9ZLZXdxQzbj", // Send to specific user's FCM token
-          'notification': {
-            'title': title,
-            'body': body,
-          },
-          'data': {
-            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-            'id': '1',
-            'status': 'done',
-          },
-        }),
-      );
 
-      if (response.statusCode == 200) {
-        print("Notification sent successfully.");
-      } else {
-        print("Failed to send notification. Status code: ${response.statusCode}");
-      }
-    } catch (e) {
-      print("Error sending notification: $e");
-    }
-  }
 }

@@ -1,11 +1,21 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
 import 'package:provider_hub/features/screens/inbox_page/model/messageModel.dart';
+import '../../../../../const/utils/consts/app_colors.dart';
 import '../../../../../main.dart';
+import '../../../../widget/custom_text_textfield_column/custom_text_textfield_column.dart';
 import '../../../../widget/custom_toast/custom_toast.dart';
 import '../../model/chat_model.dart';
 import 'package:rxdart/rxdart.dart' as rx;
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:http/http.dart' as http;
 class InboxController extends GetxController{
 var name = ''.obs;
 var isLoading = false.obs;
@@ -14,13 +24,51 @@ var chatResponseModel = ChatMessageResponse().obs;
 var chatListModel = MessageModelResponse().obs;
 var userId = ''.obs;
 var messageController = TextEditingController().obs;
+final ImagePicker _picker = ImagePicker();
+var imageBase64 = ''.obs;
+var pickedImage = File('').obs;
+final FirebaseFirestore fs = FirebaseFirestore.instance;
 @override
 void onInit() {
   fetchLastMessages();
   super.onInit();
 }
 
+Future<void> pickImageFromGallery(String receiverId, String image, String name) async {
+  if (await Permission.storage.request().isGranted) {
+    final XFile? pickedFile =
+    await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      pickedImage.value = File(pickedFile.path);
+      imageBase64.value = base64Encode(
+          pickedImage.value.readAsBytesSync());
+      showFullScreenDialog(navigatorKey.currentContext!, receiverId, image, name);// Convert image to base64
+      print(imageBase64);
+    }
+  } else if (await Permission.storage.request().isPermanentlyDenied) {
+    await openAppSettings();
+  } else if (await Permission.storage.request().isDenied) {
+    await Permission.storage.request();
+  }
+}
 
+// Pick image from camera
+Future<void> pickImageFromCamera(String receiverId, String image, String name) async {
+  if (await Permission.storage.request().isGranted) {
+    final XFile? pickedFile =
+    await _picker.pickImage(source: ImageSource.camera);
+    if (pickedFile != null) {
+      pickedImage.value = File(pickedFile.path);
+      imageBase64.value = base64Encode(
+          pickedImage.value.readAsBytesSync());
+      showFullScreenDialog(navigatorKey.currentContext!, receiverId, image, name);
+    }
+  } else if (await Permission.storage.request().isPermanentlyDenied) {
+    await openAppSettings();
+  } else if (await Permission.storage.request().isDenied) {
+    await Permission.storage.request();
+  }
+}
 // Fetch chat data from Firestore where senderId or receiverId matches the logged-in user's ID
   Future<void> fetchLastMessages() async {
     print("this is id ${box.read('loginUserId')}");
@@ -223,5 +271,152 @@ void onInit() {
     errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
   });
 }
+
+
+  void showFullScreenDialog(BuildContext context, String receiverId, String image, String name) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          backgroundColor: Colors.transparent, // Make the background transparent
+          insetPadding: EdgeInsets.all(0), // Remove any padding around the dialog
+          child: SizedBox.expand(
+            child: Container(
+              color: AppColors.backgroundColor, // Background color of the full-screen dialog
+              child: Stack(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Image.file(
+                          pickedImage.value,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                  
+                            Expanded(
+                              child: CustomTextTextfieldColumn(
+                                text: "",
+                                hint: "Enter message",
+                                textEditingController:
+                                messageController.value,
+                              ),
+                            ),
+                            5.pw,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: InkWell(
+                                onTap: () async {
+                                  // controller.sendMessage(
+                                  //     item:
+                                  //     controller.chatListModel.value.data?.first);
+                                  if (messageController.value.text.isNotEmpty) {
+                                    fs.collection('chats').doc().set({
+                                      'senderId':chatResponseModel.value.data?.first?.senderId ?? '',
+                                      'senderImage': chatResponseModel.value.data?.first?.senderImage ?? '',
+                                      'senderName': chatResponseModel.value.data?.first?.senderName ?? '',
+                                      'receiverId': receiverId,
+                                      'receiverImage': image,
+                                      'receiverName': name,
+                                      'imageBase64': imageBase64.value,
+                                      'message': messageController.value.text,
+                                      'timestamp': DateTime.now(),
+                                    });
+                  
+                                    messageController.value.clear();
+                                    await sendNotificationToUser(
+                                      receiverId, // User ID of the receiver
+                                      'New Message from ${chatResponseModel.value.data?.first?.senderName ?? 'Someone'}',
+                                     messageController.value.text,
+                                    );
+                                  }
+                                },
+                                child: Icon(
+                                  Icons.send,
+                                  color: AppColors.appColors,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    top: 20,
+                    right: 20,
+                    child: IconButton(
+                      icon: Icon(Icons.close, color: Colors.red, size: 30),
+                      onPressed: () {
+                        Navigator.pop(context); // Close dialog when the cross is pressed
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+  Future<void> sendNotificationToUser(String userId, String title, String body) async {
+    DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+    String? fcmToken = userDoc['fcmToken'];
+
+    if (fcmToken != null) {
+      await sendPushNotification(
+        fcmToken: fcmToken,
+        title: title,
+        body: body,
+      );
+    } else {
+      print("No FCM token found for this user.");
+    }
+  }
+  Future<void> sendPushNotification({
+    required String fcmToken,
+    required String title,
+    required String body,
+  }) async {
+    // final String serverKey = 'YOUR_SERVER_KEY_FROM_FIREBASE'; // Replace with your FCM server key
+
+    try {
+      var response = await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          // 'Authorization': 'key=$serverKey',
+        },
+        body: jsonEncode({
+          'to': "cpQ8itp6Q1GRfHz0oUNW4o:APA91bG_hpUsp3_h96tsry8sOgGpC191KvHbs-VCUu-6Jub-u0l3yRZHznkIJOUaMFb3AbcJqfiqHASnjGsNPTjHozWAjSIcBqQanHbc3mOFRmlChNFaEaeRYTfPhf8df9ZLZXdxQzbj", // Send to specific user's FCM token
+          'notification': {
+            'title': title,
+            'body': body,
+          },
+          'data': {
+            'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+            'id': '1',
+            'status': 'done',
+          },
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        print("Notification sent successfully.");
+      } else {
+        print("Failed to send notification. Status code: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Error sending notification: $e");
+    }
+  }
 }
 

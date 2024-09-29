@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
 import 'package:provider_hub/features/screens/inbox_page/presentation/controller/controller.dart';
@@ -55,7 +56,8 @@ class MessageWidget extends StatelessWidget {
             final message = qs['message'] ?? '';
             final senderImage = qs['senderImage'] ?? '';
             final receiverImage = qs['receiverImage'] ?? '';
-
+            final imageBase64 = qs['imageBase64'] ?? '';
+            Uint8List bytes = base64Decode(imageBase64);
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
@@ -106,7 +108,26 @@ class MessageWidget extends StatelessWidget {
                                           crossAxisAlignment: CrossAxisAlignment.end,
                                           mainAxisAlignment: MainAxisAlignment.end,
                                           children: [
-                                            CustomSimpleText(
+                                            imageBase64.toString().isNotEmpty && message ? SizedBox(
+                                              height: 60,
+                                              width: 60,
+                                              child: Column(
+                                                children: [
+                                                  Image.memory(bytes),
+                                                  5.ph,
+                                                  CustomSimpleText(
+                                                    text: message,
+                                                    fontSize: AppSizes.size15,
+                                                    fontWeight: FontWeight.normal,
+                                                    color: AppColors.white,
+                                                  )
+                                                ],
+                                              ),
+                                            ) : imageBase64.toString().isNotEmpty?  SizedBox(
+                                              height: 40,
+                                              width: 40,
+                                              child: Image.memory(bytes),
+                                            ) : CustomSimpleText(
                                               text: message,
                                               fontSize: AppSizes.size15,
                                               fontWeight: FontWeight.normal,
@@ -171,7 +192,26 @@ class MessageWidget extends StatelessWidget {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          CustomSimpleText(
+                                          imageBase64.toString().isNotEmpty && message ? SizedBox(
+                                            height: 60,
+                                            width: 60,
+                                            child: Column(
+                                              children: [
+                                                Image.memory(bytes),
+                                                5.ph,
+                                                CustomSimpleText(
+                                                  text: message,
+                                                  fontSize: AppSizes.size15,
+                                                  fontWeight: FontWeight.normal,
+                                                  color: AppColors.white,
+                                                )
+                                              ],
+                                            ),
+                                          ) : imageBase64.toString().isNotEmpty?  SizedBox(
+                                            height: 40,
+                                            width: 40,
+                                            child: Image.memory(bytes),
+                                          ) : CustomSimpleText(
                                             text: message,
                                             fontSize: AppSizes.size15,
                                             fontWeight: FontWeight.normal,
