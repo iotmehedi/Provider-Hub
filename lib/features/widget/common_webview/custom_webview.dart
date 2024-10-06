@@ -74,58 +74,56 @@ class WebPageState extends State<WebPage> {
               widget.url ?? '')
           : Stack(
               children: <Widget>[
-                Container(
-                  child: InAppWebView(
-                    initialUrlRequest:
-                        URLRequest(url: WebUri(widget.url ?? '')),
-                    initialOptions: InAppWebViewGroupOptions(
-                      crossPlatform: InAppWebViewOptions(
-                        javaScriptEnabled: true,
-                        javaScriptCanOpenWindowsAutomatically: true,
-                        supportZoom: true,
-                      ),
-                    ),
-                    initialSettings: InAppWebViewSettings(
-                      clearCache: true,
-                      allowContentAccess: true,
-                      allowFileAccess: true,
+                InAppWebView(
+                  initialUrlRequest:
+                      URLRequest(url: WebUri(widget.url ?? '')),
+                  initialOptions: InAppWebViewGroupOptions(
+                    crossPlatform: InAppWebViewOptions(
                       javaScriptEnabled: true,
-                      allowUniversalAccessFromFileURLs: true,
-                      cacheEnabled: true,
-                      pageZoom: 0.3,
-                      mixedContentMode:
-                          MixedContentMode.MIXED_CONTENT_ALWAYS_ALLOW,
+                      javaScriptCanOpenWindowsAutomatically: true,
+                      supportZoom: true,
                     ),
-                    onReceivedServerTrustAuthRequest:
-                        (controller, challenge) async {
-                      // Accept all SSL certificates (for debugging only)
-                      return ServerTrustAuthResponse(
-                          action: ServerTrustAuthResponseAction.PROCEED);
-                    },
-                    onLoadError: (controller, url, code, message) {
-                      print('Failed to load: $message');
-                    },
-                    onLoadHttpError:
-                        (controller, url, statusCode, description) {
-                      print('HTTP error: $description');
-                    },
-                    onLoadStart: (controller, url) {
-                      setState(() {
-                        homepageController.showLoading.value = true;
-                      });
-                    },
-                    onProgressChanged:
-                        (InAppWebViewController controller, int progress) {
-                      if (progress > 60) {
-                        setState(() {
-                          homepageController.showLoading.value = false;
-                        });
-                      }
-                    },
-                    onLoadStop: (controller, url) {
-                      // Optionally handle stop of load
-                    },
                   ),
+                  initialSettings: InAppWebViewSettings(
+                    clearCache: true,
+                    allowContentAccess: true,
+                    allowFileAccess: true,
+                    javaScriptEnabled: true,
+                    allowUniversalAccessFromFileURLs: true,
+                    cacheEnabled: true,
+                    pageZoom: 1.0,
+                    mixedContentMode:
+                        MixedContentMode.MIXED_CONTENT_ALWAYS_ALLOW,
+                  ),
+                  onReceivedServerTrustAuthRequest:
+                      (controller, challenge) async {
+                    // Accept all SSL certificates (for debugging only)
+                    return ServerTrustAuthResponse(
+                        action: ServerTrustAuthResponseAction.PROCEED);
+                  },
+                  onLoadError: (controller, url, code, message) {
+                    print('Failed to load: $message');
+                  },
+                  onLoadHttpError:
+                      (controller, url, statusCode, description) {
+                    print('HTTP error: $description');
+                  },
+                  onLoadStart: (controller, url) {
+                    setState(() {
+                      homepageController.showLoading.value = true;
+                    });
+                  },
+                  onProgressChanged:
+                      (InAppWebViewController controller, int progress) {
+                    if (progress > 60) {
+                      setState(() {
+                        homepageController.showLoading.value = false;
+                      });
+                    }
+                  },
+                  onLoadStop: (controller, url) {
+                    // Optionally handle stop of load
+                  },
                 ),
                 Center(
                   child: homepageController.showLoading.value == true

@@ -1157,6 +1157,8 @@ PODS:
     - Flutter
   - device_info_plus (0.0.1):
     - Flutter
+  - Firebase/Analytics (11.2.0):
+    - Firebase/Core
   - Firebase/Auth (11.2.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 11.2.0)
@@ -1473,6 +1475,7 @@ PODS:
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
+  - Firebase/Analytics
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
@@ -1618,6 +1621,6 @@ SPEC CHECKSUMS:
   syncfusion_flutter_pdfviewer: bb9998884b864cfedf72628df3503bdf57e397c0
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
-PODFILE CHECKSUM: f697287a6487e95ada6274a1e7e8fb716d3dbc64
+PODFILE CHECKSUM: ced459342ed1039567c2fa4f09364358fa178cf2
 
 COCOAPODS: 1.15.2
