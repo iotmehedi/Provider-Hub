@@ -10,6 +10,7 @@ import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
 import 'package:provider_hub/features/screens/authentication/signin/controller/controller.dart';
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
+import 'package:provider_hub/main.dart';
 
 import '../../../../../const/routes/route_name.dart';
 import '../../../../../const/routes/router.dart';
@@ -30,6 +31,12 @@ class ProfilePage extends StatelessWidget {
         textColor: AppColors.white,
         onBackPressed: () {
           Navigator.pop(context);
+        },
+        logoutButton: () {
+          box.erase().then((value) {
+            RouteGenerator.pushNamed(
+                navigatorKey.currentContext!, Routes.splashScreenRouteName);
+          });
         },
       ),
       body: SingleChildScrollView(
@@ -99,23 +106,29 @@ class ProfilePage extends StatelessWidget {
                 5.ph,
                 CustomSimpleText(
                   text: signinController.providerModel.value.type == "provider"
-                      ? signinController.providerModel.value.service ?? ''
+                      ? (signinController.providerModel.value.service
+                              ?.join(', ') ??
+                          '') // Join the list of services into a string
                       : signinController.userModel.value.type == "trainer"
-                          ? signinController.userModel.value.training ?? ''
+                          ? (signinController.userModel.value.training
+                                  ?.join(', ') ??
+                              '') // Join the training list into a string
                           : signinController.consultantModel.value.type ==
                                   "consultant"
-                              ? signinController
-                                      .consultantModel.value.service ??
-                                  ''
+                              ? (signinController.consultantModel.value.service
+                                      ?.join(', ') ??
+                                  '') // Join the consultant service list
                               : signinController.qddpModel.value.type == "qddp"
-                                  ? signinController.qddpModel.value.service ??
-                                      ''
+                                  ? (signinController.qddpModel.value.service
+                                          ?.join(', ') ??
+                                      '') // Join the qddp service list
                                   : '',
                   fontSize: AppSizes.size12,
                   fontWeight: FontWeight.normal,
                   color: AppColors.white,
                   alignment: Alignment.center,
                 ),
+
                 10.ph,
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,
@@ -190,28 +203,17 @@ class ProfilePage extends StatelessWidget {
                 10.ph,
                 CustomSimpleText(
                   alignment: Alignment.center,
-                  text: signinController.providerModel.value.type ==
-                      "provider"
-                      ? signinController
-                      .providerModel.value.email ??
-                      ''
-                      : signinController.userModel.value.type ==
-                      "trainer"
-                      ? signinController
-                      .userModel.value.email ??
-                      ''
-                      : signinController
-                      .consultantModel.value.type ==
-                      "consultant"
-                      ? signinController
-                      .consultantModel.value.email ??
-                      ''
-                      : signinController.qddpModel.value.type ==
-                      "qddp"
-                      ? signinController
-                      .qddpModel.value.email ??
-                      ''
-                      : '',
+                  text: signinController.providerModel.value.type == "provider"
+                      ? signinController.providerModel.value.email ?? ''
+                      : signinController.userModel.value.type == "trainer"
+                          ? signinController.userModel.value.email ?? ''
+                          : signinController.consultantModel.value.type ==
+                                  "consultant"
+                              ? signinController.consultantModel.value.email ??
+                                  ''
+                              : signinController.qddpModel.value.type == "qddp"
+                                  ? signinController.qddpModel.value.email ?? ''
+                                  : '',
                   fontSize: AppSizes.size14,
                   fontWeight: FontWeight.normal,
                   color: AppColors.white,
@@ -219,17 +221,11 @@ class ProfilePage extends StatelessWidget {
                 10.ph,
                 CustomSimpleText(
                   alignment: Alignment.center,
-                  text: signinController.providerModel.value.type ==
-                      "provider"
-                      ? "License: ${signinController
-                      .providerModel.value.licenseNumber ??
-                      ''}"
-                      : signinController.userModel.value.type ==
-                      "trainer"
-                      ? signinController
-                      .userModel.value.phoneNumber ??
-                      ''
-                      :  '',
+                  text: signinController.providerModel.value.type == "provider"
+                      ? "License: ${signinController.providerModel.value.licenseNumber ?? ''}"
+                      : signinController.userModel.value.type == "trainer"
+                          ? signinController.userModel.value.phoneNumber ?? ''
+                          : '',
                   fontSize: AppSizes.size14,
                   fontWeight: FontWeight.normal,
                   color: AppColors.white,
@@ -237,21 +233,18 @@ class ProfilePage extends StatelessWidget {
                 10.ph,
                 CustomSimpleText(
                   alignment: Alignment.center,
-                  text: signinController.providerModel.value.type ==
-                      "provider"
-                      ? "NPI: ${signinController
-                      .providerModel.value.npiNumber ??
-                      ''}"
-                      : signinController.userModel.value.type ==
-                      "trainer"
-                      ? signinController
-                      .userModel.value.training ??
-                      ''
-                      :  '',
+                  text: signinController.providerModel.value.type == "provider"
+                      ? "NPI: ${signinController.providerModel.value.npiNumber ?? ''}"
+                      : signinController.userModel.value.type == "trainer"
+                          ? (signinController.userModel.value.training
+                                  ?.join(', ') ??
+                              '') // Convert List to String if needed
+                          : '',
                   fontSize: AppSizes.size14,
                   fontWeight: FontWeight.normal,
                   color: AppColors.white,
                 ),
+
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,
                 //   children: [
@@ -330,14 +323,20 @@ class ProfilePage extends StatelessWidget {
                 // ),
                 20.ph,
                 Visibility(
-                  visible:  signinController.providerModel.value.type == "provider" ? false : true,
+                  visible:
+                      signinController.providerModel.value.type == "provider"
+                          ? false
+                          : true,
                   child: Divider(
                     color: AppColors.deepGrey,
                   ),
                 ),
                 20.ph,
                 Visibility(
-                  visible:  signinController.providerModel.value.type == "provider" ? false : true,
+                  visible:
+                      signinController.providerModel.value.type == "provider"
+                          ? false
+                          : true,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 20),
                     child: Align(
@@ -354,7 +353,10 @@ class ProfilePage extends StatelessWidget {
                 ),
                 40.ph,
                 Visibility(
-                  visible:  signinController.providerModel.value.type == "provider" ? false : true,
+                  visible:
+                      signinController.providerModel.value.type == "provider"
+                          ? false
+                          : true,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12),
                     child: GridView.builder(
@@ -375,7 +377,8 @@ class ProfilePage extends StatelessWidget {
                                 margin: EdgeInsets.only(top: 10),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: AppColors.appColors),
+                                  border:
+                                      Border.all(color: AppColors.appColors),
                                   color: Colors.black,
                                   boxShadow: [
                                     BoxShadow(
@@ -403,20 +406,25 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     5.ph,
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         PannableRatingBar(
                                           rate: index / 10,
-                                          items: List.generate(1, (index) =>
-                                          const RatingWidget(
-                                            selectedColor: Colors.orange,
-                                            unSelectedColor: Colors.grey,
-                                            child: Icon(
-                                              Icons.star,
-                                              size: 15,
-                                            ),
-                                          )),
+                                          items: List.generate(
+                                              1,
+                                              (index) => const RatingWidget(
+                                                    selectedColor:
+                                                        Colors.orange,
+                                                    unSelectedColor:
+                                                        Colors.grey,
+                                                    child: Icon(
+                                                      Icons.star,
+                                                      size: 15,
+                                                    ),
+                                                  )),
                                         ),
                                         CustomSimpleText(
                                           text: "${index / 10}",
@@ -430,28 +438,31 @@ class ProfilePage extends StatelessWidget {
                                     ),
                                     5.ph,
                                     InkWell(
-                                      onTap: (){
+                                      onTap: () {
                                         // RouteGenerator.pushNamedSms(
                                         //     context, Routes.messageScreen, arguments: [
                                         //       item.id,
                                         //   item.imageBase64,
                                         //   item.providerName
                                         // ]);
-                                        RouteGenerator.pushNamedSms(
-                                            context, Routes.providerDetailsProfile, arguments: [
-                                              item
-                                        ]);
+                                        RouteGenerator.pushNamedSms(context,
+                                            Routes.providerDetailsProfile,
+                                            arguments: [item]);
                                         print("item ${item.id}");
-                                        indexController.fetchMessages(receiverId: item.id ??'');
+                                        indexController.fetchMessages(
+                                            receiverId: item.id ?? '');
                                       },
                                       child: Container(
-                                        padding: EdgeInsets.symmetric(vertical: 5),
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 5),
                                         margin: EdgeInsets.only(bottom: 10),
-                                        width: MediaQuery.of(context).size.width * 0.26,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.26,
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(6),
-                                          color: AppColors.appColors
-                                        ),
+                                            borderRadius:
+                                                BorderRadius.circular(6),
+                                            color: AppColors.appColors),
                                         child: CustomSimpleText(
                                           text: "View Details",
                                           fontWeight: FontWeight.bold,
@@ -477,12 +488,13 @@ class ProfilePage extends StatelessWidget {
                                     height: AppSizes.newSize(8.0),
                                     width: AppSizes.newSize(8.0),
                                     child: Image.memory(
-                                      base64Decode( item.imageBase64 ?? ''),
+                                      base64Decode(item.imageBase64 ?? ''),
                                       fit: BoxFit.cover, // Adjust image display
                                     ),
                                   ),
                                 ),
-                              ),)
+                              ),
+                            )
                           ],
                         );
                       },

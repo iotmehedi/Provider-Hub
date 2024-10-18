@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/consts/app_sizes.dart';
@@ -39,30 +41,32 @@ class TrainerRegistrationScreen extends StatelessWidget {
               children: [
                 10.ph,
                 Center(
-                      child: InkWell(
-                          onTap: () => controller.showImageSourceDialog(context),
-                          child: controller.pickedImage.value.path.isNotEmpty
-                    ? Container(
+                  child: InkWell(
+                    onTap: () => controller.showImageSourceDialog(context),
+                    child: controller.pickedImage.value.path.isNotEmpty
+                        ? Container(
+                            height: AppSizes.newSize(10.0),
+                            width: AppSizes.newSize(10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Image.file(
+                              controller.pickedImage.value,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ))
+                        : InkWell(
+                            onTap: () =>
+                                controller.showImageSourceDialog(context),
+                            child: CustomSvgWidget(
+                              image: AppAssets.uploadPictureAveter,
                               height: AppSizes.newSize(10.0),
                               width: AppSizes.newSize(10.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Image.file(
-                                controller.pickedImage.value,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              )) : InkWell(
-                        onTap: () => controller.showImageSourceDialog(context),
-                        child: CustomSvgWidget(
-                          image: AppAssets.uploadPictureAveter,
-                          height: AppSizes.newSize(10.0),
-                          width: AppSizes.newSize(10.0),
-                        ),
-                      ),
-                        ),
-                    ),
+                            ),
+                          ),
+                  ),
+                ),
                 10.ph,
                 Center(
                   child: CustomSimpleText(
@@ -96,56 +100,55 @@ class TrainerRegistrationScreen extends StatelessWidget {
                     textEditingController:
                         controller.officeAddressController.value),
                 10.ph,
-                globalText14(text: "Select Training's That You Can Provide", fontWeight: FontWeight.w500, color: AppColors.white),
+                globalText14(
+                    text: "Select Training's That You Can Provide",
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.white),
                 10.ph,
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.appColors, width: 1.0),
-                    borderRadius:
-                        BorderRadius.circular(5.0), // Adjust as needed
+                MultiSelectDialogField(
+                  items: controller.items,
+                  title: const Text("Animals"),
+                  backgroundColor: AppColors.backgroundColor,
+                  itemsTextStyle: const TextStyle(color: Colors.white),
+                  checkColor: AppColors.white,
+                  selectedColor: AppColors.appColors,
+                  selectedItemsTextStyle: const TextStyle(
+                    color: Colors.white,
                   ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: controller.selectedValue.value,
-                      items: <String>["Select Training's", 'CRP/First Aid', 'TOVA', 'Medication Aid', 'DSP', 'Documentation']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: CustomSimpleText(
-                            text: value,
-                            fontWeight: FontWeight.w500,
-                            fontSize: AppSizes.size14,
-                            color: AppColors.white,
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        controller.selectedValue.value = value!;
-                      },
-                      underline: SizedBox(), // Removes the default underline
-                      isExpanded:
-                          true, // Makes the dropdown button expand to fill its container
-                      dropdownColor:
-                          Colors.black, // Sets the dropdown menu color to black
-                      iconEnabledColor: Colors
-                          .white, // Optional: Change the icon color if needed
-                      style: TextStyle(color: Colors.white),
+                  decoration: BoxDecoration(
+                    color: HexColor('80848A').withOpacity(0.35),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    border: Border.all(
+                      color: AppColors.appColors,
+                      width: 2,
                     ),
                   ),
+                  buttonIcon: Icon(
+                    Icons.arrow_drop_down,
+                    color: AppColors.white,
+                  ),
+                  buttonText: const Text(
+                    "Choose Training's",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                  onConfirm: (results) {
+                    controller.selectedServiceItems.value = results;
+                  },
                 ),
                 10.ph,
                 CustomTextTextfieldColumn(
                     text: "Password",
                     hint: "Enter password",
-                    textEditingController:
-                    controller.passwordController.value),
+                    textEditingController: controller.passwordController.value),
                 10.ph,
                 CustomTextTextfieldColumn(
                     text: "Confirm Password",
                     hint: "Enter confirm password",
                     textEditingController:
-                    controller.confirmationPasswordController.value),
+                        controller.confirmationPasswordController.value),
                 10.ph,
                 Row(
                   children: [

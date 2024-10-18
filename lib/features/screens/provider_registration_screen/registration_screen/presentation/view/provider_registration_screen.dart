@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
+import 'package:provider_hub/const/utils/consts/textstyle.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
@@ -16,9 +20,21 @@ import '../../../../../widget/custom_elevatedButton/custom_eleveted_button.dart'
 import '../../../../../widget/custom_svg/custom_svg_widget.dart';
 import '../controller/provider_reg_controller.dart';
 
-class ProviderRegistrationScreen extends StatelessWidget {
+class ProviderRegistrationScreen extends StatefulWidget {
   ProviderRegistrationScreen({super.key});
+
+  @override
+  State<ProviderRegistrationScreen> createState() =>
+      _ProviderRegistrationScreenState();
+}
+
+class _ProviderRegistrationScreenState
+    extends State<ProviderRegistrationScreen> {
   var controller = Get.put(ProviderRegController());
+  // static List _animals = ["mehedi", "hasan", "Shourov"];
+  // final _items =
+  //     _animals.map((animal) => MultiSelectItem(animal, animal)).toList();
+  // List _selectedAnimals = [];
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -79,10 +95,86 @@ class ProviderRegistrationScreen extends StatelessWidget {
                     textEditingController:
                         controller.providerNameController.value),
                 10.ph,
-                CustomTextTextfieldColumn(
-                    text: "Services",
-                    hint: "Enter Services that you provide",
-                    textEditingController: controller.serviceController.value),
+                // CustomTextTextfieldColumn(
+                //     text: "Services",
+                //     hint: "Enter Services that you provide",
+                //     textEditingController: controller.serviceController.value),
+                // Container(
+                //   padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                //   decoration: BoxDecoration(
+                //     border: Border.all(color: AppColors.appColors, width: 1.0),
+                //     borderRadius:
+                //         BorderRadius.circular(5.0), // Adjust as needed
+                //   ),
+                //   child: DropdownButtonHideUnderline(
+                //     child: DropdownButton<String>(
+                //       value: controller.selectedServiceValue.value,
+                //       items: <String>["Choose one", 'A', 'B', 'C', 'D']
+                //           .map((String value) {
+                //         return DropdownMenuItem<String>(
+                //           value: value,
+                //           child: CustomSimpleText(
+                //             text: value,
+                //             fontWeight: FontWeight.w500,
+                //             fontSize: AppSizes.size14,
+                //             color: AppColors.white,
+                //           ),
+                //         );
+                //       }).toList(),
+                //       onChanged: (value) {
+                //         controller.selectedServiceValue.value = value!;
+                //       },
+                //       underline:
+                //           const SizedBox(), // Removes the default underline
+                //       isExpanded:
+                //           true, // Makes the dropdown button expand to fill its container
+                //       dropdownColor:
+                //           Colors.black, // Sets the dropdown menu color to black
+                //       iconEnabledColor: Colors
+                //           .white, // Optional: Change the icon color if needed
+                //       style: const TextStyle(color: Colors.white),
+                //     ),
+                //   ),
+                // ),
+                globalText14(
+                    text: "Service",
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.white),
+                5.ph,
+                MultiSelectDialogField(
+                  items: controller.items,
+                  title: const Text("Animals"),
+                  backgroundColor: AppColors.backgroundColor,
+                  itemsTextStyle: const TextStyle(color: Colors.white),
+                  checkColor: AppColors.white,
+                  selectedColor: AppColors.appColors,
+                  selectedItemsTextStyle: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: BoxDecoration(
+                    color: HexColor('80848A').withOpacity(0.35),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    border: Border.all(
+                      color: AppColors.appColors,
+                      width: 2,
+                    ),
+                  ),
+                  buttonIcon: Icon(
+                    Icons.supervised_user_circle_sharp,
+                    color: AppColors.white,
+                  ),
+                  buttonText: const Text(
+                    "Choose services",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                  onConfirm: (results) {
+                    controller.selectedServiceItems.value = results;
+                  },
+                ),
+
                 10.ph,
                 CustomTextTextfieldColumn(
                     text: "Contact Name",

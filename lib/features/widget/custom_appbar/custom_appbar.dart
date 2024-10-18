@@ -5,6 +5,7 @@ import 'package:provider_hub/const/utils/consts/app_colors.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final VoidCallback? onBackPressed;
+  final VoidCallback? logoutButton;
   final String? fontFamily;
   final double? fontSize;
   final Color? textColor;
@@ -17,7 +18,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.fontFamily,
     this.fontSize,
     this.textColor,
-    this.needTitleCenter
+    this.needTitleCenter,
+    this.logoutButton,
   }) : super(key: key);
 
   @override
@@ -28,15 +30,28 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title,
         textAlign: TextAlign.center,
-        style:
-             TextStyle(fontWeight: FontWeight.w600, fontFamily: fontFamily ?? "Podkova", fontSize: fontSize ?? 20, color: textColor ?? AppColors.appColors),
+        style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontFamily: fontFamily ?? "Podkova",
+            fontSize: fontSize ?? 20,
+            color: textColor ?? AppColors.appColors),
       ),
       leading: onBackPressed != null
           ? IconButton(
               icon: const Icon(Icons.arrow_back),
               onPressed: onBackPressed,
-        color: AppColors.white,
+              color: AppColors.white,
             )
+          : null,
+      actions: logoutButton != null
+          ? [
+              IconButton(
+                  onPressed: logoutButton,
+                  icon: Icon(
+                    Icons.logout,
+                    color: AppColors.white,
+                  ))
+            ]
           : null,
     );
   }

@@ -9,6 +9,7 @@ import 'package:provider_hub/features/screens/inbox_page/presentation/view/inbox
 import 'package:provider_hub/features/screens/nearest_provider/presentation/view/nearest_provider_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen_three.dart';
+import 'package:provider_hub/features/screens/splash_screen/initial_splash_screen.dart';
 import '../../features/screens/authentication/model/provider_model.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/dbhds_screen.dart';
 import '../../features/screens/homepage/presentation/sub_item_page/provider_resources_screen/provider_resources_screen.dart';
@@ -75,9 +76,7 @@ class RouteGenerator {
   }
 
   static gotoWebPage(
-      {required BuildContext context,
-      String? pageTitle,
-      required String url}) {
+      {required BuildContext context, String? pageTitle, required String url}) {
     return Navigator.push(
       context,
       MaterialPageRoute(
@@ -92,6 +91,10 @@ class RouteGenerator {
 
   static Route<dynamic>? onRouteGenerate(RouteSettings routeSettings) {
     switch (routeSettings.name) {
+      case Routes.initialSplashScreen:
+        return MaterialPageRoute(
+          builder: (context) => const InitialSplashScreen(),
+        );
       case Routes.splashScreenRouteName:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
@@ -133,8 +136,7 @@ class RouteGenerator {
         {
           final arguments = routeSettings.arguments as List;
           return MaterialPageRoute(
-            builder: (context) =>
-                PaymentScreenTwo(),
+            builder: (context) => PaymentScreenTwo(),
           );
         }
       case Routes.paymentScreenThree:
@@ -167,7 +169,11 @@ class RouteGenerator {
       case Routes.messageScreen:
         final arguments = routeSettings.arguments as List;
         return MaterialPageRoute(
-          builder: (context) => MessageScreen(receiverId: arguments[0] as String, image: arguments[1] as String, name: arguments[2] as String,),
+          builder: (context) => MessageScreen(
+            receiverId: arguments[0] as String,
+            image: arguments[1] as String,
+            name: arguments[2] as String,
+          ),
         );
       case Routes.profile:
         return MaterialPageRoute(
@@ -189,30 +195,31 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => CRCScreen(),
         );
-        case Routes.licensingPage:
+      case Routes.licensingPage:
         return MaterialPageRoute(
           builder: (context) => LicensingPage(),
         );
-        case Routes.humanRightsTrainingsScreen:
+      case Routes.humanRightsTrainingsScreen:
         return MaterialPageRoute(
           builder: (context) => HumanRightsTrainingsScreen(),
         );
-        case Routes.biuScreen:
+      case Routes.biuScreen:
         return MaterialPageRoute(
           builder: (context) => BiuScreen(),
         );
-        case Routes.dmasScreen:
+      case Routes.dmasScreen:
         return MaterialPageRoute(
           builder: (context) => DmasScreen(),
         );
-        case Routes.providerResourcesScreen:
+      case Routes.providerResourcesScreen:
         return MaterialPageRoute(
           builder: (context) => ProviderResourcesScreen(),
         );
-        case Routes.providerDetailsProfile:
-          final arguments = routeSettings.arguments as List;
+      case Routes.providerDetailsProfile:
+        final arguments = routeSettings.arguments as List;
         return MaterialPageRoute(
-          builder: (context) => ProviderProfileDetails(providerModel: arguments[0] as ProviderModel),
+          builder: (context) => ProviderProfileDetails(
+              providerModel: arguments[0] as ProviderModel),
         );
     }
     return null;

@@ -10,7 +10,6 @@ import 'package:provider_hub/features/screens/authentication/model/provider_mode
 import 'package:provider_hub/features/screens/authentication/model/qddp_model.dart';
 import 'package:provider_hub/features/widget/custom_toast/custom_toast.dart';
 import 'package:provider_hub/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../const/routes/route_name.dart';
 import '../../../../../const/routes/router.dart';
 import '../../model/userModel.dart';
@@ -28,6 +27,7 @@ class SigninController extends GetxController {
   var filteredList = <ProviderModel>[].obs;
   var userData = {}.obs; // Store user data
   var userId = ''.obs;
+  var isLoading = false.obs;
   @override
   void onInit() {
     fetchProviders();
@@ -35,65 +35,92 @@ class SigninController extends GetxController {
   }
 
   Future<void> signIn() async {
-
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
     var emailFromSession = box.read('email');
     var passwordFromSession = box.read('password');
+    // box.erase();
+    print("this is print $emailFromSession $passwordFromSession");
     try {
       // Query Firestore collection for the provided email
-      QuerySnapshot querySnapshot = await firestore.value
-          .collection('users')
-          .where('email', isEqualTo: emailPhoneController.value.text)
-          .limit(1)
-          .get();
-
-      if (querySnapshot.docs.isNotEmpty) {
-        // Extract user data from the document
-        DocumentSnapshot userDoc = querySnapshot.docs.first;
-        Map<String, dynamic> userDocData =
-        querySnapshot.docs.first.data() as Map<String, dynamic>;
-
-        // Check if the provided password matches the one stored in Firestore
-        if (userDocData['password'] == passwordController.value.text) {
-          userData.value = userDocData; // Store user data for display
-          if (userData['type'] == "provider") {
-            providerModel.value = ProviderModel.fromMap(userDocData);
-            userId.value = providerModel.value.id ?? '';
-          } else if (userData['type'] == "consultant") {
-            consultantModel.value = ConsultantModel.fromJson(userDocData);
-            userId.value = consultantModel.value.id ?? '';
-          } else if (userData['type'] == "qddp") {
-            qddpModel.value = QDDPModel.fromJson(userDocData);
-            userId.value = qddpModel.value.id ?? '';
-          } else {
-            userModel.value = UserModel.fromMap(userDocData);
-            userId.value = userModel.value.id ?? '';
-          }
-           userId.value = userModel.value.id ?? '';
-          print('User data: ${userDoc.id} ${userModel.value.officeAddress}');
-          box.write('loginUserId', userDoc.id);
-          await prefs.setString('loginUserId', userDoc.id);
-          successToast(context: navigatorKey.currentContext!, msg: 'Login successful!');
-          if ((emailFromSession?.isEmpty ?? false) &&
-              (passwordFromSession?.isEmpty ?? false)) {
-            await prefs.setString('email', emailPhoneController.value.text);
-            await prefs.setString('password', passwordController.value.text);
-            box.write('email', emailPhoneController.value.text);
-            box.write('password', passwordController.value.text);
-          }
-          RouteGenerator.pushNamed(navigatorKey.currentContext!, Routes.inbox);
-          // User authenticated, proceed to the next screen or show data
-        } else {
-          print('Incorrect password');
-          errorToast(context: navigatorKey.currentContext!, msg: "Incorrect password");
-        }
+      if ((emailFromSession == null &&
+              emailPhoneController.value.text.isEmpty) &&
+          passwordFromSession == null &&
+          passwordController.value.text.isEmpty) {
+        RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
       } else {
-        // ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-        //   const SnackBar(content: Text('No user found with that email')),
-        // );
-        print('No user found with that email');
+        isLoading.value = true;
+        QuerySnapshot querySnapshot = await firestore.value
+            .collection('users')
+            .where('email',
+                isEqualTo: emailFromSession.toString().isNotEmpty
+                    ? emailFromSession
+                    : emailPhoneController.value.text)
+            .limit(1)
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          // Extract user data from the document
+          DocumentSnapshot userDoc = querySnapshot.docs.first;
+          Map<String, dynamic> userDocData =
+              querySnapshot.docs.first.data() as Map<String, dynamic>;
+
+          // Check if the provided password matches the one stored in Firestore
+          if ((userDocData['password'] == passwordController.value.text) ||
+              (userDocData['password'] == passwordFromSession)) {
+            userData.value = userDocData; // Store user data for display
+            if (userData['type'] == "provider") {
+              providerModel.value = ProviderModel.fromMap(userDocData);
+              userId.value = providerModel.value.id ?? '';
+            } else if (userData['type'] == "consultant") {
+              consultantModel.value = ConsultantModel.fromJson(userDocData);
+              userId.value = consultantModel.value.id ?? '';
+            } else if (userData['type'] == "qddp") {
+              qddpModel.value = QDDPModel.fromJson(userDocData);
+              userId.value = qddpModel.value.id ?? '';
+            } else {
+              userModel.value = UserModel.fromMap(userDocData);
+              userId.value = userModel.value.id ?? '';
+            }
+            print('User data: ${userDoc.id} ${userModel.value.officeAddress}');
+            box.write('loginUserId', userDoc.id);
+            await box.write('loginUserId', userDoc.id);
+            if ((emailFromSession == null) && (passwordFromSession == null)) {
+              successToast(
+                  context: navigatorKey.currentContext!,
+                  msg: 'Login successful!');
+            }
+
+            if ((emailFromSession == null) && (passwordFromSession == null)) {
+              await box.write('email', emailPhoneController.value.text);
+              await box.write('password', passwordController.value.text);
+              box.write('email', emailPhoneController.value.text);
+              box.write('password', passwordController.value.text);
+            }
+            isLoading.value = false;
+            RouteGenerator.pushNamed(
+                navigatorKey.currentContext!, Routes.inbox);
+            emailPhoneController.value.text = '';
+            passwordController.value.text = '';
+            // User authenticated, proceed to the next screen or show data
+          } else {
+            print('Incorrect password');
+            isLoading.value = false;
+            errorToast(
+                context: navigatorKey.currentContext!,
+                msg: "Incorrect password");
+          }
+        } else {
+          // ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+          //   const SnackBar(content: Text('No user found with that email')),
+          // );
+          isLoading.value = false;
+          RouteGenerator.pushNamed(
+              navigatorKey.currentContext!, Routes.splashScreenRouteName);
+          box.erase();
+          print('No user found with that email');
+        }
       }
     } catch (e) {
+      isLoading.value = false;
       print('Error signing in: $e');
     }
   }
@@ -103,8 +130,8 @@ class SigninController extends GetxController {
     try {
       print("this is data");
       // Initialize the collection reference for 'users'
-      CollectionReference users = FirebaseFirestore.instance.collection(
-          'users');
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
 
       // Fetch all user documents from Firestore
       QuerySnapshot querySnapshot = await users.get();
@@ -119,8 +146,8 @@ class SigninController extends GetxController {
         if (doc['type'] == "provider") {
           print("this is data2");
           // Convert the document data to ProviderModel and add it to the list
-          ProviderModel provider = ProviderModel.fromMap(
-              doc.data() as Map<String, dynamic>);
+          ProviderModel provider =
+              ProviderModel.fromMap(doc.data() as Map<String, dynamic>);
 
           providerList.add(provider);
           filteredList.add(provider);
@@ -141,10 +168,7 @@ class SigninController extends GetxController {
           providerList; // Show all items if the search query is empty
     } else {
       filteredList.value = providerList
-          .where((provider) =>
-          provider.contactName
-          !.toLowerCase()
-              .contains(query
+          .where((provider) => provider.contactName!.toLowerCase().contains(query
               .toLowerCase())) // Assuming `name` is a field in your ProviderModel
           .toList();
     }
@@ -162,7 +186,8 @@ class SigninController extends GetxController {
     if (token != null && userId.value.isNotEmpty) {
       // You can save the token for the logged-in user in Firestore
       // Example:
-      await FirebaseFirestore.instance.collection('users')
+      await FirebaseFirestore.instance
+          .collection('users')
           .doc(userId.value)
           .update({
         'fcmToken': token,
@@ -174,10 +199,12 @@ class SigninController extends GetxController {
       print("New FCM Token: $newToken");
 
       // Save new token
-      FirebaseFirestore.instance.collection('users').doc(currentId!.uid).update(
-          {
-            'fcmToken': newToken,
-          });
+      FirebaseFirestore.instance
+          .collection('users')
+          .doc(currentId!.uid)
+          .update({
+        'fcmToken': newToken,
+      });
     });
   }
 
@@ -186,7 +213,7 @@ class SigninController extends GetxController {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
 
     var user = userId.value;
-print("auth $user");
+    print("auth $user");
     if (user != null) {
       String userId = user;
       String? token = await messaging.getToken();
@@ -209,11 +236,17 @@ print("auth $user");
   Future<void> updateFCMToken(String userId, String token) async {
     try {
       // Check if the document exists
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
 
       if (userDoc.exists) {
         // Document exists, update the FCM token
-        await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .update({
           'fcmToken': token,
         });
         print("FCM token updated successfully.");

@@ -14,8 +14,8 @@ import '../../../../widget/custom_svg/custom_svg_widget.dart';
 import '../../../../widget/custom_text_textfield_column/custom_text_textfield_column.dart';
 
 class SignInPage extends StatelessWidget {
-   SignInPage({super.key});
-var controller = Get.put(SigninController());
+  SignInPage({super.key});
+  var controller = Get.put(SigninController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,34 +37,37 @@ var controller = Get.put(SigninController());
                 ),
                 40.ph,
                 CustomTextTextfieldColumn(
-                    text: "Email/Phone",
-                    hint: "Enter Your Email/Phone",
-                    textEditingController:
-                    controller.emailPhoneController.value,
+                  text: "Email/Phone",
+                  hint: "Enter Your Email/Phone",
+                  textEditingController: controller.emailPhoneController.value,
                 ),
                 15.ph,
                 CustomTextTextfieldColumn(
-                    text: "Password",
-                    hint: "Enter Your Password",
-                    textEditingController:
-                    controller.passwordController.value,
+                  text: "Password",
+                  hint: "Enter Your Password",
+                  textEditingController: controller.passwordController.value,
                 ),
                 20.ph,
                 SizedBox(
                   height: 47,
                   child: CustomElevatedButton(
-                      text: CustomSimpleText(
-                        text: "Sign In",
-                        fontSize: 21,
-                        color:  AppColors.white,
-                        alignment: Alignment.center,
-                      ),
-                      onPress: () {
-                        controller.signIn();
-                        // RouteGenerator.pushNamed(context, Routes.inbox);
-                      },
-                      backgroundColor:  AppColors.appColors,
-                      elevatedButtonSideBorderColor:  AppColors.appColors,),
+                    text: controller.isLoading.value == true
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : CustomSimpleText(
+                            text: "Sign In",
+                            fontSize: 21,
+                            color: AppColors.white,
+                            alignment: Alignment.center,
+                          ),
+                    onPress: () {
+                      controller.signIn();
+                      // RouteGenerator.pushNamed(context, Routes.inbox);
+                    },
+                    backgroundColor: AppColors.appColors,
+                    elevatedButtonSideBorderColor: AppColors.appColors,
+                  ),
                 ),
               ],
             ),

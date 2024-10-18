@@ -1,5 +1,6 @@
 class Routes {
-  static const splashScreenRouteName = "/";
+  static const initialSplashScreen = "/";
+  static const splashScreenRouteName = "splashScreen";
   static const signinPage = "/signinPage";
   static const registrationPage = "/RegistrationPage";
   static const providerRegScreen = "/providerRegScreen";
@@ -26,5 +27,4 @@ class Routes {
   static const dmasScreen = "/dmasScreen";
   static const providerResourcesScreen = "/providerResourcesScreen";
   static const providerDetailsProfile = "/providerDetailsProfile";
-
 }

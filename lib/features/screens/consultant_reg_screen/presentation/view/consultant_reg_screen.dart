@@ -38,31 +38,32 @@ class ConsultantRegistrationScreen extends StatelessWidget {
               children: [
                 10.ph,
                 Center(
-                      child: InkWell(
-                          onTap: () => controller.showImageSourceDialog(context),
-                          child: controller.pickedImage.value.path.isNotEmpty
-                    ? Container(
+                  child: InkWell(
+                    onTap: () => controller.showImageSourceDialog(context),
+                    child: controller.pickedImage.value.path.isNotEmpty
+                        ? Container(
+                            height: AppSizes.newSize(10.0),
+                            width: AppSizes.newSize(10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Image.file(
+                              controller.pickedImage.value,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ))
+                        : InkWell(
+                            onTap: () =>
+                                controller.showImageSourceDialog(context),
+                            child: CustomSvgWidget(
+                              image: AppAssets.uploadPictureAveter,
                               height: AppSizes.newSize(10.0),
                               width: AppSizes.newSize(10.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Image.file(
-                                controller.pickedImage.value,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              )) : InkWell(
-                        onTap: () => controller.showImageSourceDialog(context),
-                        child: CustomSvgWidget(
-                          image: AppAssets.uploadPictureAveter,
-                          height: AppSizes.newSize(10.0),
-                          width: AppSizes.newSize(10.0),
-                        ),
-                      ),
-                        ),
-                    ),
-                    
+                            ),
+                          ),
+                  ),
+                ),
                 10.ph,
                 Center(
                   child: CustomSimpleText(
@@ -125,7 +126,8 @@ class ConsultantRegistrationScreen extends StatelessWidget {
                       onChanged: (value) {
                         controller.selectedValue.value = value!;
                       },
-                      underline: const SizedBox(), // Removes the default underline
+                      underline:
+                          const SizedBox(), // Removes the default underline
                       isExpanded:
                           true, // Makes the dropdown button expand to fill its container
                       dropdownColor:
@@ -141,11 +143,12 @@ class ConsultantRegistrationScreen extends StatelessWidget {
                     text: "Password",
                     hint: "Enter passowrd",
                     textEditingController: controller.passwordController.value),
-                    10.ph,
+                10.ph,
                 CustomTextTextfieldColumn(
                     text: "Confirmation Password",
                     hint: "Enter confirmation password",
-                    textEditingController: controller.confirmationPasswordController.value),
+                    textEditingController:
+                        controller.confirmationPasswordController.value),
                 10.ph,
                 Row(
                   children: [
@@ -201,6 +204,7 @@ class ConsultantRegistrationScreen extends StatelessWidget {
                         text: "Next",
                         fontSize: 20,
                         color: AppColors.white,
+                        alignment: Alignment.center,
                       ),
                       onPress: () {
                         RouteGenerator.pushNamed(context, Routes.paymentScreen);

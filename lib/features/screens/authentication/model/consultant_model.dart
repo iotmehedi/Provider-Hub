@@ -6,7 +6,7 @@ class ConsultantModel {
   final String? email;
   final String? consults;
   final String? imageBase64;
-  final String? service;
+  final List<dynamic>? service;
   final String? password;
   final String? type;
   final DateTime? createdAt;
@@ -32,7 +32,7 @@ class ConsultantModel {
       email: json['email'],
       consults: json['consults'],
       imageBase64: json['imageBase64'],
-      service: json['service'],
+      service: json['service'] is List ? json['service'] : [],
       password: json['password'],
       type: json['type'],
       id: json['id'],
@@ -54,7 +54,9 @@ class ConsultantModel {
       'password': password,
       'type': type,
       'id': id,
-      'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : FieldValue.serverTimestamp(),
+      'createdAt': createdAt != null
+          ? Timestamp.fromDate(createdAt!)
+          : FieldValue.serverTimestamp(),
     };
   }
 }

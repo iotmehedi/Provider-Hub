@@ -5,7 +5,7 @@ class UserModel {
   final String? email;
   final String? phoneNumber;
   final String? officeAddress;
-  final String? training;
+  final List<dynamic>? training;
   final String? type;
   final String? imageBase64;
   final String? password;
@@ -32,7 +32,7 @@ class UserModel {
       email: data['email'] ?? '',
       phoneNumber: data['phoneNumber'] ?? '',
       officeAddress: data['officeAddress'] ?? '',
-      training: data['training'] ?? '',
+      training: data['training'] is List ? data['training'] : [],
       type: data['type'] ?? '',
       imageBase64: data['imageBase64'] ?? '',
       password: data['password'] ?? '',

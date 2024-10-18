@@ -14,9 +14,8 @@ import 'package:provider_hub/const/utils/consts/common_controller.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 import 'package:provider_hub/features/widget/custom_toast/custom_toast.dart';
 import 'package:provider_hub/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class ConsultantRegController extends GetxController{
+class ConsultantRegController extends GetxController {
   var fullNameController = TextEditingController().obs;
   var phoneNumberController = TextEditingController().obs;
   var emailController = TextEditingController().obs;
@@ -24,14 +23,14 @@ class ConsultantRegController extends GetxController{
   var confirmationPasswordController = TextEditingController().obs;
   var isChecked = false.obs;
   var selectedValue = 'A'.obs;
-    var commonController = Get.put(CommonController());
+  var commonController = Get.put(CommonController());
   final ImagePicker _picker = ImagePicker();
   var imageBase64 = ''.obs;
   var pickedImage = File('').obs;
   Future<void> pickImageFromGallery() async {
     if (await Permission.storage.request().isGranted) {
       final XFile? pickedFile =
-      await _picker.pickImage(source: ImageSource.gallery);
+          await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         pickedImage.value = File(pickedFile.path);
         int imageSize = pickedImage.value.lengthSync();
@@ -42,12 +41,14 @@ class ConsultantRegController extends GetxController{
         // Check if the file size is more than 1MB
         if (imageSizeInMB > 1) {
           // Show a toast message if the file is larger than 1MB
-          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+          errorToast(
+              context: navigatorKey.currentContext!,
+              msg: "Image size should less than 1 mb");
         } else {
           // Convert image to base64 if size is within limit
           imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
           print(imageBase64.value);
-        }// Convert image to base64
+        } // Convert image to base64
       }
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
@@ -60,7 +61,7 @@ class ConsultantRegController extends GetxController{
   Future<void> pickImageFromCamera() async {
     if (await Permission.storage.request().isGranted) {
       final XFile? pickedFile =
-      await _picker.pickImage(source: ImageSource.camera);
+          await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         pickedImage.value = File(pickedFile.path);
         int imageSize = pickedImage.value.lengthSync();
@@ -71,12 +72,14 @@ class ConsultantRegController extends GetxController{
         // Check if the file size is more than 1MB
         if (imageSizeInMB > 1) {
           // Show a toast message if the file is larger than 1MB
-          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+          errorToast(
+              context: navigatorKey.currentContext!,
+              msg: "Image size should less than 1 mb");
         } else {
           // Convert image to base64 if size is within limit
           imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
           print(imageBase64.value);
-        }// Convert image to base64
+        } // Convert image to base64
       }
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
@@ -84,6 +87,7 @@ class ConsultantRegController extends GetxController{
       await Permission.storage.request();
     }
   }
+
   Future<void> validation() async {
     if (pickedImage.value.path.isEmpty) {
       errorToast(
@@ -93,15 +97,17 @@ class ConsultantRegController extends GetxController{
           context: navigatorKey.currentContext!, msg: "Please enter full name");
     } else if (phoneNumberController.value.text.isEmpty) {
       errorToast(
-          context: navigatorKey.currentContext!, msg: "Please enter phone number");
+          context: navigatorKey.currentContext!,
+          msg: "Please enter phone number");
     } else if (emailController.value.text.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!,
           msg: "Please enter your email");
-    }  else if (selectedValue.value == "Select Training's") {
+    } else if (selectedValue.value == "Select Training's") {
       errorToast(
-          context: navigatorKey.currentContext!, msg: "Please select training's");
-    }  else if (passwordController.value.text.isEmpty) {
+          context: navigatorKey.currentContext!,
+          msg: "Please select training's");
+    } else if (passwordController.value.text.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Please enter password");
     } else if (confirmationPasswordController.value.text !=
@@ -114,9 +120,8 @@ class ConsultantRegController extends GetxController{
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
     } else {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', emailController.value.text);
-      await prefs.setString('password', passwordController.value.text);
+      box.write('email', emailController.value.text);
+      box.write('password', passwordController.value.text);
       commonController.fromPage.value = "consultant";
       commonController.email.value = emailController.value.text;
       commonController.phone.value = phoneNumberController.value.text;
@@ -124,11 +129,12 @@ class ConsultantRegController extends GetxController{
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
   }
+
   Future addConsultantRegistration() async {
     CollectionReference users = FirebaseFirestore.instance.collection("users");
 
     QuerySnapshot emailQuery =
-    await users.where('email', isEqualTo: emailController.value.text).get();
+        await users.where('email', isEqualTo: emailController.value.text).get();
     QuerySnapshot phoneQuery = await users
         .where('phoneNumber', isEqualTo: phoneNumberController.value.text)
         .get();
@@ -141,7 +147,7 @@ class ConsultantRegController extends GetxController{
           context: navigatorKey.currentContext!,
           msg: "Phone number already exists");
     } else {
-      Map<String, dynamic> consultantData ={
+      Map<String, dynamic> consultantData = {
         'fullName': fullNameController.value.text,
         'phoneNumber': phoneNumberController.value.text,
         'email': emailController.value.text,
@@ -158,22 +164,24 @@ class ConsultantRegController extends GetxController{
 
         // Update the document with the generated ID
         users.doc(generatedId).update({
-          'id': generatedId,  // Assign the generated Firestore document ID to the 'id' field
+          'id':
+              generatedId, // Assign the generated Firestore document ID to the 'id' field
         }).then((_) {
           print("User ID added");
-          successToast(context: navigatorKey.currentContext!, msg: "Payment Successful");
-          RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
+          successToast(
+              context: navigatorKey.currentContext!, msg: "Payment Successful");
+          // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
           // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
         }).catchError((error) {
           print("Failed to update user with ID: $error");
         });
-
       }).catchError((error) {
         print("Failed to add user: $error");
         // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
       });
     }
   }
+
   void showImageSourceDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -228,5 +236,4 @@ class ConsultantRegController extends GetxController{
       },
     );
   }
-
 }

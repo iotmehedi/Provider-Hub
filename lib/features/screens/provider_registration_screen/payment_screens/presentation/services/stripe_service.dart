@@ -36,7 +36,8 @@ class StripeService {
   Future<void> makePayment({required String money}) async {
     try {
       String? paymentIntentClientSecret = await _createPaymentIntent(
-        int.parse(money), // amount in the smallest unit of currency (e.g., cents)
+        int.parse(
+            money), // amount in the smallest unit of currency (e.g., cents)
         "usd",
       );
       if (paymentIntentClientSecret == null) return;
@@ -48,12 +49,11 @@ class StripeService {
         ),
       );
 
-      print("${commonController.email.value} ${commonController.fromPage.value}");
+      print(
+          "${commonController.email.value} ${commonController.fromPage.value}");
 
       // Present the payment sheet to the user
       await Stripe.instance.presentPaymentSheet().then((value) async {
-
-
         // Handle registration based on the page type
         if (commonController.fromPage.value == "provider") {
           print("provider value");
@@ -78,15 +78,14 @@ class StripeService {
         }
       }).catchError((e) {
         print("Error presenting payment sheet: $e");
-        errorToast(context: navigatorKey.currentContext!, msg: "Payment Cancel");
+        errorToast(
+            context: navigatorKey.currentContext!, msg: "Payment Cancel");
       });
-
     } catch (e) {
       print("StripeException: $e");
       // errorToast(context: navigatorKey.currentContext!, msg: "Payment error: ${e.toString()}");
     }
   }
-
 
   Future<String?> _createPaymentIntent(int amount, String currency) async {
     try {
@@ -186,8 +185,23 @@ class StripeService {
                 child: CustomElevatedButton(
               backgroundColor: AppColors.appColors,
               borderRadius: 8,
-              onPress: () {
-                RouteGenerator.pushNamed(context, Routes.inbox);
+              onPress: () async {
+                if (commonController.fromPage.value == "provider") {
+                  await signinController.signIn();
+                } else if (commonController.fromPage.value == "consultant") {
+                  print("cosultant value");
+
+                  await signinController.signIn();
+                } else if (commonController.fromPage.value == "trainer") {
+                  print("trainer value");
+
+                  await signinController.signIn();
+                } else {
+                  print("qqdp value");
+
+                  await signinController.signIn();
+                }
+                // RouteGenerator.pushNamed(context, Routes.inbox);
               },
               width: 121,
               elevatedButtonSideBorderColor: AppColors.appColors,
