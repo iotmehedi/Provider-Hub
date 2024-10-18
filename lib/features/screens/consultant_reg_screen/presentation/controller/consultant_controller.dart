@@ -34,8 +34,20 @@ class ConsultantRegController extends GetxController{
       await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         pickedImage.value = File(pickedFile.path);
-        imageBase64.value = base64Encode(
-            pickedImage.value.readAsBytesSync()); // Convert image to base64
+        int imageSize = pickedImage.value.lengthSync();
+
+        // Convert to MB (1 MB = 1024 * 1024 bytes)
+        double imageSizeInMB = imageSize / (1024 * 1024);
+
+        // Check if the file size is more than 1MB
+        if (imageSizeInMB > 1) {
+          // Show a toast message if the file is larger than 1MB
+          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+        } else {
+          // Convert image to base64 if size is within limit
+          imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
+          print(imageBase64.value);
+        }// Convert image to base64
       }
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
@@ -51,8 +63,20 @@ class ConsultantRegController extends GetxController{
       await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         pickedImage.value = File(pickedFile.path);
-        imageBase64.value = base64Encode(
-            pickedImage.value.readAsBytesSync()); // Convert image to base64
+        int imageSize = pickedImage.value.lengthSync();
+
+        // Convert to MB (1 MB = 1024 * 1024 bytes)
+        double imageSizeInMB = imageSize / (1024 * 1024);
+
+        // Check if the file size is more than 1MB
+        if (imageSizeInMB > 1) {
+          // Show a toast message if the file is larger than 1MB
+          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+        } else {
+          // Convert image to base64 if size is within limit
+          imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
+          print(imageBase64.value);
+        }// Convert image to base64
       }
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
@@ -117,7 +141,7 @@ class ConsultantRegController extends GetxController{
           context: navigatorKey.currentContext!,
           msg: "Phone number already exists");
     } else {
-      users.add({
+      Map<String, dynamic> consultantData ={
         'fullName': fullNameController.value.text,
         'phoneNumber': phoneNumberController.value.text,
         'email': emailController.value.text,
@@ -127,10 +151,26 @@ class ConsultantRegController extends GetxController{
         'password': passwordController.value.text,
         'type': "consultant",
         'createdAt': FieldValue.serverTimestamp(),
-      }).then((value) {
+      };
+      users.add(consultantData).then((value) {
         print("User Added");
+        String generatedId = value.id;
+
+        // Update the document with the generated ID
+        users.doc(generatedId).update({
+          'id': generatedId,  // Assign the generated Firestore document ID to the 'id' field
+        }).then((_) {
+          print("User ID added");
+          successToast(context: navigatorKey.currentContext!, msg: "Payment Successful");
+          RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
+          // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
+        }).catchError((error) {
+          print("Failed to update user with ID: $error");
+        });
+
       }).catchError((error) {
         print("Failed to add user: $error");
+        // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
       });
     }
   }

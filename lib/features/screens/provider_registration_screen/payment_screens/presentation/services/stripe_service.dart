@@ -52,22 +52,26 @@ class StripeService {
 
       // Present the payment sheet to the user
       await Stripe.instance.presentPaymentSheet().then((value) async {
-        successToast(context: navigatorKey.currentContext!, msg: "Payment Successful");
+
 
         // Handle registration based on the page type
         if (commonController.fromPage.value == "provider") {
+          print("provider value");
           await providerController.addProviderRegistration();
           await signinController.signIn();
           showImageSourceDialog(navigatorKey.currentContext!);
         } else if (commonController.fromPage.value == "consultant") {
+          print("cosultant value");
           await consultantController.addConsultantRegistration();
           await signinController.signIn();
           showImageSourceDialog(navigatorKey.currentContext!);
         } else if (commonController.fromPage.value == "trainer") {
+          print("trainer value");
           await trainerController.addTrainerRegistration();
           await signinController.signIn();
           showImageSourceDialog(navigatorKey.currentContext!);
         } else {
+          print("qqdp value");
           await qddpController.addQDDPRegistration();
           await signinController.signIn();
           showImageSourceDialog(navigatorKey.currentContext!);

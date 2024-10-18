@@ -64,11 +64,14 @@ class QDDPRegistrationScreen extends StatelessWidget {
                         ),
                     ),
                 10.ph,
-                CustomSimpleText(
-                  text: "Upload Picture",
-                  fontSize: AppSizes.size16,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.white,
+                Center(
+                  child: CustomSimpleText(
+                    text: "Upload Picture",
+                    fontSize: AppSizes.size16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.white,
+                    alignment: Alignment.center,
+                  ),
                 ),
                 20.ph,
                 CustomTextTextfieldColumn(
@@ -154,7 +157,7 @@ class QDDPRegistrationScreen extends StatelessWidget {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: controller.selectedDegree.value,
-                      items: <String>["Degree", 'A', 'B', 'C', 'D']
+                      items: <String>["Select Degree", 'A', 'B', 'C', 'D']
                           .map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,

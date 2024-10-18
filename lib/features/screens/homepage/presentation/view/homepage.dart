@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -51,11 +53,12 @@ var signInController = Get.put(SigninController());
                   // signInController.fetchProviders();
                   signInController.getToken();
                   signInController.saveFCMToken();
-                  GetServiceKey getServerKey = GetServiceKey();
-                  String accessToken = await getServerKey.getServiceKeyToken();
-                  print(accessToken);
-                  // Navigate to the desired page when the TextField is tapped
-                  // RouteGenerator.pushNamed(context,Routes.nearestProvider);
+                  if(Platform.isAndroid){
+                    GetServiceKey getServerKey = GetServiceKey();
+                    String accessToken = await getServerKey.getServiceKeyToken();
+                    print(accessToken);
+                  }
+                  RouteGenerator.pushNamed(context,Routes.nearestProvider);
                 },
                 child: AbsorbPointer(
                   child: Container(

@@ -34,15 +34,29 @@ class ProviderRegController extends GetxController {
   var imageBase64 = ''.obs;
   var pickedImage = File('').obs;
   // Pick image from gallery
+
   Future<void> pickImageFromGallery() async {
     if (await Permission.storage.request().isGranted) {
       final XFile? pickedFile =
-          await _picker.pickImage(source: ImageSource.gallery);
+      await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         pickedImage.value = File(pickedFile.path);
-        imageBase64.value = base64Encode(
-            pickedImage.value.readAsBytesSync()); // Convert image to base64
-        print(imageBase64);
+
+        // Get the file size in bytes
+        int imageSize = pickedImage.value.lengthSync();
+
+        // Convert to MB (1 MB = 1024 * 1024 bytes)
+        double imageSizeInMB = imageSize / (1024 * 1024);
+
+        // Check if the file size is more than 1MB
+        if (imageSizeInMB > 1) {
+          // Show a toast message if the file is larger than 1MB
+          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+        } else {
+          // Convert image to base64 if size is within limit
+          imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
+          print(imageBase64.value);
+        }
       }
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
@@ -58,8 +72,20 @@ class ProviderRegController extends GetxController {
           await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         pickedImage.value = File(pickedFile.path);
-        imageBase64.value = base64Encode(
-            pickedImage.value.readAsBytesSync()); // Convert image to base64
+        int imageSize = pickedImage.value.lengthSync();
+
+        // Convert to MB (1 MB = 1024 * 1024 bytes)
+        double imageSizeInMB = imageSize / (1024 * 1024);
+
+        // Check if the file size is more than 1MB
+        if (imageSizeInMB > 1) {
+          // Show a toast message if the file is larger than 1MB
+          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+        } else {
+          // Convert image to base64 if size is within limit
+          imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
+          print(imageBase64.value);
+        }// Convert image to base64
       }
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
@@ -146,37 +172,43 @@ class ProviderRegController extends GetxController {
           msg: "Phone number already exists");
     } else {
       print(providerNameController.value.text);
+
       Map<String, dynamic> providerData = {
-        'providerName': providerNameController.value.text,
-        'service': serviceController.value.text,
-        'contactName': contactNameController.value.text,
-        'phoneNumber': contactController.value.text,
-        'email': emailController.value.text,
-        'officeAddress': officeAddressController.value.text,
-        'licenseNumber': licenseNumberController.value.text,
-        'npiNumber': npiNumberController.value.text,
-        'imageBase64': imageBase64.value,
-        'type': "provider",
-        'password': passwordController.value.text,
-        'createdAt': FieldValue.serverTimestamp(),
+        'providerName': providerNameController.value.text,  // providerName: string
+        'service': serviceController.value.text,            // service: string
+        'contactName': contactNameController.value.text,    // contactName: string
+        'phoneNumber': contactController.value.text,        // phoneNumber: string
+        'email': emailController.value.text,                // email: string
+        'officeAddress': officeAddressController.value.text, // officeAddress: string
+        'licenseNumber': licenseNumberController.value.text, // licenseNumber: string
+        'npiNumber': npiNumberController.value.text,        // npiNumber: string
+        'imageBase64': imageBase64.value,                   // imageBase64: string (ensure this is within Firestore's size limits)
+        'type': "provider",                                 // type: string
+        'password': passwordController.value.text,          // password: string
+        'fcmToken': "",                  // fcmToken: string (optional, replace if available)
+        'createdAt': FieldValue.serverTimestamp(),          // createdAt: Firestore timestamp
       };
+
+      box.write('email', emailController.value.text);  // Storing email locally
+      box.write('password', passwordController.value.text);  // Storing password locally
+
       users.add(providerData).then((value) {
         print("User Added");
         String generatedId = value.id;
-
         // Update the document with the generated ID
         users.doc(generatedId).update({
-          'id': generatedId,
+          'id': generatedId,  // Assign the generated Firestore document ID to the 'id' field
         }).then((_) {
           print("User ID added");
-          successToast(context: navigatorKey.currentContext!, msg: "User successfully added with ID");
+          successToast(context: navigatorKey.currentContext!, msg: "Payment Successful");
+          RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
+          // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
         }).catchError((error) {
           print("Failed to update user with ID: $error");
         });
-        successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
       }).catchError((error) {
         print("Failed to add user: $error");
-        errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
+        // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
       });
     }
   }

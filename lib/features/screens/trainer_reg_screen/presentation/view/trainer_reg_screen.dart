@@ -64,12 +64,14 @@ class TrainerRegistrationScreen extends StatelessWidget {
                         ),
                     ),
                 10.ph,
-                CustomSimpleText(
-                  text: "Upload Picture",
-                  fontSize: AppSizes.size16,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.white,
-                  alignment: Alignment.center,
+                Center(
+                  child: CustomSimpleText(
+                    text: "Upload Picture",
+                    fontSize: AppSizes.size16,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.white,
+                    alignment: Alignment.center,
+                  ),
                 ),
                 20.ph,
                 CustomTextTextfieldColumn(

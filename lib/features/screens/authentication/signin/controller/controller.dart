@@ -8,6 +8,7 @@ import 'package:path/path.dart';
 import 'package:provider_hub/features/screens/authentication/model/consultant_model.dart';
 import 'package:provider_hub/features/screens/authentication/model/provider_model.dart';
 import 'package:provider_hub/features/screens/authentication/model/qddp_model.dart';
+import 'package:provider_hub/features/widget/custom_toast/custom_toast.dart';
 import 'package:provider_hub/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../../../const/routes/route_name.dart';
@@ -72,10 +73,7 @@ class SigninController extends GetxController {
           print('User data: ${userDoc.id} ${userModel.value.officeAddress}');
           box.write('loginUserId', userDoc.id);
           await prefs.setString('loginUserId', userDoc.id);
-          print('User data: ${userDoc.id} ${userData['officeAddress']}');
-          ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-            const SnackBar(content: Text('Login successful!')),
-          );
+          successToast(context: navigatorKey.currentContext!, msg: 'Login successful!');
           if ((emailFromSession?.isEmpty ?? false) &&
               (passwordFromSession?.isEmpty ?? false)) {
             await prefs.setString('email', emailPhoneController.value.text);
@@ -87,14 +85,12 @@ class SigninController extends GetxController {
           // User authenticated, proceed to the next screen or show data
         } else {
           print('Incorrect password');
-          ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-            const SnackBar(content: Text('Incorrect password')),
-          );
+          errorToast(context: navigatorKey.currentContext!, msg: "Incorrect password");
         }
       } else {
-        ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
-          const SnackBar(content: Text('No user found with that email')),
-        );
+        // ScaffoldMessenger.of(navigatorKey.currentContext!).showSnackBar(
+        //   const SnackBar(content: Text('No user found with that email')),
+        // );
         print('No user found with that email');
       }
     } catch (e) {

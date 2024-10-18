@@ -187,7 +187,71 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                // 10.ph,
+                10.ph,
+                CustomSimpleText(
+                  alignment: Alignment.center,
+                  text: signinController.providerModel.value.type ==
+                      "provider"
+                      ? signinController
+                      .providerModel.value.email ??
+                      ''
+                      : signinController.userModel.value.type ==
+                      "trainer"
+                      ? signinController
+                      .userModel.value.email ??
+                      ''
+                      : signinController
+                      .consultantModel.value.type ==
+                      "consultant"
+                      ? signinController
+                      .consultantModel.value.email ??
+                      ''
+                      : signinController.qddpModel.value.type ==
+                      "qddp"
+                      ? signinController
+                      .qddpModel.value.email ??
+                      ''
+                      : '',
+                  fontSize: AppSizes.size14,
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.white,
+                ),
+                10.ph,
+                CustomSimpleText(
+                  alignment: Alignment.center,
+                  text: signinController.providerModel.value.type ==
+                      "provider"
+                      ? "License: ${signinController
+                      .providerModel.value.licenseNumber ??
+                      ''}"
+                      : signinController.userModel.value.type ==
+                      "trainer"
+                      ? signinController
+                      .userModel.value.phoneNumber ??
+                      ''
+                      :  '',
+                  fontSize: AppSizes.size14,
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.white,
+                ),
+                10.ph,
+                CustomSimpleText(
+                  alignment: Alignment.center,
+                  text: signinController.providerModel.value.type ==
+                      "provider"
+                      ? "NPI: ${signinController
+                      .providerModel.value.npiNumber ??
+                      ''}"
+                      : signinController.userModel.value.type ==
+                      "trainer"
+                      ? signinController
+                      .userModel.value.training ??
+                      ''
+                      :  '',
+                  fontSize: AppSizes.size14,
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.white,
+                ),
                 // Row(
                 //   mainAxisAlignment: MainAxisAlignment.center,
                 //   children: [
@@ -265,20 +329,26 @@ class ProfilePage extends StatelessWidget {
                 //   ],
                 // ),
                 20.ph,
-                Divider(
-                  color: AppColors.deepGrey,
+                Visibility(
+                  visible:  signinController.providerModel.value.type == "provider" ? false : true,
+                  child: Divider(
+                    color: AppColors.deepGrey,
+                  ),
                 ),
                 20.ph,
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: CustomSimpleText(
-                      text: "Provide Suggestion",
-                      fontSize: AppSizes.size13,
-                      color: AppColors.white,
-                      fontWeight: FontWeight.bold,
-                      textAlign: TextAlign.start,
+                Visibility(
+                  visible:  signinController.providerModel.value.type == "provider" ? false : true,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: CustomSimpleText(
+                        text: "Provide Suggestion",
+                        fontSize: AppSizes.size13,
+                        color: AppColors.white,
+                        fontWeight: FontWeight.bold,
+                        textAlign: TextAlign.start,
+                      ),
                     ),
                   ),
                 ),
