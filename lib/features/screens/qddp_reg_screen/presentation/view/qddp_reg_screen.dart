@@ -22,7 +22,7 @@ class QDDPRegistrationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-          () => Scaffold(
+      () => Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: CustomAppBar(
           title: "QDDP Registration Form",
@@ -39,30 +39,32 @@ class QDDPRegistrationScreen extends StatelessWidget {
               children: [
                 10.ph,
                 Center(
-                      child: InkWell(
-                          onTap: () => controller.showImageSourceDialog(context),
-                          child: controller.pickedImage.value.path.isNotEmpty
-                    ? Container(
+                  child: InkWell(
+                    onTap: () => controller.showImageSourceDialog(context),
+                    child: controller.pickedImage.value.path.isNotEmpty
+                        ? Container(
+                            height: AppSizes.newSize(10.0),
+                            width: AppSizes.newSize(10.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: Image.file(
+                              controller.pickedImage.value,
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ))
+                        : InkWell(
+                            onTap: () =>
+                                controller.showImageSourceDialog(context),
+                            child: CustomSvgWidget(
+                              image: AppAssets.uploadPictureAveter,
                               height: AppSizes.newSize(10.0),
                               width: AppSizes.newSize(10.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Image.file(
-                                controller.pickedImage.value,
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              )) : InkWell(
-                        onTap: () => controller.showImageSourceDialog(context),
-                        child: CustomSvgWidget(
-                          image: AppAssets.uploadPictureAveter,
-                          height: AppSizes.newSize(10.0),
-                          width: AppSizes.newSize(10.0),
-                        ),
-                      ),
-                        ),
-                    ),
+                            ),
+                          ),
+                  ),
+                ),
                 10.ph,
                 Center(
                   child: CustomSimpleText(
@@ -83,7 +85,7 @@ class QDDPRegistrationScreen extends StatelessWidget {
                     text: "Phone Number",
                     hint: "Enter Your Phone Number",
                     textEditingController:
-                    controller.phoneNumberController.value),
+                        controller.phoneNumberController.value),
                 10.ph,
                 CustomTextTextfieldColumn(
                     text: "Contact Email",
@@ -105,12 +107,12 @@ class QDDPRegistrationScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColors.appColors, width: 1.0),
                     borderRadius:
-                    BorderRadius.circular(5.0), // Adjust as needed
+                        BorderRadius.circular(5.0), // Adjust as needed
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: controller.selectedValue.value,
-                      items: <String>["Choose one", 'A', 'B', 'C', 'D']
+                      items: <String>["Choose one", "Registered nurse"]
                           .map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
@@ -125,11 +127,12 @@ class QDDPRegistrationScreen extends StatelessWidget {
                       onChanged: (value) {
                         controller.selectedValue.value = value!;
                       },
-                      underline: const SizedBox(), // Removes the default underline
+                      underline:
+                          const SizedBox(), // Removes the default underline
                       isExpanded:
-                      true, // Makes the dropdown button expand to fill its container
+                          true, // Makes the dropdown button expand to fill its container
                       dropdownColor:
-                      Colors.black, // Sets the dropdown menu color to black
+                          Colors.black, // Sets the dropdown menu color to black
                       iconEnabledColor: Colors
                           .white, // Optional: Change the icon color if needed
                       style: const TextStyle(color: Colors.white),
@@ -152,13 +155,20 @@ class QDDPRegistrationScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(color: AppColors.appColors, width: 1.0),
                     borderRadius:
-                    BorderRadius.circular(5.0), // Adjust as needed
+                        BorderRadius.circular(5.0), // Adjust as needed
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: controller.selectedDegree.value,
-                      items: <String>["Select Degree", 'A', 'B', 'C', 'D']
-                          .map((String value) {
+                      items: <String>[
+                        "Select Degree",
+                        "Socialogy",
+                        "social work",
+                        "special education",
+                        "psychology",
+                        "rehabilatation",
+                        "counceling"
+                      ].map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: CustomSimpleText(
@@ -172,11 +182,12 @@ class QDDPRegistrationScreen extends StatelessWidget {
                       onChanged: (value) {
                         controller.selectedDegree.value = value!;
                       },
-                      underline: const SizedBox(), // Removes the default underline
+                      underline:
+                          const SizedBox(), // Removes the default underline
                       isExpanded:
-                      true, // Makes the dropdown button expand to fill its container
+                          true, // Makes the dropdown button expand to fill its container
                       dropdownColor:
-                      Colors.black, // Sets the dropdown menu color to black
+                          Colors.black, // Sets the dropdown menu color to black
                       iconEnabledColor: Colors
                           .white, // Optional: Change the icon color if needed
                       style: const TextStyle(color: Colors.white),
@@ -200,7 +211,7 @@ class QDDPRegistrationScreen extends StatelessWidget {
                   children: [
                     Checkbox(
                       side: WidgetStateBorderSide.resolveWith(
-                            (Set<WidgetState> states) {
+                        (Set<WidgetState> states) {
                           if (states.contains(WidgetState.pressed) ||
                               states.contains(WidgetState.hovered) ||
                               states.contains(WidgetState.focused)) {
@@ -215,9 +226,9 @@ class QDDPRegistrationScreen extends StatelessWidget {
                       value: controller.isChecked.value,
                       focusColor: AppColors.white,
                       fillColor: MaterialStateProperty.resolveWith(
-                              (Set<MaterialState> states) {
-                            return AppColors.deepGrey;
-                          }),
+                          (Set<MaterialState> states) {
+                        return AppColors.deepGrey;
+                      }),
                       onChanged: (value) {
                         controller.isChecked.value = value!;
                       },
@@ -228,7 +239,7 @@ class QDDPRegistrationScreen extends StatelessWidget {
                         children: [
                           CustomSimpleText(
                             text:
-                            "By selecting Agree and continue below, I agree to ",
+                                "By selecting Agree and continue below, I agree to ",
                             fontSize: 12,
                             color: AppColors.white,
                           ),

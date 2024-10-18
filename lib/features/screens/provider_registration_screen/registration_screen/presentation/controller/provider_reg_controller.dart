@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/consts/app_sizes.dart';
@@ -12,14 +13,13 @@ import 'package:provider_hub/const/utils/consts/common_controller.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 import 'package:provider_hub/features/widget/custom_toast/custom_toast.dart';
 import 'package:provider_hub/main.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../const/routes/route_name.dart';
 import '../../../../../../const/routes/router.dart';
 
 class ProviderRegController extends GetxController {
   var providerNameController = TextEditingController(text: "mehedi").obs;
-  var serviceController = TextEditingController(text: "service").obs;
+  // var serviceController = TextEditingController(text: "service").obs;
   var contactNameController = TextEditingController(text: "contact name").obs;
   var contactController = TextEditingController(text: "012345678").obs;
   var emailController = TextEditingController(text: "test@gmail.com").obs;
@@ -33,12 +33,29 @@ class ProviderRegController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   var imageBase64 = ''.obs;
   var pickedImage = File('').obs;
+  var selectedServiceName = [
+    "In-Home Supportive Services",
+    "Group Home Services",
+    "Sponsored Residential Services",
+    "Community Engagement Services",
+    "Day Support Services",
+    "Outpatient Psychotherapy"
+  ].obs;
+  var items = <MultiSelectItem<String>>[].obs;
+  var selectedServiceItems = [].obs;
   // Pick image from gallery
+  @override
+  void onInit() {
+    items.value = selectedServiceName
+        .map((animal) => MultiSelectItem(animal, animal))
+        .toList();
+    super.onInit();
+  }
 
   Future<void> pickImageFromGallery() async {
     if (await Permission.storage.request().isGranted) {
       final XFile? pickedFile =
-      await _picker.pickImage(source: ImageSource.gallery);
+          await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         pickedImage.value = File(pickedFile.path);
 
@@ -51,7 +68,9 @@ class ProviderRegController extends GetxController {
         // Check if the file size is more than 1MB
         if (imageSizeInMB > 1) {
           // Show a toast message if the file is larger than 1MB
-          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+          errorToast(
+              context: navigatorKey.currentContext!,
+              msg: "Image size should less than 1 mb");
         } else {
           // Convert image to base64 if size is within limit
           imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
@@ -80,12 +99,14 @@ class ProviderRegController extends GetxController {
         // Check if the file size is more than 1MB
         if (imageSizeInMB > 1) {
           // Show a toast message if the file is larger than 1MB
-          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+          errorToast(
+              context: navigatorKey.currentContext!,
+              msg: "Image size should less than 1 mb");
         } else {
           // Convert image to base64 if size is within limit
           imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
           print(imageBase64.value);
-        }// Convert image to base64
+        } // Convert image to base64
       }
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
@@ -102,7 +123,7 @@ class ProviderRegController extends GetxController {
     } else if (providerNameController.value.text.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Please enter name");
-    } else if (serviceController.value.text.isEmpty) {
+    } else if (selectedServiceItems.value.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Please enter service");
     } else if (contactNameController.value.text.isEmpty) {
@@ -141,9 +162,8 @@ class ProviderRegController extends GetxController {
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
     } else {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', emailController.value.text);
-      await prefs.setString('password', passwordController.value.text);
+      box.write('email', emailController.value.text);
+      box.write('password', passwordController.value.text);
       commonController.fromPage.value = "provider";
       commonController.email.value = emailController.value.text;
       commonController.phone.value = contactController.value.text;
@@ -154,15 +174,14 @@ class ProviderRegController extends GetxController {
   }
 
   Future addProviderRegistration() async {
-  
     CollectionReference users = FirebaseFirestore.instance.collection('users');
-    
+
     QuerySnapshot emailQuery =
         await users.where('email', isEqualTo: emailController.value.text).get();
     QuerySnapshot phoneQuery = await users
         .where('phoneNumber', isEqualTo: contactController.value.text)
         .get();
-    
+
     if (emailQuery.docs.isNotEmpty) {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Email already exists");
@@ -174,34 +193,42 @@ class ProviderRegController extends GetxController {
       print(providerNameController.value.text);
 
       Map<String, dynamic> providerData = {
-        'providerName': providerNameController.value.text,  // providerName: string
-        'service': serviceController.value.text,            // service: string
-        'contactName': contactNameController.value.text,    // contactName: string
-        'phoneNumber': contactController.value.text,        // phoneNumber: string
-        'email': emailController.value.text,                // email: string
-        'officeAddress': officeAddressController.value.text, // officeAddress: string
-        'licenseNumber': licenseNumberController.value.text, // licenseNumber: string
-        'npiNumber': npiNumberController.value.text,        // npiNumber: string
-        'imageBase64': imageBase64.value,                   // imageBase64: string (ensure this is within Firestore's size limits)
-        'type': "provider",                                 // type: string
-        'password': passwordController.value.text,          // password: string
-        'fcmToken': "",                  // fcmToken: string (optional, replace if available)
-        'createdAt': FieldValue.serverTimestamp(),          // createdAt: Firestore timestamp
+        'providerName':
+            providerNameController.value.text, // providerName: string
+        'service': selectedServiceItems, // service: string
+        'contactName': contactNameController.value.text, // contactName: string
+        'phoneNumber': contactController.value.text, // phoneNumber: string
+        'email': emailController.value.text, // email: string
+        'officeAddress':
+            officeAddressController.value.text, // officeAddress: string
+        'licenseNumber':
+            licenseNumberController.value.text, // licenseNumber: string
+        'npiNumber': npiNumberController.value.text, // npiNumber: string
+        'imageBase64': imageBase64
+            .value, // imageBase64: string (ensure this is within Firestore's size limits)
+        'type': "provider", // type: string
+        'password': passwordController.value.text, // password: string
+        'fcmToken': "", // fcmToken: string (optional, replace if available)
+        'createdAt':
+            FieldValue.serverTimestamp(), // createdAt: Firestore timestamp
       };
 
-      box.write('email', emailController.value.text);  // Storing email locally
-      box.write('password', passwordController.value.text);  // Storing password locally
+      box.write('email', emailController.value.text); // Storing email locally
+      box.write('password',
+          passwordController.value.text); // Storing password locally
 
       users.add(providerData).then((value) {
         print("User Added");
         String generatedId = value.id;
         // Update the document with the generated ID
         users.doc(generatedId).update({
-          'id': generatedId,  // Assign the generated Firestore document ID to the 'id' field
+          'id':
+              generatedId, // Assign the generated Firestore document ID to the 'id' field
         }).then((_) {
           print("User ID added");
-          successToast(context: navigatorKey.currentContext!, msg: "Payment Successful");
-          RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
+          successToast(
+              context: navigatorKey.currentContext!, msg: "Payment Successful");
+          // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
           // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
         }).catchError((error) {
           print("Failed to update user with ID: $error");

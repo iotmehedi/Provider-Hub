@@ -11,7 +11,7 @@ class ProviderModel {
   final String? password;
   final String? phoneNumber;
   final String? providerName;
-  final String? service;
+  final List<dynamic>? service;
   final String? type;
   final String? id;
 
@@ -44,7 +44,7 @@ class ProviderModel {
       password: data['password'] ?? '',
       phoneNumber: data['phoneNumber'] ?? '',
       providerName: data['providerName'] ?? '',
-      service: data['service'] ?? '',
+      service: data['service'] is List ? data['service'] : [],
       type: data['type'] ?? '',
       id: data['id'] ?? '',
     );

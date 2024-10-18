@@ -18,7 +18,7 @@ import '../../../inbox_page/presentation/controller/controller.dart';
 
 class ProviderProfileDetails extends StatelessWidget {
   final ProviderModel providerModel;
-   ProviderProfileDetails({super.key, required this.providerModel});
+  ProviderProfileDetails({super.key, required this.providerModel});
   var signinController = Get.find<SigninController>();
   var indexController = Get.put(InboxController());
   @override
@@ -58,7 +58,7 @@ class ProviderProfileDetails extends StatelessWidget {
           ),
           5.ph,
           CustomSimpleText(
-            text: providerModel.service ?? '',
+            text: providerModel.service?.join(', ') ?? '',
             fontSize: AppSizes.size12,
             fontWeight: FontWeight.normal,
             color: AppColors.white,
@@ -127,21 +127,20 @@ class ProviderProfileDetails extends StatelessWidget {
               ),
               8.ph,
               CustomSimpleText(
-                text:'View Services',
-                  textDecoration: TextDecoration.underline,
-                  fontSize: AppSizes.size13,
-                  fontWeight: FontWeight.normal,
-                  color: AppColors.white,
-
+                text: 'View Services',
+                textDecoration: TextDecoration.underline,
+                fontSize: AppSizes.size13,
+                fontWeight: FontWeight.normal,
+                color: AppColors.white,
               )
             ],
           ),
           CustomSimpleText(
-           text:  'Bio',
-              textDecoration: TextDecoration.none,
-              fontSize: AppSizes.size13,
-              fontWeight: FontWeight.normal,
-              color: AppColors.white,
+            text: 'Bio',
+            textDecoration: TextDecoration.none,
+            fontSize: AppSizes.size13,
+            fontWeight: FontWeight.normal,
+            color: AppColors.white,
             alignment: Alignment.center,
           ),
           10.ph,
@@ -151,14 +150,15 @@ class ProviderProfileDetails extends StatelessWidget {
               Expanded(
                 flex: 2,
                 child: InkWell(
-                  onTap: (){
-                    RouteGenerator.pushNamedSms(
-                        context, Routes.messageScreen, arguments: [
+                  onTap: () {
+                    RouteGenerator.pushNamedSms(context, Routes.messageScreen,
+                        arguments: [
                           providerModel.id,
-                      providerModel.imageBase64,
-                      providerModel.providerName
-                    ]);
-                    indexController.fetchMessages(receiverId: providerModel.id ??'');
+                          providerModel.imageBase64,
+                          providerModel.providerName
+                        ]);
+                    indexController.fetchMessages(
+                        receiverId: providerModel.id ?? '');
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -221,7 +221,9 @@ class ProviderProfileDetails extends StatelessWidget {
           ),
           40.ph,
           Visibility(
-            visible:  signinController.providerModel.value.type == "provider" ? false : true,
+            visible: signinController.providerModel.value.type == "provider"
+                ? false
+                : true,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: GridView.builder(
@@ -275,15 +277,16 @@ class ProviderProfileDetails extends StatelessWidget {
                                 children: [
                                   PannableRatingBar(
                                     rate: index / 10,
-                                    items: List.generate(1, (index) =>
-                                    const RatingWidget(
-                                      selectedColor: Colors.orange,
-                                      unSelectedColor: Colors.grey,
-                                      child: Icon(
-                                        Icons.star,
-                                        size: 15,
-                                      ),
-                                    )),
+                                    items: List.generate(
+                                        1,
+                                        (index) => const RatingWidget(
+                                              selectedColor: Colors.orange,
+                                              unSelectedColor: Colors.grey,
+                                              child: Icon(
+                                                Icons.star,
+                                                size: 15,
+                                              ),
+                                            )),
                                   ),
                                   CustomSimpleText(
                                     text: "${index / 10}",
@@ -297,23 +300,20 @@ class ProviderProfileDetails extends StatelessWidget {
                               ),
                               5.ph,
                               InkWell(
-                                onTap: (){
-
+                                onTap: () {
                                   RouteGenerator.pushNamedSms(
-                                      context, Routes.providerDetailsProfile, arguments: [
-                                    item
-                                  ]);
+                                      context, Routes.providerDetailsProfile,
+                                      arguments: [item]);
                                   print("item ${item.id}");
-
                                 },
                                 child: Container(
                                   padding: EdgeInsets.symmetric(vertical: 5),
                                   margin: EdgeInsets.only(bottom: 10),
-                                  width: MediaQuery.of(context).size.width * 0.26,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.26,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(6),
-                                      color: AppColors.appColors
-                                  ),
+                                      color: AppColors.appColors),
                                   child: CustomSimpleText(
                                     text: "View Details",
                                     fontWeight: FontWeight.bold,
@@ -339,12 +339,13 @@ class ProviderProfileDetails extends StatelessWidget {
                               height: AppSizes.newSize(8.0),
                               width: AppSizes.newSize(8.0),
                               child: Image.memory(
-                                base64Decode( item.imageBase64 ?? ''),
+                                base64Decode(item.imageBase64 ?? ''),
                                 fit: BoxFit.cover, // Adjust image display
                               ),
                             ),
                           ),
-                        ),)
+                        ),
+                      )
                     ],
                   );
                 },

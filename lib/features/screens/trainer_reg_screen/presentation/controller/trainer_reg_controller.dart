@@ -5,8 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../const/routes/route_name.dart';
 import '../../../../../const/routes/router.dart';
@@ -17,7 +17,7 @@ import '../../../../../main.dart';
 import '../../../../widget/custom_simple_text/custom_simple_text.dart';
 import '../../../../widget/custom_toast/custom_toast.dart';
 
-class TrainerRegController extends GetxController{
+class TrainerRegController extends GetxController {
   var fullNameController = TextEditingController().obs;
   var phoneNumberController = TextEditingController().obs;
   var emailController = TextEditingController().obs;
@@ -25,15 +25,33 @@ class TrainerRegController extends GetxController{
   var passwordController = TextEditingController().obs;
   var confirmationPasswordController = TextEditingController().obs;
   var isChecked = false.obs;
-  var selectedValue = "Select Training's".obs;
+  // var selectedValue = "Select Training's".obs;
   var commonController = Get.put(CommonController());
   final ImagePicker _picker = ImagePicker();
   var imageBase64 = ''.obs;
   var pickedImage = File('').obs;
+  var selectedServiceName = [
+    "CRP/First Aid",
+    "TOVA",
+    "Medication Aid",
+    "DSP",
+    "Documentation",
+  ].obs;
+  var items = <MultiSelectItem<String>>[].obs;
+  var selectedServiceItems = [].obs;
+  // Pick image from gallery
+  @override
+  void onInit() {
+    items.value = selectedServiceName
+        .map((animal) => MultiSelectItem(animal, animal))
+        .toList();
+    super.onInit();
+  }
+
   Future<void> pickImageFromGallery() async {
     if (await Permission.storage.request().isGranted) {
       final XFile? pickedFile =
-      await _picker.pickImage(source: ImageSource.gallery);
+          await _picker.pickImage(source: ImageSource.gallery);
       if (pickedFile != null) {
         pickedImage.value = File(pickedFile.path);
         int imageSize = pickedImage.value.lengthSync();
@@ -44,12 +62,14 @@ class TrainerRegController extends GetxController{
         // Check if the file size is more than 1MB
         if (imageSizeInMB > 1) {
           // Show a toast message if the file is larger than 1MB
-          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+          errorToast(
+              context: navigatorKey.currentContext!,
+              msg: "Image size should less than 1 mb");
         } else {
           // Convert image to base64 if size is within limit
           imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
           print(imageBase64.value);
-        }// Convert image to base64
+        } // Convert image to base64
       }
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
@@ -62,7 +82,7 @@ class TrainerRegController extends GetxController{
   Future<void> pickImageFromCamera() async {
     if (await Permission.storage.request().isGranted) {
       final XFile? pickedFile =
-      await _picker.pickImage(source: ImageSource.camera);
+          await _picker.pickImage(source: ImageSource.camera);
       if (pickedFile != null) {
         pickedImage.value = File(pickedFile.path);
         int imageSize = pickedImage.value.lengthSync();
@@ -73,12 +93,14 @@ class TrainerRegController extends GetxController{
         // Check if the file size is more than 1MB
         if (imageSizeInMB > 1) {
           // Show a toast message if the file is larger than 1MB
-          errorToast(context: navigatorKey.currentContext!, msg: "Image size should less than 1 mb");
+          errorToast(
+              context: navigatorKey.currentContext!,
+              msg: "Image size should less than 1 mb");
         } else {
           // Convert image to base64 if size is within limit
           imageBase64.value = base64Encode(pickedImage.value.readAsBytesSync());
           print(imageBase64.value);
-        }// Convert image to base64
+        } // Convert image to base64
       }
     } else if (await Permission.storage.request().isPermanentlyDenied) {
       await openAppSettings();
@@ -86,6 +108,7 @@ class TrainerRegController extends GetxController{
       await Permission.storage.request();
     }
   }
+
   Future<void> validation() async {
     if (pickedImage.value.path.isEmpty) {
       errorToast(
@@ -95,7 +118,8 @@ class TrainerRegController extends GetxController{
           context: navigatorKey.currentContext!, msg: "Please enter full name");
     } else if (phoneNumberController.value.text.isEmpty) {
       errorToast(
-          context: navigatorKey.currentContext!, msg: "Please enter phone number");
+          context: navigatorKey.currentContext!,
+          msg: "Please enter phone number");
     } else if (emailController.value.text.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!,
@@ -104,10 +128,11 @@ class TrainerRegController extends GetxController{
       errorToast(
           context: navigatorKey.currentContext!,
           msg: "Please enter office address");
-    } else if (selectedValue.value == "Select Training's") {
+    } else if (selectedServiceItems.isEmpty) {
       errorToast(
-          context: navigatorKey.currentContext!, msg: "Please select training's");
-    }  else if (passwordController.value.text.isEmpty) {
+          context: navigatorKey.currentContext!,
+          msg: "Please select training's");
+    } else if (passwordController.value.text.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Please enter password");
     } else if (confirmationPasswordController.value.text !=
@@ -120,9 +145,8 @@ class TrainerRegController extends GetxController{
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
     } else {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', emailController.value.text);
-      await prefs.setString('password', passwordController.value.text);
+      box.write('email', emailController.value.text);
+      box.write('password', passwordController.value.text);
       commonController.fromPage.value = "trainer";
       commonController.email.value = emailController.value.text;
       commonController.phone.value = phoneNumberController.value.text;
@@ -130,11 +154,12 @@ class TrainerRegController extends GetxController{
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
   }
+
   Future addTrainerRegistration() async {
     CollectionReference users = FirebaseFirestore.instance.collection("users");
 
     QuerySnapshot emailQuery =
-    await users.where('email', isEqualTo: emailController.value.text).get();
+        await users.where('email', isEqualTo: emailController.value.text).get();
     QuerySnapshot phoneQuery = await users
         .where('phoneNumber', isEqualTo: phoneNumberController.value.text)
         .get();
@@ -152,7 +177,7 @@ class TrainerRegController extends GetxController{
         'phoneNumber': phoneNumberController.value.text,
         'email': emailController.value.text,
         'officeAddress': officeAddressController.value.text,
-        'training': selectedValue.value,
+        'training': selectedServiceItems,
         'type': "trainer",
         'service': "Trainer",
         'imageBase64': imageBase64.value,
@@ -164,22 +189,24 @@ class TrainerRegController extends GetxController{
 
         // Update the document with the generated ID
         users.doc(generatedId).update({
-          'id': generatedId,  // Assign the generated Firestore document ID to the 'id' field
+          'id':
+              generatedId, // Assign the generated Firestore document ID to the 'id' field
         }).then((_) {
           print("User ID added");
-          successToast(context: navigatorKey.currentContext!, msg: "Payment Successful");
-          RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
+          successToast(
+              context: navigatorKey.currentContext!, msg: "Payment Successful");
+          // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
           // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
         }).catchError((error) {
           print("Failed to update user with ID: $error");
         });
-
       }).catchError((error) {
         print("Failed to add user: $error");
         // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
       });
     }
   }
+
   void showImageSourceDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -234,5 +261,4 @@ class TrainerRegController extends GetxController{
       },
     );
   }
-
 }

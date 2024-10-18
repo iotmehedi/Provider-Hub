@@ -98,133 +98,146 @@ class NearestProviderPage extends StatelessWidget {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                   borderSide: BorderSide(
-                      color:
-                      AppColors.white), // Border color when focused
+                      color: AppColors.white), // Border color when focused
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                   borderSide: BorderSide(
-                      color:
-                      AppColors.white), // Border color when enabled
+                      color: AppColors.white), // Border color when enabled
                 ),
                 disabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(100),
                   borderSide: BorderSide(
-                      color:
-                      AppColors.white), // Border color when disabled
+                      color: AppColors.white), // Border color when disabled
                 ),
               ),
             ),
           ),
           10.ph,
           Expanded(
-            child: Obx(()=> ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: signinController.filteredList.length,
-              itemBuilder: (context, index) {
-                final item = signinController.filteredList[index];
-                return GestureDetector(
-                  onTap: () {
-                    // controller.selectedIndex.value = index;
-                  },
-                  child: Card(
-                    elevation: 0.0,
-                    color: AppColors.slightGrey.withOpacity(0.04),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(100),
-                              child: SizedBox(
-                                height: AppSizes.newSize(8.0),
-                                width: AppSizes.newSize(8.0),
-                                child: Image.memory(
-                                  base64Decode( item.imageBase64 ?? ''),
-                                  fit: BoxFit.cover, // Adjust image display
-                                ),
-                              ),
-                            ),
-                          ),
-                          10.pw,
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                CustomSimpleText(
-                                  text: item.contactName ?? '',
-                                  fontSize: AppSizes.size13,
-                                  fontWeight: FontWeight.normal,
-                                  color: AppColors.white,
-                                ),
-                                3.ph,
-                                CustomSimpleText(
-                                  text: item.service ?? '',
-                                  fontSize: AppSizes.size13,
-                                  fontWeight: FontWeight.normal,
-                                  color: AppColors.white,
-                                ),
-                                3.ph,
-                                SizedBox(
-                                  width: MediaQuery.of(context).size.width * 0.79,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Icon(Icons.star, color: AppColors.yellow,size: 10,),
-                                          5.pw,
-                                          CustomSimpleText(
-                                            text: "4.5",
-                                            fontSize: AppSizes.size11,
-                                            fontWeight: FontWeight.normal,
-                                            color: AppColors.yellow,
-                                            textAlign: TextAlign.end,
-                                          ),
-                                        ],
-                                      ),
-                                      InkWell(
-                                        onTap: (){
-                                          // RouteGenerator.pushNamed(context,Routes.messageScreen);
-                                          RouteGenerator.pushNamedSms(
-                                              context, Routes.messageScreen, arguments: [
-                                            item.id,
-                                            item.imageBase64,
-                                            item.providerName
-                                          ]);
-                                          indexController.fetchMessages(receiverId: item.id ??'');
-                                        },
-                                        child: Container(
-                                          height: 22,
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(100),
-                                              color: AppColors.appColors
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                                            child: Center(child: CustomSimpleText(text: "Send Message", fontSize: AppSizes.size11, color: AppColors.white,)),
-                                          ),
-                                        ),
-                                      )
-                                    ],
+            child: Obx(() => ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  itemCount: signinController.filteredList.length,
+                  itemBuilder: (context, index) {
+                    final item = signinController.filteredList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        // controller.selectedIndex.value = index;
+                      },
+                      child: Card(
+                        elevation: 0.0,
+                        color: AppColors.slightGrey.withOpacity(0.04),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: SizedBox(
+                                    height: AppSizes.newSize(8.0),
+                                    width: AppSizes.newSize(8.0),
+                                    child: Image.memory(
+                                      base64Decode(item.imageBase64 ?? ''),
+                                      fit: BoxFit.cover, // Adjust image display
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                              10.pw,
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomSimpleText(
+                                      text: item.contactName ?? '',
+                                      fontSize: AppSizes.size13,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppColors.white,
+                                    ),
+                                    3.ph,
+                                    CustomSimpleText(
+                                      text: item.service?.join(', ') ?? '',
+                                      fontSize: AppSizes.size13,
+                                      fontWeight: FontWeight.normal,
+                                      color: AppColors.white,
+                                    ),
+                                    3.ph,
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.79,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.star,
+                                                color: AppColors.yellow,
+                                                size: 10,
+                                              ),
+                                              5.pw,
+                                              CustomSimpleText(
+                                                text: "4.5",
+                                                fontSize: AppSizes.size11,
+                                                fontWeight: FontWeight.normal,
+                                                color: AppColors.yellow,
+                                                textAlign: TextAlign.end,
+                                              ),
+                                            ],
+                                          ),
+                                          InkWell(
+                                            onTap: () {
+                                              // RouteGenerator.pushNamed(context,Routes.messageScreen);
+                                              RouteGenerator.pushNamedSms(
+                                                  context, Routes.messageScreen,
+                                                  arguments: [
+                                                    item.id,
+                                                    item.imageBase64,
+                                                    item.providerName
+                                                  ]);
+                                              indexController.fetchMessages(
+                                                  receiverId: item.id ?? '');
+                                            },
+                                            child: Container(
+                                              height: 22,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          100),
+                                                  color: AppColors.appColors),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 10),
+                                                child: Center(
+                                                    child: CustomSimpleText(
+                                                  text: "Send Message",
+                                                  fontSize: AppSizes.size11,
+                                                  color: AppColors.white,
+                                                )),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              },
-            )),
+                    );
+                  },
+                )),
           ),
         ],
       ),

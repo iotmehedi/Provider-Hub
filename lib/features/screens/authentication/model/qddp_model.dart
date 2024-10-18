@@ -6,7 +6,7 @@ class QDDPModel {
   final String? email;
   final String? consults;
   final String? type;
-  final String? service;
+  final List<dynamic>? service;
   final String? imageBase64;
   final String? password;
   final DateTime? createdAt;
@@ -33,7 +33,7 @@ class QDDPModel {
       email: json['email'],
       consults: json['consults'],
       type: json['type'],
-      service: json['service'],
+      service: json['service'] is List ? json['service'] : [],
       imageBase64: json['imageBase64'],
       password: json['password'],
       id: json['id'],
@@ -55,7 +55,9 @@ class QDDPModel {
       'imageBase64': imageBase64,
       'password': password,
       'id': id,
-      'createdAt': createdAt != null ? Timestamp.fromDate(createdAt!) : FieldValue.serverTimestamp(),
+      'createdAt': createdAt != null
+          ? Timestamp.fromDate(createdAt!)
+          : FieldValue.serverTimestamp(),
     };
   }
 }
