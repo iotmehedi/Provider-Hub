@@ -20,10 +20,9 @@ class CustomSimpleText extends StatelessWidget {
       this.textAlign,
       this.maxLines,
       this.textDecoration,
-        this.decorationColor,
-        this.alignment,
-        this.heightOfStyle
-      });
+      this.decorationColor,
+      this.alignment,
+      this.heightOfStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +32,7 @@ class CustomSimpleText extends StatelessWidget {
         text,
         // maxLines: maxLines ,
         textAlign: textAlign ?? TextAlign.center,
+
         style: GoogleFonts.roboto(
           letterSpacing: 0.2,
           color: color ?? Colors.black,

@@ -41,10 +41,16 @@ class ProviderProfileDetails extends StatelessWidget {
               child: SizedBox(
                 height: AppSizes.newSize(8.0),
                 width: AppSizes.newSize(8.0),
-                child: Image.memory(
-                  base64Decode(providerModel.imageBase64 ?? ''),
-                  fit: BoxFit.cover, // Adjust image display
-                ),
+                child: providerModel.imageBase64?.isEmpty ?? false
+                    ? Icon(
+                        Icons.person,
+                        size: AppSizes.newSize(8.0),
+                        color: AppColors.white,
+                      )
+                    : Image.memory(
+                        base64Decode(providerModel.imageBase64 ?? ''),
+                        fit: BoxFit.cover, // Adjust image display
+                      ),
               ),
             ),
           ),
@@ -155,7 +161,8 @@ class ProviderProfileDetails extends StatelessWidget {
                         arguments: [
                           providerModel.id,
                           providerModel.imageBase64,
-                          providerModel.providerName
+                          providerModel.contactName,
+                          providerModel.type,
                         ]);
                     indexController.fetchMessages(
                         receiverId: providerModel.id ?? '');
@@ -338,10 +345,16 @@ class ProviderProfileDetails extends StatelessWidget {
                             child: SizedBox(
                               height: AppSizes.newSize(8.0),
                               width: AppSizes.newSize(8.0),
-                              child: Image.memory(
-                                base64Decode(item.imageBase64 ?? ''),
-                                fit: BoxFit.cover, // Adjust image display
-                              ),
+                              child: item.imageBase64?.isEmpty ?? false
+                                  ? Icon(
+                                      Icons.person,
+                                      size: AppSizes.newSize(8.0),
+                                      color: AppColors.white,
+                                    )
+                                  : Image.memory(
+                                      base64Decode(item.imageBase64 ?? ''),
+                                      fit: BoxFit.cover, // Adjust image display
+                                    ),
                             ),
                           ),
                         ),

@@ -112,14 +112,17 @@ class QDDPRegistrationScreen extends StatelessWidget {
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: controller.selectedValue.value,
-                      items: <String>["Choose one", "Registered nurse"]
-                          .map((String value) {
+                      items: <String>[
+                        "Choose one",
+                        "Registered nurse",
+                        "Human Services"
+                      ].map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: CustomSimpleText(
                             text: value,
                             fontWeight: FontWeight.w500,
-                            fontSize: AppSizes.size14,
+                            fontSize: AppSizes.size13,
                             color: AppColors.white,
                           ),
                         );
@@ -167,14 +170,16 @@ class QDDPRegistrationScreen extends StatelessWidget {
                         "special education",
                         "psychology",
                         "rehabilatation",
-                        "counceling"
+                        "counceling",
+                        "Bachelor’s",
+                        "Masters"
                       ].map((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: CustomSimpleText(
                             text: value,
                             fontWeight: FontWeight.w500,
-                            fontSize: AppSizes.size14,
+                            fontSize: AppSizes.size13,
                             color: AppColors.white,
                           ),
                         );
@@ -205,7 +210,8 @@ class QDDPRegistrationScreen extends StatelessWidget {
                     text: "confirmation password",
                     hint: "Enter confirmation password",
                     isNeedIcon: true,
-                    textEditingController: controller.passwordController.value),
+                    textEditingController:
+                        controller.confirmationPasswordController.value),
                 10.ph,
                 Row(
                   children: [
@@ -256,18 +262,24 @@ class QDDPRegistrationScreen extends StatelessWidget {
                 10.ph,
                 SizedBox(
                   height: 48,
-                  child: CustomElevatedButton(
-                      text: CustomSimpleText(
-                        text: "Next",
-                        fontSize: 20,
-                        color: AppColors.white,
-                      ),
-                      onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.paymentScreen);
-                      },
-                      backgroundColor: AppColors.appColors,
-                      elevatedButtonSideBorderColor: AppColors.appColors),
+                  child: controller.isLoading.value == true
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CustomElevatedButton(
+                          text: CustomSimpleText(
+                            text: "Next",
+                            fontSize: 20,
+                            color: AppColors.white,
+                            alignment: Alignment.center,
+                          ),
+                          onPress: () {
+                            controller.validation();
+                          },
+                          backgroundColor: AppColors.appColors,
+                          elevatedButtonSideBorderColor: AppColors.appColors),
                 ),
+                10.ph,
               ],
             ),
           ),

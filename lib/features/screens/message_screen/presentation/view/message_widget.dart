@@ -11,10 +11,15 @@ import '../../../../../const/utils/consts/app_assets.dart';
 import '../../../../../const/utils/consts/app_colors.dart';
 import '../../../../../const/utils/consts/app_sizes.dart';
 import '../../../../widget/custom_simple_text/custom_simple_text.dart';
+
 class MessageWidget extends StatelessWidget {
   final InboxController controller;
   final String senderid, receiverId;
-  MessageWidget({super.key, required this.controller, required this. senderid, required this.receiverId});
+  MessageWidget(
+      {super.key,
+      required this.controller,
+      required this.senderid,
+      required this.receiverId});
   final Stream<QuerySnapshot> _messageStream = FirebaseFirestore.instance
       .collection('chats')
       .orderBy('timestamp')
@@ -24,7 +29,8 @@ class MessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<List<QueryDocumentSnapshot>>(
       stream: controller.fetchMessages(receiverId: receiverId),
-      builder: (BuildContext context, AsyncSnapshot<List<QueryDocumentSnapshot>> snapshot) {
+      builder: (BuildContext context,
+          AsyncSnapshot<List<QueryDocumentSnapshot>> snapshot) {
         if (snapshot.hasError) {
           return const CustomSimpleText(
             text: "Something went wrong",
@@ -41,14 +47,22 @@ class MessageWidget extends StatelessWidget {
         final messages = snapshot.data;
 
         if (messages == null || messages.isEmpty) {
-          return const Center(child: CustomSimpleText(text: "No messages found", color: Colors.white,alignment: Alignment.center));
+          return const Center(
+              child: CustomSimpleText(
+                  text: "No messages found",
+                  color: Colors.white,
+                  alignment: Alignment.center));
         }
-
+        messages.sort((a, b) {
+          final timestampA = a['timestamp']?.toDate();
+          final timestampB = b['timestamp']?.toDate();
+          return timestampA.compareTo(timestampB);
+        });
         return ListView.builder(
           itemCount: messages.length,
           physics: const ScrollPhysics(),
           shrinkWrap: true,
-          reverse: true,
+          reverse: false,
           primary: true,
           itemBuilder: (_, index) {
             final qs = messages[index];
@@ -75,10 +89,16 @@ class MessageWidget extends StatelessWidget {
                             child: SizedBox(
                               height: AppSizes.newSize(3.0),
                               width: AppSizes.newSize(3.0),
-                              child: Image.memory(
-                                base64Decode(receiverImage),
-                                fit: BoxFit.cover,
-                              ),
+                              child: imageBase64?.isEmpty ?? false
+                                  ? Icon(
+                                      Icons.person,
+                                      size: AppSizes.newSize(3.0),
+                                      color: AppColors.white,
+                                    )
+                                  : Image.memory(
+                                      base64Decode(receiverImage),
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
                           ),
                         ),
@@ -101,44 +121,66 @@ class MessageWidget extends StatelessWidget {
                                   child: Align(
                                     alignment: Alignment.bottomLeft,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(left: 10, bottom: 10),
+                                      padding: const EdgeInsets.only(
+                                          left: 10, bottom: 10),
                                       child: Padding(
-                                        padding: const EdgeInsets.only(left: 10, bottom: 0, top: 10, right: 20),
+                                        padding: const EdgeInsets.only(
+                                            left: 10,
+                                            bottom: 0,
+                                            top: 10,
+                                            right: 20),
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.end,
-                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.end,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                           children: [
-                                            imageBase64.toString().isNotEmpty && message ? SizedBox(
-                                              height: 60,
-                                              width: 60,
-                                              child: Column(
-                                                children: [
-                                                  Image.memory(bytes),
-                                                  5.ph,
-                                                  CustomSimpleText(
-                                                    text: message,
-                                                    fontSize: AppSizes.size15,
-                                                    fontWeight: FontWeight.normal,
-                                                    color: AppColors.white,
+                                            imageBase64.toString().isNotEmpty &&
+                                                    message
+                                                ? SizedBox(
+                                                    height: 60,
+                                                    width: 60,
+                                                    child: Column(
+                                                      children: [
+                                                        Image.memory(bytes),
+                                                        5.ph,
+                                                        CustomSimpleText(
+                                                          text: message,
+                                                          fontSize:
+                                                              AppSizes.size15,
+                                                          fontWeight:
+                                                              FontWeight.normal,
+                                                          color:
+                                                              AppColors.white,
+                                                        )
+                                                      ],
+                                                    ),
                                                   )
-                                                ],
-                                              ),
-                                            ) : imageBase64.toString().isNotEmpty?  SizedBox(
-                                              height: 40,
-                                              width: 40,
-                                              child: Image.memory(bytes),
-                                            ) : CustomSimpleText(
-                                              text: message,
-                                              fontSize: AppSizes.size15,
-                                              fontWeight: FontWeight.normal,
-                                              color: AppColors.white,
-                                            ),
+                                                : imageBase64
+                                                        .toString()
+                                                        .isNotEmpty
+                                                    ? SizedBox(
+                                                        height: 40,
+                                                        width: 40,
+                                                        child:
+                                                            Image.memory(bytes),
+                                                      )
+                                                    : CustomSimpleText(
+                                                        text: message,
+                                                        fontSize:
+                                                            AppSizes.size15,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        color: AppColors.white,
+                                                      ),
                                             5.ph,
                                             CustomSimpleText(
-                                              text: "${timestamp?.hour ?? 0}:${timestamp?.minute ?? 0}",
+                                              text:
+                                                  "${timestamp?.hour ?? 0}:${timestamp?.minute ?? 0}",
                                               fontSize: AppSizes.size12,
                                               fontWeight: FontWeight.normal,
-                                              color: AppColors.white.withOpacity(0.4),
+                                              color: AppColors.white
+                                                  .withOpacity(0.4),
                                               alignment: Alignment.centerRight,
                                               textAlign: TextAlign.end,
                                             ),
@@ -177,7 +219,9 @@ class MessageWidget extends StatelessWidget {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     color: HexColor("565656").withOpacity(0.6),
-                                    border: Border.all(color: AppColors.deepGrey.withOpacity(0.5)),
+                                    border: Border.all(
+                                        color: AppColors.deepGrey
+                                            .withOpacity(0.5)),
                                     borderRadius: const BorderRadius.only(
                                       topRight: Radius.circular(8),
                                       topLeft: Radius.circular(8),
@@ -187,42 +231,61 @@ class MessageWidget extends StatelessWidget {
                                   child: Align(
                                     alignment: Alignment.bottomLeft,
                                     child: Padding(
-                                      padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10, right: 10),
+                                      padding: const EdgeInsets.only(
+                                          left: 10,
+                                          bottom: 10,
+                                          top: 10,
+                                          right: 10),
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
                                         children: [
-                                          imageBase64.toString().isNotEmpty && message ? SizedBox(
-                                            height: 60,
-                                            width: 60,
-                                            child: Column(
-                                              children: [
-                                                Image.memory(bytes),
-                                                5.ph,
-                                                CustomSimpleText(
-                                                  text: message,
-                                                  fontSize: AppSizes.size15,
-                                                  fontWeight: FontWeight.normal,
-                                                  color: AppColors.white,
+                                          imageBase64.toString().isNotEmpty &&
+                                                  message
+                                              ? SizedBox(
+                                                  height: 60,
+                                                  width: 60,
+                                                  child: Column(
+                                                    children: [
+                                                      Image.memory(bytes),
+                                                      5.ph,
+                                                      CustomSimpleText(
+                                                        text: message,
+                                                        fontSize:
+                                                            AppSizes.size15,
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        color: AppColors.white,
+                                                      )
+                                                    ],
+                                                  ),
                                                 )
-                                              ],
-                                            ),
-                                          ) : imageBase64.toString().isNotEmpty?  SizedBox(
-                                            height: 40,
-                                            width: 40,
-                                            child: Image.memory(bytes),
-                                          ) : CustomSimpleText(
-                                            text: message,
-                                            fontSize: AppSizes.size15,
-                                            fontWeight: FontWeight.normal,
-                                            color: AppColors.white,
-                                          ),
+                                              : imageBase64
+                                                      .toString()
+                                                      .isNotEmpty
+                                                  ? SizedBox(
+                                                      height: 40,
+                                                      width: 40,
+                                                      child:
+                                                          Image.memory(bytes),
+                                                    )
+                                                  : CustomSimpleText(
+                                                      text: message,
+                                                      fontSize: AppSizes.size15,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      color: AppColors.white,
+                                                    ),
                                           5.ph,
                                           CustomSimpleText(
-                                            text: "${timestamp?.hour ?? 0}:${timestamp?.minute ?? 0}",
+                                            text:
+                                                "${timestamp?.hour ?? 0}:${timestamp?.minute ?? 0}",
                                             fontSize: AppSizes.size12,
                                             fontWeight: FontWeight.normal,
-                                            color: AppColors.white.withOpacity(0.4),
+                                            color: AppColors.white
+                                                .withOpacity(0.4),
                                             alignment: Alignment.centerRight,
                                             textAlign: TextAlign.end,
                                           ),
@@ -247,10 +310,16 @@ class MessageWidget extends StatelessWidget {
                             child: SizedBox(
                               height: AppSizes.newSize(3.0),
                               width: AppSizes.newSize(3.0),
-                              child: Image.memory(
-                                base64Decode(senderImage),
-                                fit: BoxFit.cover,
-                              ),
+                              child: senderImage.toString().isEmpty
+                                  ? Icon(
+                                      Icons.person,
+                                      size: AppSizes.newSize(8.0),
+                                      color: AppColors.white,
+                                    )
+                                  : Image.memory(
+                                      base64Decode(senderImage),
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
                           ),
                         ),
@@ -265,5 +334,4 @@ class MessageWidget extends StatelessWidget {
       },
     );
   }
-
 }

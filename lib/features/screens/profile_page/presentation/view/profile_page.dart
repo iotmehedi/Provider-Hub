@@ -7,6 +7,10 @@ import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/consts/app_sizes.dart';
 import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
+import 'package:provider_hub/features/screens/authentication/model/consultant_model.dart';
+import 'package:provider_hub/features/screens/authentication/model/provider_model.dart';
+import 'package:provider_hub/features/screens/authentication/model/qddp_model.dart';
+import 'package:provider_hub/features/screens/authentication/model/userModel.dart';
 import 'package:provider_hub/features/screens/authentication/signin/controller/controller.dart';
 import 'package:provider_hub/features/widget/custom_appbar/custom_appbar.dart';
 import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
@@ -36,6 +40,12 @@ class ProfilePage extends StatelessWidget {
           box.erase().then((value) {
             RouteGenerator.pushNamed(
                 navigatorKey.currentContext!, Routes.splashScreenRouteName);
+            Future.delayed(Duration(seconds: 1), () {
+              signinController.providerModel.value = ProviderModel();
+              signinController.userModel.value = UserModel();
+              signinController.consultantModel.value = ConsultantModel();
+              signinController.qddpModel.value = QDDPModel();
+            });
           });
         },
       ),
@@ -50,36 +60,59 @@ class ProfilePage extends StatelessWidget {
                     child: SizedBox(
                       height: AppSizes.newSize(8.0),
                       width: AppSizes.newSize(8.0),
-                      child: Image.memory(
-                        base64Decode(
-                          (signinController.providerModel.value.imageBase64
-                                      ?.isNotEmpty ??
+                      child: (signinController
+                                      .providerModel.value.imageBase64?.isEmpty ??
+                                  false) ||
+                              (signinController
+                                      .userModel.value.imageBase64?.isEmpty ??
+                                  false) ||
+                              (signinController.consultantModel.value
+                                      .imageBase64?.isEmpty ??
+                                  false) ||
+                              (signinController
+                                      .qddpModel.value.imageBase64?.isEmpty ??
                                   false)
-                              ? signinController
-                                      .providerModel.value.imageBase64 ??
-                                  ''
-                              : (signinController.userModel.value.imageBase64
-                                          ?.isNotEmpty ??
-                                      false)
-                                  ? signinController
-                                          .userModel.value.imageBase64 ??
-                                      ''
-                                  : (signinController.consultantModel.value
-                                              .imageBase64?.isNotEmpty ??
-                                          false)
-                                      ? signinController.consultantModel.value
-                                              .imageBase64 ??
-                                          ''
-                                      : (signinController.qddpModel.value
-                                                  .imageBase64?.isNotEmpty ??
-                                              false)
-                                          ? signinController.qddpModel.value
-                                                  .imageBase64 ??
-                                              ''
-                                          : '', // Fallback to empty string if none are available
-                        ),
-                        fit: BoxFit.cover, // Adjust image display
-                      ),
+                          ? Icon(
+                              Icons.person,
+                              size: AppSizes.newSize(8.0),
+                              color: AppColors.white,
+                            )
+                          : Image.memory(
+                              base64Decode(
+                                (signinController.providerModel.value
+                                            .imageBase64?.isNotEmpty ??
+                                        false)
+                                    ? signinController
+                                            .providerModel.value.imageBase64 ??
+                                        ''
+                                    : (signinController.userModel.value
+                                                .imageBase64?.isNotEmpty ??
+                                            false)
+                                        ? signinController
+                                                .userModel.value.imageBase64 ??
+                                            ''
+                                        : (signinController
+                                                    .consultantModel
+                                                    .value
+                                                    .imageBase64
+                                                    ?.isNotEmpty ??
+                                                false)
+                                            ? signinController.consultantModel
+                                                    .value.imageBase64 ??
+                                                ''
+                                            : (signinController
+                                                        .qddpModel
+                                                        .value
+                                                        .imageBase64
+                                                        ?.isNotEmpty ??
+                                                    false)
+                                                ? signinController.qddpModel
+                                                        .value.imageBase64 ??
+                                                    ''
+                                                : '', // Fallback to empty string if none are available
+                              ),
+                              fit: BoxFit.cover, // Adjust image display
+                            ),
                     ),
                   ),
                 ),
@@ -190,6 +223,7 @@ class ProfilePage extends StatelessWidget {
                           fontWeight: FontWeight.normal,
                           color: AppColors.white,
                         ),
+
                         // CustomSimpleText(
                         //   text: " 21, West Virginia",
                         //   fontSize: AppSizes.size14,
@@ -200,6 +234,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ],
                 ),
+
                 10.ph,
                 CustomSimpleText(
                   alignment: Alignment.center,
@@ -219,6 +254,29 @@ class ProfilePage extends StatelessWidget {
                   color: AppColors.white,
                 ),
                 10.ph,
+                Visibility(
+                  visible: signinController.qddpModel.value.type == "qddp"
+                      ? true
+                      : false,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomSimpleText(
+                        text:
+                            signinController.qddpModel.value.degree.toString(),
+                        color: AppColors.white,
+                        alignment: Alignment.center,
+                      ),
+                      5.ph,
+                      CustomSimpleText(
+                        text: signinController.qddpModel.value.degreeField
+                            .toString(),
+                        color: AppColors.white,
+                        alignment: Alignment.center,
+                      ),
+                    ],
+                  ),
+                ),
                 CustomSimpleText(
                   alignment: Alignment.center,
                   text: signinController.providerModel.value.type == "provider"
@@ -351,6 +409,7 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 40.ph,
                 Visibility(
                   visible:
@@ -487,10 +546,18 @@ class ProfilePage extends StatelessWidget {
                                   child: SizedBox(
                                     height: AppSizes.newSize(8.0),
                                     width: AppSizes.newSize(8.0),
-                                    child: Image.memory(
-                                      base64Decode(item.imageBase64 ?? ''),
-                                      fit: BoxFit.cover, // Adjust image display
-                                    ),
+                                    child: item.imageBase64?.isEmpty ?? false
+                                        ? Icon(
+                                            Icons.person,
+                                            size: AppSizes.newSize(8.0),
+                                            color: AppColors.white,
+                                          )
+                                        : Image.memory(
+                                            base64Decode(
+                                                item.imageBase64 ?? ''),
+                                            fit: BoxFit
+                                                .cover, // Adjust image display
+                                          ),
                                   ),
                                 ),
                               ),

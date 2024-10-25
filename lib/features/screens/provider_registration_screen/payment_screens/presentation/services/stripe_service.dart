@@ -58,22 +58,22 @@ class StripeService {
         if (commonController.fromPage.value == "provider") {
           print("provider value");
           await providerController.addProviderRegistration();
-          await signinController.signIn();
+          // await signinController.signIn();
           showImageSourceDialog(navigatorKey.currentContext!);
         } else if (commonController.fromPage.value == "consultant") {
           print("cosultant value");
           await consultantController.addConsultantRegistration();
-          await signinController.signIn();
+          // await signinController.signIn();
           showImageSourceDialog(navigatorKey.currentContext!);
         } else if (commonController.fromPage.value == "trainer") {
           print("trainer value");
           await trainerController.addTrainerRegistration();
-          await signinController.signIn();
+          // await signinController.signIn();
           showImageSourceDialog(navigatorKey.currentContext!);
         } else {
           print("qqdp value");
           await qddpController.addQDDPRegistration();
-          await signinController.signIn();
+          // await signinController.signIn();
           showImageSourceDialog(navigatorKey.currentContext!);
         }
       }).catchError((e) {

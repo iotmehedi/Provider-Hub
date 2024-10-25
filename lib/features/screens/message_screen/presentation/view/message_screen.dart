@@ -12,18 +12,25 @@ import 'package:provider_hub/features/screens/message_screen/presentation/contro
 
 import '../../../../../const/utils/consts/app_colors.dart';
 import '../../../../../const/utils/consts/app_sizes.dart';
+import '../../../../../main.dart';
 import '../../../../widget/custom_simple_text/custom_simple_text.dart';
 import '../../../../widget/custom_text_textfield_column/custom_text_textfield_column.dart';
 import '../../../nearest_provider/presentation/controller/controller.dart';
 import 'message_widget.dart';
 
 class MessageScreen extends StatelessWidget {
-  final String receiverId, image, name;
-  MessageScreen({super.key, required this.receiverId, required this.image, required this.name});
+  final String receiverId, image, name, type;
+  MessageScreen(
+      {super.key,
+      required this.receiverId,
+      required this.image,
+      required this.name,
+      required this.type});
   var controller = Get.put(InboxController());
   final FirebaseFirestore fs = FirebaseFirestore.instance;
   @override
   Widget build(BuildContext context) {
+    print("receiveId ${receiverId}");
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
@@ -34,15 +41,41 @@ class MessageScreen extends StatelessWidget {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CustomSimpleText(
-              text: (controller.chatListModel.value.data != null &&
-                  controller.chatListModel.value.data!.isNotEmpty)
-                  ? controller
-                  .chatListModel.value.data!.first.receiverName ??
-                  ''
-                  : '', // Provide a default value or handle empty state
-              fontSize: AppSizes.size24,
-              color: AppColors.white,
+            Expanded(
+              child: Row(
+                children: [
+                  Center(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: SizedBox(
+                        height: AppSizes.newSize(4.0),
+                        width: AppSizes.newSize(4.0),
+                        child: image.isEmpty
+                            ? Icon(
+                                Icons.person,
+                                size: AppSizes.newSize(4.0),
+                                color: AppColors.white,
+                              )
+                            : Image.memory(
+                                base64Decode(image),
+                                fit: BoxFit.cover, // Adjust image display
+                              ),
+                      ),
+                    ),
+                  ),
+                  10.pw,
+                  Expanded(
+                    child: CustomSimpleText(
+                      text:
+                          name, // Provide a default value or handle empty state
+                      fontSize: AppSizes.size24,
+                      fontWeight: FontWeight.normal,
+                      color: AppColors.white,
+                      alignment: Alignment.centerLeft,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Icon(
               Icons.info_outline,
@@ -59,7 +92,10 @@ class MessageScreen extends StatelessWidget {
           children: [
             Container(
                 height: MediaQuery.of(context).size.height * 0.75,
-                child: MessageWidget(controller: controller, senderid: controller.userId.value, receiverId: receiverId)),
+                child: MessageWidget(
+                    controller: controller,
+                    senderid: controller.userId.value,
+                    receiverId: receiverId)),
             10.ph,
             Padding(
               padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
@@ -69,16 +105,20 @@ class MessageScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(top: 30),
-                    child: IconButton(onPressed: (){
-                      _showBottomDialog(context, receiverId, image, name);
-                    }, icon: Icon(Icons.add_circle_outlined, size: 30,)),
+                    child: IconButton(
+                        onPressed: () {
+                          _showBottomDialog(context, receiverId, image, name);
+                        },
+                        icon: Icon(
+                          Icons.add_circle_outlined,
+                          size: 30,
+                        )),
                   ),
                   Expanded(
                     child: CustomTextTextfieldColumn(
                       text: "",
                       hint: "Enter message",
-                      textEditingController:
-                      controller.messageController.value,
+                      textEditingController: controller.messageController.value,
                     ),
                   ),
                   5.pw,
@@ -86,28 +126,52 @@ class MessageScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 20),
                     child: InkWell(
                       onTap: () async {
-                        // controller.sendMessage(
-                        //     item:
-                        //     controller.chatListModel.value.data?.first);
-                        if (controller.messageController.value.text.isNotEmpty) {
-                          fs.collection('chats').doc().set({
-                            'senderId':controller.chatResponseModel.value.data?.first?.senderId ?? '',
-                            'senderImage': controller.chatResponseModel.value.data?.first?.senderImage ?? '',
-                            'senderName': controller.chatResponseModel.value.data?.first?.senderName ?? '',
+                        // Check if the message input is not empty
+                        // print(
+                        //     "hello ${receiverId} ${controller.chatResponseModel.value.data?.first?.senderId}  ${box.read("loginUserId")}");
+                        if (controller
+                            .messageController.value.text.isNotEmpty) {
+                          await fs.collection('chats').doc().set({
+                            'senderId': box.read("loginUserId"),
+                            'senderImage': box.read("image"),
+                            'senderName': box.read("name"),
+                            'senderType': box.read("type"),
                             'receiverId': receiverId,
                             'receiverImage': image,
                             'receiverName': name,
+                            'receiverType': type,
                             'imageBase64': controller.imageBase64.value,
                             'message': controller.messageController.value.text,
                             'timestamp': DateTime.now(),
                           });
 
+                          // Clear the input field after sending
                           controller.messageController.value.clear();
-                          await controller.sendNotificationToUser(
-                          receiverId, // User ID of the receiver
-                          'New Message from ${controller.chatResponseModel.value.data?.first?.senderName ?? 'Someone'}',
-                          controller.messageController.value.text,
-                          );
+
+                          // Fetch the updated list of messages
+                          await controller.fetchLastMessages();
+
+                          // Check if there are any messages before accessing .first
+                          if (controller.chatResponseModel.value.data != null &&
+                              controller
+                                  .chatResponseModel.value.data!.isNotEmpty) {
+                            final firstMessage =
+                                controller.chatResponseModel.value.data!.first;
+                            print(
+                                "First message after send: ${firstMessage.senderId}");
+
+                            // Send a notification to the receiver
+                            await controller.sendNotificationToUser(
+                              receiverId,
+                              'New Message from ${firstMessage.senderName ?? 'Someone'}',
+                              controller.messageController.value.text,
+                            );
+                          } else {
+                            print(
+                                'No previous messages found after sending a new one');
+                          }
+                        } else {
+                          print('Cannot send an empty message');
                         }
                       },
                       child: Icon(
@@ -123,9 +187,10 @@ class MessageScreen extends StatelessWidget {
         ),
       ),
     );
-
   }
-  void _showBottomDialog(BuildContext context, String receiverId, String image, String name) {
+
+  void _showBottomDialog(
+      BuildContext context, String receiverId, String image, String name) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -149,9 +214,10 @@ class MessageScreen extends StatelessWidget {
                     Row(
                       children: [
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             Navigator.pop(context);
-                            controller.pickImageFromGallery(receiverId, image, name);
+                            controller.pickImageFromGallery(
+                                receiverId, image, name);
                           },
                           child: Container(
                             height: 50,
@@ -161,15 +227,19 @@ class MessageScreen extends StatelessWidget {
                               color: AppColors.appColors,
                             ),
                             child: Center(
-                              child: Icon(Icons.photo, color: AppColors.white,),
+                              child: Icon(
+                                Icons.photo,
+                                color: AppColors.white,
+                              ),
                             ),
                           ),
                         ),
                         10.pw,
                         InkWell(
-                          onTap: (){
+                          onTap: () {
                             Navigator.pop(context);
-                            controller.pickImageFromCamera(receiverId, image, name);
+                            controller.pickImageFromCamera(
+                                receiverId, image, name);
                           },
                           child: Container(
                             height: 50,
@@ -179,7 +249,10 @@ class MessageScreen extends StatelessWidget {
                               color: AppColors.appColors,
                             ),
                             child: Center(
-                              child: Icon(Icons.photo_camera, color: AppColors.white,),
+                              child: Icon(
+                                Icons.photo_camera,
+                                color: AppColors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -194,6 +267,4 @@ class MessageScreen extends StatelessWidget {
       },
     );
   }
-
-
 }

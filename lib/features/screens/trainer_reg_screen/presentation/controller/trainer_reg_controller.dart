@@ -25,6 +25,7 @@ class TrainerRegController extends GetxController {
   var passwordController = TextEditingController().obs;
   var confirmationPasswordController = TextEditingController().obs;
   var isChecked = false.obs;
+  var isLoading = false.obs;
   // var selectedValue = "Select Training's".obs;
   var commonController = Get.put(CommonController());
   final ImagePicker _picker = ImagePicker();
@@ -110,6 +111,15 @@ class TrainerRegController extends GetxController {
   }
 
   Future<void> validation() async {
+    isLoading.value = true;
+
+    CollectionReference users = FirebaseFirestore.instance.collection("users");
+
+    QuerySnapshot emailQuery =
+        await users.where('email', isEqualTo: emailController.value.text).get();
+    QuerySnapshot phoneQuery = await users
+        .where('phoneNumber', isEqualTo: phoneNumberController.value.text)
+        .get();
     if (pickedImage.value.path.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Please enter image");
@@ -144,6 +154,13 @@ class TrainerRegController extends GetxController {
       errorToast(
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
+    } else if (phoneQuery.docs.isNotEmpty) {
+      errorToast(
+          context: navigatorKey.currentContext!,
+          msg: "Phone number already exists");
+    } else if (emailQuery.docs.isNotEmpty) {
+      errorToast(
+          context: navigatorKey.currentContext!, msg: "Email already exists");
     } else {
       box.write('email', emailController.value.text);
       box.write('password', passwordController.value.text);
@@ -153,58 +170,43 @@ class TrainerRegController extends GetxController {
       RouteGenerator.pushNamedSms(
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
+    isLoading.value = false;
   }
 
   Future addTrainerRegistration() async {
     CollectionReference users = FirebaseFirestore.instance.collection("users");
+    users.add({
+      'fullName': fullNameController.value.text,
+      'phoneNumber': phoneNumberController.value.text,
+      'email': emailController.value.text,
+      'officeAddress': officeAddressController.value.text,
+      'training': selectedServiceItems,
+      'type': "trainer",
+      'service': "Trainer",
+      'imageBase64': imageBase64.value,
+      'password': passwordController.value.text,
+      'createdAt': FieldValue.serverTimestamp(),
+    }).then((value) {
+      print("User Added");
+      String generatedId = value.id;
 
-    QuerySnapshot emailQuery =
-        await users.where('email', isEqualTo: emailController.value.text).get();
-    QuerySnapshot phoneQuery = await users
-        .where('phoneNumber', isEqualTo: phoneNumberController.value.text)
-        .get();
-
-    if (emailQuery.docs.isNotEmpty) {
-      errorToast(
-          context: navigatorKey.currentContext!, msg: "Email already exists");
-    } else if (phoneQuery.docs.isNotEmpty) {
-      errorToast(
-          context: navigatorKey.currentContext!,
-          msg: "Phone number already exists");
-    } else {
-      users.add({
-        'fullName': fullNameController.value.text,
-        'phoneNumber': phoneNumberController.value.text,
-        'email': emailController.value.text,
-        'officeAddress': officeAddressController.value.text,
-        'training': selectedServiceItems,
-        'type': "trainer",
-        'service': "Trainer",
-        'imageBase64': imageBase64.value,
-        'password': passwordController.value.text,
-        'createdAt': FieldValue.serverTimestamp(),
-      }).then((value) {
-        print("User Added");
-        String generatedId = value.id;
-
-        // Update the document with the generated ID
-        users.doc(generatedId).update({
-          'id':
-              generatedId, // Assign the generated Firestore document ID to the 'id' field
-        }).then((_) {
-          print("User ID added");
-          successToast(
-              context: navigatorKey.currentContext!, msg: "Payment Successful");
-          // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
-          // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
-        }).catchError((error) {
-          print("Failed to update user with ID: $error");
-        });
+      // Update the document with the generated ID
+      users.doc(generatedId).update({
+        'id':
+            generatedId, // Assign the generated Firestore document ID to the 'id' field
+      }).then((_) {
+        print("User ID added");
+        successToast(
+            context: navigatorKey.currentContext!, msg: "Payment Successful");
+        // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
+        // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
       }).catchError((error) {
-        print("Failed to add user: $error");
-        // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
+        print("Failed to update user with ID: $error");
       });
-    }
+    }).catchError((error) {
+      print("Failed to add user: $error");
+      // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
+    });
   }
 
   void showImageSourceDialog(BuildContext context) {

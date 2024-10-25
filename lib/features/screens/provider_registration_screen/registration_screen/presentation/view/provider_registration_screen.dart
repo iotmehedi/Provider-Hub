@@ -270,18 +270,22 @@ class _ProviderRegistrationScreenState
                 10.ph,
                 SizedBox(
                   height: 48,
-                  child: CustomElevatedButton(
-                      text: CustomSimpleText(
-                        alignment: Alignment.center,
-                        text: "Next",
-                        fontSize: 20,
-                        color: AppColors.white,
-                      ),
-                      onPress: () {
-                        controller.validation();
-                      },
-                      backgroundColor: AppColors.appColors,
-                      elevatedButtonSideBorderColor: AppColors.appColors),
+                  child: controller.isLoading.value == true
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CustomElevatedButton(
+                          text: CustomSimpleText(
+                            alignment: Alignment.center,
+                            text: "Next",
+                            fontSize: 20,
+                            color: AppColors.white,
+                          ),
+                          onPress: () {
+                            controller.validation();
+                          },
+                          backgroundColor: AppColors.appColors,
+                          elevatedButtonSideBorderColor: AppColors.appColors),
                 ),
               ],
             ),

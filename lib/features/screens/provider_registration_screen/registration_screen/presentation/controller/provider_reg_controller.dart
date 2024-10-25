@@ -29,6 +29,7 @@ class ProviderRegController extends GetxController {
   var passwordController = TextEditingController(text: "mehedi").obs;
   var confirmPasswordController = TextEditingController(text: "mehedi").obs;
   var isChecked = false.obs;
+  var isLoading = false.obs;
   var commonController = Get.put(CommonController());
   final ImagePicker _picker = ImagePicker();
   var imageBase64 = ''.obs;
@@ -117,6 +118,15 @@ class ProviderRegController extends GetxController {
 
   // Add user details and the base64 image string to Firestore
   Future<void> validation() async {
+    isLoading.value = true;
+
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    QuerySnapshot emailQuery =
+        await users.where('email', isEqualTo: emailController.value.text).get();
+    QuerySnapshot phoneQuery = await users
+        .where('phoneNumber', isEqualTo: contactController.value.text)
+        .get();
     if (pickedImage.value.path.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Please enter image");
@@ -161,6 +171,13 @@ class ProviderRegController extends GetxController {
       errorToast(
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
+    } else if (phoneQuery.docs.isNotEmpty) {
+      errorToast(
+          context: navigatorKey.currentContext!,
+          msg: "Phone number already exists");
+    } else if (emailQuery.docs.isNotEmpty) {
+      errorToast(
+          context: navigatorKey.currentContext!, msg: "Email already exists");
     } else {
       box.write('email', emailController.value.text);
       box.write('password', passwordController.value.text);
@@ -171,73 +188,57 @@ class ProviderRegController extends GetxController {
       RouteGenerator.pushNamedSms(
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
+    isLoading.value = false;
   }
 
   Future addProviderRegistration() async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
+    print(providerNameController.value.text);
 
-    QuerySnapshot emailQuery =
-        await users.where('email', isEqualTo: emailController.value.text).get();
-    QuerySnapshot phoneQuery = await users
-        .where('phoneNumber', isEqualTo: contactController.value.text)
-        .get();
+    Map<String, dynamic> providerData = {
+      'providerName': providerNameController.value.text, // providerName: string
+      'service': selectedServiceItems, // service: string
+      'contactName': contactNameController.value.text, // contactName: string
+      'phoneNumber': contactController.value.text, // phoneNumber: string
+      'email': emailController.value.text, // email: string
+      'officeAddress':
+          officeAddressController.value.text, // officeAddress: string
+      'licenseNumber':
+          licenseNumberController.value.text, // licenseNumber: string
+      'npiNumber': npiNumberController.value.text, // npiNumber: string
+      'imageBase64': imageBase64
+          .value, // imageBase64: string (ensure this is within Firestore's size limits)
+      'type': "provider", // type: string
+      'password': passwordController.value.text, // password: string
+      'fcmToken': "", // fcmToken: string (optional, replace if available)
+      'createdAt':
+          FieldValue.serverTimestamp(), // createdAt: Firestore timestamp
+    };
 
-    if (emailQuery.docs.isNotEmpty) {
-      errorToast(
-          context: navigatorKey.currentContext!, msg: "Email already exists");
-    } else if (phoneQuery.docs.isNotEmpty) {
-      errorToast(
-          context: navigatorKey.currentContext!,
-          msg: "Phone number already exists");
-    } else {
-      print(providerNameController.value.text);
+    box.write('email', emailController.value.text); // Storing email locally
+    box.write(
+        'password', passwordController.value.text); // Storing password locally
 
-      Map<String, dynamic> providerData = {
-        'providerName':
-            providerNameController.value.text, // providerName: string
-        'service': selectedServiceItems, // service: string
-        'contactName': contactNameController.value.text, // contactName: string
-        'phoneNumber': contactController.value.text, // phoneNumber: string
-        'email': emailController.value.text, // email: string
-        'officeAddress':
-            officeAddressController.value.text, // officeAddress: string
-        'licenseNumber':
-            licenseNumberController.value.text, // licenseNumber: string
-        'npiNumber': npiNumberController.value.text, // npiNumber: string
-        'imageBase64': imageBase64
-            .value, // imageBase64: string (ensure this is within Firestore's size limits)
-        'type': "provider", // type: string
-        'password': passwordController.value.text, // password: string
-        'fcmToken': "", // fcmToken: string (optional, replace if available)
-        'createdAt':
-            FieldValue.serverTimestamp(), // createdAt: Firestore timestamp
-      };
-
-      box.write('email', emailController.value.text); // Storing email locally
-      box.write('password',
-          passwordController.value.text); // Storing password locally
-
-      users.add(providerData).then((value) {
-        print("User Added");
-        String generatedId = value.id;
-        // Update the document with the generated ID
-        users.doc(generatedId).update({
-          'id':
-              generatedId, // Assign the generated Firestore document ID to the 'id' field
-        }).then((_) {
-          print("User ID added");
-          successToast(
-              context: navigatorKey.currentContext!, msg: "Payment Successful");
-          // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
-          // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
-        }).catchError((error) {
-          print("Failed to update user with ID: $error");
-        });
+    users.add(providerData).then((value) {
+      print("User Added");
+      String generatedId = value.id;
+      // Update the document with the generated ID
+      users.doc(generatedId).update({
+        'id':
+            generatedId, // Assign the generated Firestore document ID to the 'id' field
+      }).then((_) {
+        print("User ID added");
+        successToast(
+            context: navigatorKey.currentContext!, msg: "Payment Successful");
+        // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
+        // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
       }).catchError((error) {
-        print("Failed to add user: $error");
-        // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
+        print("Failed to update user with ID: $error");
       });
-    }
+    }).catchError((error) {
+      print("Failed to add user: $error");
+      // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
+    });
   }
 
   void showImageSourceDialog(BuildContext context) {

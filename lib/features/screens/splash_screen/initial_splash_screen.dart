@@ -21,6 +21,8 @@ class _InitialSplashScreenState extends State<InitialSplashScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       if (box.read("email").toString().isNotEmpty &&
           box.read("password").toString().isNotEmpty) {
+        print(
+            "this is value ${box.read("email").toString()} ${box.read("password").toString()}");
         signinController.signIn();
       } else {
         RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);

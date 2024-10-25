@@ -29,6 +29,7 @@ class QDDPRegController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   var imageBase64 = ''.obs;
   var pickedImage = File('').obs;
+  var isLoading = false.obs;
   Future<void> pickImageFromGallery() async {
     if (await Permission.storage.request().isGranted) {
       final XFile? pickedFile =
@@ -91,6 +92,15 @@ class QDDPRegController extends GetxController {
   }
 
   Future<void> validation() async {
+    isLoading.value = true;
+
+    CollectionReference users = FirebaseFirestore.instance.collection("users");
+
+    QuerySnapshot emailQuery =
+        await users.where('email', isEqualTo: emailController.value.text).get();
+    QuerySnapshot phoneQuery = await users
+        .where('phoneNumber', isEqualTo: phoneNumberController.value.text)
+        .get();
     if (pickedImage.value.path.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Please enter image");
@@ -124,6 +134,13 @@ class QDDPRegController extends GetxController {
       errorToast(
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
+    } else if (phoneQuery.docs.isNotEmpty) {
+      errorToast(
+          context: navigatorKey.currentContext!,
+          msg: "Phone number already exists");
+    } else if (emailQuery.docs.isNotEmpty) {
+      errorToast(
+          context: navigatorKey.currentContext!, msg: "Email already exists");
     } else {
       box.write('email', emailController.value.text);
       box.write('password', passwordController.value.text);
@@ -133,57 +150,45 @@ class QDDPRegController extends GetxController {
       RouteGenerator.pushNamedSms(
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
+    isLoading.value = false;
   }
 
   Future addQDDPRegistration() async {
     CollectionReference users = FirebaseFirestore.instance.collection("users");
 
-    QuerySnapshot emailQuery =
-        await users.where('email', isEqualTo: emailController.value.text).get();
-    QuerySnapshot phoneQuery = await users
-        .where('phoneNumber', isEqualTo: phoneNumberController.value.text)
-        .get();
+    users.add({
+      'fullName': fullNameController.value.text,
+      'phoneNumber': phoneNumberController.value.text,
+      'email': emailController.value.text,
+      'consults': selectedValue.value,
+      'type': "qddp",
+      'service': "QDDP",
+      'imageBase64': imageBase64.value,
+      'password': passwordController.value.text,
+      'degreeField': selectedValue.value,
+      'degree': selectedDegree.value,
+      'createdAt': FieldValue.serverTimestamp(),
+    }).then((value) {
+      print("User Added");
+      String generatedId = value.id;
 
-    if (emailQuery.docs.isNotEmpty) {
-      errorToast(
-          context: navigatorKey.currentContext!, msg: "Email already exists");
-    } else if (phoneQuery.docs.isNotEmpty) {
-      errorToast(
-          context: navigatorKey.currentContext!,
-          msg: "Phone number already exists");
-    } else {
-      users.add({
-        'fullName': fullNameController.value.text,
-        'phoneNumber': phoneNumberController.value.text,
-        'email': emailController.value.text,
-        'consults': selectedValue.value,
-        'type': "qddp",
-        'service': "QDDP",
-        'imageBase64': imageBase64.value,
-        'password': passwordController.value.text,
-        'createdAt': FieldValue.serverTimestamp(),
-      }).then((value) {
-        print("User Added");
-        String generatedId = value.id;
-
-        // Update the document with the generated ID
-        users.doc(generatedId).update({
-          'id':
-              generatedId, // Assign the generated Firestore document ID to the 'id' field
-        }).then((_) {
-          print("User ID added");
-          successToast(
-              context: navigatorKey.currentContext!, msg: "Payment Successful");
-          // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
-          // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
-        }).catchError((error) {
-          print("Failed to update user with ID: $error");
-        });
+      // Update the document with the generated ID
+      users.doc(generatedId).update({
+        'id':
+            generatedId, // Assign the generated Firestore document ID to the 'id' field
+      }).then((_) {
+        print("User ID added");
+        successToast(
+            context: navigatorKey.currentContext!, msg: "Payment Successful");
+        // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
+        // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
       }).catchError((error) {
-        print("Failed to add user: $error");
-        // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
+        print("Failed to update user with ID: $error");
       });
-    }
+    }).catchError((error) {
+      print("Failed to add user: $error");
+      // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
+    });
   }
 
   void showImageSourceDialog(BuildContext context) {

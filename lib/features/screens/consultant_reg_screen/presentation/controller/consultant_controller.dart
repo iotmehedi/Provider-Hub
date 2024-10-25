@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider_hub/const/routes/route_name.dart';
 import 'package:provider_hub/const/routes/router.dart';
@@ -27,6 +28,26 @@ class ConsultantRegController extends GetxController {
   final ImagePicker _picker = ImagePicker();
   var imageBase64 = ''.obs;
   var pickedImage = File('').obs;
+  var isLoading = false.obs;
+  var selectedServiceName = [
+    "DD polices",
+    "MH polices",
+    "Home Health Polices",
+    "Risk Management ",
+    "Administration",
+  ].obs;
+  //Consult services
+  var items = <MultiSelectItem<String>>[].obs;
+  var selectedServiceItems = [].obs;
+  // Pick image from gallery
+  @override
+  void onInit() {
+    items.value = selectedServiceName
+        .map((animal) => MultiSelectItem(animal, animal))
+        .toList();
+    super.onInit();
+  }
+
   Future<void> pickImageFromGallery() async {
     if (await Permission.storage.request().isGranted) {
       final XFile? pickedFile =
@@ -89,6 +110,14 @@ class ConsultantRegController extends GetxController {
   }
 
   Future<void> validation() async {
+    isLoading.value = true;
+    CollectionReference users = FirebaseFirestore.instance.collection("users");
+
+    QuerySnapshot emailQuery =
+        await users.where('email', isEqualTo: emailController.value.text).get();
+    QuerySnapshot phoneQuery = await users
+        .where('phoneNumber', isEqualTo: phoneNumberController.value.text)
+        .get();
     if (pickedImage.value.path.isEmpty) {
       errorToast(
           context: navigatorKey.currentContext!, msg: "Please enter image");
@@ -119,6 +148,13 @@ class ConsultantRegController extends GetxController {
       errorToast(
           context: navigatorKey.currentContext!,
           msg: "Please select terms and policies");
+    } else if (phoneQuery.docs.isNotEmpty) {
+      errorToast(
+          context: navigatorKey.currentContext!,
+          msg: "Phone number already exists");
+    } else if (emailQuery.docs.isNotEmpty) {
+      errorToast(
+          context: navigatorKey.currentContext!, msg: "Email already exists");
     } else {
       box.write('email', emailController.value.text);
       box.write('password', passwordController.value.text);
@@ -128,58 +164,43 @@ class ConsultantRegController extends GetxController {
       RouteGenerator.pushNamedSms(
           navigatorKey.currentContext!, Routes.paymentScreen);
     }
+    isLoading.value = false;
   }
 
   Future addConsultantRegistration() async {
     CollectionReference users = FirebaseFirestore.instance.collection("users");
+    Map<String, dynamic> consultantData = {
+      'fullName': fullNameController.value.text,
+      'phoneNumber': phoneNumberController.value.text,
+      'email': emailController.value.text,
+      'consults': selectedValue.value,
+      'imageBase64': imageBase64.value,
+      'service': selectedServiceItems,
+      'password': passwordController.value.text,
+      'type': "consultant",
+      'createdAt': FieldValue.serverTimestamp(),
+    };
+    users.add(consultantData).then((value) {
+      print("User Added");
+      String generatedId = value.id;
 
-    QuerySnapshot emailQuery =
-        await users.where('email', isEqualTo: emailController.value.text).get();
-    QuerySnapshot phoneQuery = await users
-        .where('phoneNumber', isEqualTo: phoneNumberController.value.text)
-        .get();
-
-    if (emailQuery.docs.isNotEmpty) {
-      errorToast(
-          context: navigatorKey.currentContext!, msg: "Email already exists");
-    } else if (phoneQuery.docs.isNotEmpty) {
-      errorToast(
-          context: navigatorKey.currentContext!,
-          msg: "Phone number already exists");
-    } else {
-      Map<String, dynamic> consultantData = {
-        'fullName': fullNameController.value.text,
-        'phoneNumber': phoneNumberController.value.text,
-        'email': emailController.value.text,
-        'consults': selectedValue.value,
-        'imageBase64': imageBase64.value,
-        'service': selectedValue.value,
-        'password': passwordController.value.text,
-        'type': "consultant",
-        'createdAt': FieldValue.serverTimestamp(),
-      };
-      users.add(consultantData).then((value) {
-        print("User Added");
-        String generatedId = value.id;
-
-        // Update the document with the generated ID
-        users.doc(generatedId).update({
-          'id':
-              generatedId, // Assign the generated Firestore document ID to the 'id' field
-        }).then((_) {
-          print("User ID added");
-          successToast(
-              context: navigatorKey.currentContext!, msg: "Payment Successful");
-          // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
-          // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
-        }).catchError((error) {
-          print("Failed to update user with ID: $error");
-        });
+      // Update the document with the generated ID
+      users.doc(generatedId).update({
+        'id':
+            generatedId, // Assign the generated Firestore document ID to the 'id' field
+      }).then((_) {
+        print("User ID added");
+        successToast(
+            context: navigatorKey.currentContext!, msg: "Payment Successful");
+        // RouteGenerator.pushNamedAndRemoveAll(Routes.splashScreenRouteName);
+        // successToast(context: navigatorKey.currentContext!, msg: "User successfully added");
       }).catchError((error) {
-        print("Failed to add user: $error");
-        // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
+        print("Failed to update user with ID: $error");
       });
-    }
+    }).catchError((error) {
+      print("Failed to add user: $error");
+      // errorToast(context: navigatorKey.currentContext!, msg: "Failed to add user: $error");
+    });
   }
 
   void showImageSourceDialog(BuildContext context) {

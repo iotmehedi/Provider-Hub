@@ -30,6 +30,14 @@ class InboxPage extends StatelessWidget {
                 appBar: AppBar(
                   automaticallyImplyLeading: false,
                   backgroundColor: AppColors.backgroundColor,
+                  leading: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: AppColors.white,
+                      )),
                   title: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -52,42 +60,73 @@ class InboxPage extends StatelessWidget {
                             child: SizedBox(
                               height: AppSizes.newSize(4.0),
                               width: AppSizes.newSize(4.0),
-                              child: Image.memory(
-                                base64Decode(
+                              child:
                                   (signinController.providerModel.value
-                                              .imageBase64?.isNotEmpty ??
-                                          false)
-                                      ? signinController.providerModel.value
-                                              .imageBase64 ??
-                                          ''
-                                      : (signinController.userModel.value
-                                                  .imageBase64?.isNotEmpty ??
+                                                  .imageBase64?.isEmpty ??
+                                              false) ||
+                                          (signinController.userModel.value.imageBase64
+                                                  ?.isEmpty ??
+                                              false) ||
+                                          (signinController.consultantModel
+                                                  .value.imageBase64?.isEmpty ??
+                                              false) ||
+                                          (signinController.qddpModel.value
+                                                  .imageBase64?.isEmpty ??
                                               false)
-                                          ? signinController.userModel.value
-                                                  .imageBase64 ??
-                                              ''
-                                          : (signinController
-                                                      .consultantModel
-                                                      .value
-                                                      .imageBase64
-                                                      ?.isNotEmpty ??
-                                                  false)
-                                              ? signinController.consultantModel
-                                                      .value.imageBase64 ??
-                                                  ''
-                                              : (signinController
-                                                          .qddpModel
-                                                          .value
-                                                          .imageBase64
-                                                          ?.isNotEmpty ??
-                                                      false)
-                                                  ? signinController.qddpModel
-                                                          .value.imageBase64 ??
-                                                      ''
-                                                  : '', // Fallback to empty string if none are available
-                                ),
-                                fit: BoxFit.cover, // Adjust image display
-                              ),
+                                      ? Icon(
+                                          Icons.person,
+                                          size: AppSizes.newSize(4.0),
+                                          color: AppColors.white,
+                                        )
+                                      : Image.memory(
+                                          base64Decode(
+                                            (signinController
+                                                        .providerModel
+                                                        .value
+                                                        .imageBase64
+                                                        ?.isNotEmpty ??
+                                                    false)
+                                                ? signinController.providerModel
+                                                        .value.imageBase64 ??
+                                                    ''
+                                                : (signinController
+                                                            .userModel
+                                                            .value
+                                                            .imageBase64
+                                                            ?.isNotEmpty ??
+                                                        false)
+                                                    ? signinController
+                                                            .userModel
+                                                            .value
+                                                            .imageBase64 ??
+                                                        ''
+                                                    : (signinController
+                                                                .consultantModel
+                                                                .value
+                                                                .imageBase64
+                                                                ?.isNotEmpty ??
+                                                            false)
+                                                        ? signinController
+                                                                .consultantModel
+                                                                .value
+                                                                .imageBase64 ??
+                                                            ''
+                                                        : (signinController
+                                                                    .qddpModel
+                                                                    .value
+                                                                    .imageBase64
+                                                                    ?.isNotEmpty ??
+                                                                false)
+                                                            ? signinController
+                                                                    .qddpModel
+                                                                    .value
+                                                                    .imageBase64 ??
+                                                                ''
+                                                            : '', // Fallback to empty string if none are available
+                                          ),
+                                          fit: BoxFit
+                                              .cover, // Adjust image display
+                                        ),
                             ),
                           ),
                         ),
@@ -103,7 +142,7 @@ class InboxPage extends StatelessWidget {
                         ? const CustomSimpleText(
                             text: "No Data Found",
                             color: Colors.white,
-                  alignment: Alignment.center,
+                            alignment: Alignment.center,
                           )
                         : ListView.builder(
                             scrollDirection: Axis.vertical,
@@ -120,17 +159,72 @@ class InboxPage extends StatelessWidget {
                               return Visibility(
                                 // visible: isSender ? false : true,
                                 child: GestureDetector(
-                                  onTap: () {
+                                  onTap: () async {
+                                    print(
+                                        "type of the ${item?.receiverType} ${item?.senderType}");
                                     RouteGenerator.pushNamedSms(
                                         context, Routes.messageScreen,
                                         arguments: [
-                                          item?.receiverId ?? '',
+                                          signinController.providerModel.value
+                                                          .type ==
+                                                      "provider" &&
+                                                  item?.receiverType ==
+                                                      item?.senderType
+                                              ? item?.receiverId
+                                              : signinController.providerModel
+                                                              .value.type ==
+                                                          "provider" &&
+                                                      item?.receiverType ==
+                                                          "provider" &&
+                                                      item?.senderType ==
+                                                          "trainer"
+                                                  ? item?.senderId
+                                                  : signinController
+                                                                  .providerModel
+                                                                  .value
+                                                                  .type ==
+                                                              "provider" &&
+                                                          item?.receiverType ==
+                                                              "provider" &&
+                                                          item?.senderType ==
+                                                              "trainer"
+                                                      ? item?.receiverId
+                                                      : signinController
+                                                                      .providerModel
+                                                                      .value
+                                                                      .type ==
+                                                                  "provider" &&
+                                                              item?.receiverType ==
+                                                                  "provider" &&
+                                                              item?.senderType ==
+                                                                  "qddp"
+                                                          ? item?.senderId
+                                                          : signinController
+                                                                          .userModel
+                                                                          .value
+                                                                          .type ==
+                                                                      "trainer" &&
+                                                                  item?.receiverType ==
+                                                                      "provider" &&
+                                                                  item?.senderType ==
+                                                                      "trainer"
+                                                              ? item?.receiverId
+                                                              : signinController.consultantModel.value.type == "consultant" && item?.receiverType == item?.senderType
+                                                                  ? item?.senderId
+                                                                  : signinController.consultantModel.value.type == "consultant" && item?.receiverType == "provider" && item?.senderType == "consultant"
+                                                                      ? item?.receiverId
+                                                                      : signinController.qddpModel.value.type == "qddp" && item?.receiverType == item?.senderType
+                                                                          ? item?.senderId
+                                                                          : signinController.qddpModel.value.type == "qddp" && item?.receiverType == "provider" && item?.senderType == "qddp"
+                                                                              ? item?.receiverId
+                                                                              : item?.senderId,
                                           item?.receiverImage ?? '',
-                                          item?.receiverName
+                                          item?.receiverName,
+                                          item?.receiverType,
                                         ]);
                                     print("item ${item.runtimeType}");
-                                    controller.fetchMessages(
-                                        receiverId: item?.receiverId ?? '');
+                                    await controller.fetchMessages(
+                                        receiverId: item?.senderId ?? '');
                                   },
                                   child: Card(
                                     elevation: 0.0,
@@ -154,13 +248,22 @@ class InboxPage extends StatelessWidget {
                                               child: SizedBox(
                                                 height: AppSizes.newSize(5.0),
                                                 width: AppSizes.newSize(5.0),
-                                                child: Image.memory(
-                                                  base64Decode(
-                                                      item?.receiverImage ??
-                                                          ''),
-                                                  fit: BoxFit
-                                                      .cover, // Adjust image display
-                                                ),
+                                                child: item?.receiverImage
+                                                            ?.isEmpty ??
+                                                        false
+                                                    ? Icon(
+                                                        Icons.person,
+                                                        size: AppSizes.newSize(
+                                                            4.0),
+                                                        color: AppColors.white,
+                                                      )
+                                                    : Image.memory(
+                                                        base64Decode(
+                                                            item?.receiverImage ??
+                                                                ''),
+                                                        fit: BoxFit
+                                                            .cover, // Adjust image display
+                                                      ),
                                               ),
                                             ),
                                           ),
@@ -170,8 +273,13 @@ class InboxPage extends StatelessWidget {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               CustomSimpleText(
-                                                text:
-                                                    (item?.receiverName ?? ''),
+                                                text: signinController
+                                                            .providerModel
+                                                            .value
+                                                            .type ==
+                                                        "provider"
+                                                    ? (item?.senderName ?? '')
+                                                    : item?.receiverName ?? '',
                                                 fontSize: AppSizes.size13,
                                                 fontWeight: FontWeight.normal,
                                                 color: AppColors.white,
@@ -181,19 +289,7 @@ class InboxPage extends StatelessWidget {
                                                 alignment:
                                                     Alignment.centerRight,
                                                 child: CustomSimpleText(
-                                                  text: controller
-                                                          .chatResponseModel
-                                                          .value
-                                                          .data?[(controller
-                                                                      .chatResponseModel
-                                                                      .value
-                                                                      .data
-                                                                      ?.length ??
-                                                                  0) -
-                                                              1]
-                                                          .message
-                                                          .toString() ??
-                                                      '',
+                                                  text: item?.message ?? '',
                                                   fontSize: AppSizes.size11,
                                                   fontWeight: FontWeight.normal,
                                                   color: AppColors.white,

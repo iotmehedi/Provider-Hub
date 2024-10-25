@@ -28,8 +28,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   await _setup();
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  print('fcmToken: ${fcmToken}');
+  // final fcmToken = await FirebaseMessaging.instance.getToken();
+  // print('fcmToken: ${fcmToken}');
   runApp(const MyApp());
 }
 

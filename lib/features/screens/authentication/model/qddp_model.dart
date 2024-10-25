@@ -8,6 +8,8 @@ class QDDPModel {
   final String? type;
   final List<dynamic>? service;
   final String? imageBase64;
+  final String? degreeField;
+  final String? degree;
   final String? password;
   final DateTime? createdAt;
   final String? id;
@@ -21,6 +23,8 @@ class QDDPModel {
     this.service,
     this.imageBase64,
     this.password,
+    this.degreeField,
+    this.degree,
     this.createdAt,
     this.id,
   });
@@ -35,6 +39,8 @@ class QDDPModel {
       type: json['type'],
       service: json['service'] is List ? json['service'] : [],
       imageBase64: json['imageBase64'],
+      degreeField: json['degreeField'],
+      degree: json['degree'],
       password: json['password'],
       id: json['id'],
       createdAt: json['createdAt'] != null
@@ -53,6 +59,8 @@ class QDDPModel {
       'type': type,
       'service': service,
       'imageBase64': imageBase64,
+      'degreeField': degreeField,
+      'degree': degree,
       'password': password,
       'id': id,
       'createdAt': createdAt != null

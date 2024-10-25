@@ -5,6 +5,7 @@ import 'package:provider_hub/features/screens/authentication/signin/view/sign_in
 import 'package:provider_hub/features/screens/consultant_reg_screen/presentation/view/consultant_reg_screen.dart';
 import 'package:provider_hub/features/screens/homepage/presentation/sub_item_page/crc_screen.dart';
 import 'package:provider_hub/features/screens/homepage/presentation/sub_item_page/human_rights_screen.dart';
+import 'package:provider_hub/features/screens/homepage/presentation/view/services_wise_provider_list.dart';
 import 'package:provider_hub/features/screens/inbox_page/presentation/view/inbox_page.dart';
 import 'package:provider_hub/features/screens/nearest_provider/presentation/view/nearest_provider_screen.dart';
 import 'package:provider_hub/features/screens/provider_registration_screen/payment_screens/presentation/views/payment_screen.dart';
@@ -173,6 +174,7 @@ class RouteGenerator {
             receiverId: arguments[0] as String,
             image: arguments[1] as String,
             name: arguments[2] as String,
+            type: arguments[3] as String,
           ),
         );
       case Routes.profile:
@@ -220,6 +222,12 @@ class RouteGenerator {
         return MaterialPageRoute(
           builder: (context) => ProviderProfileDetails(
               providerModel: arguments[0] as ProviderModel),
+        );
+      case Routes.serviceWiseProviderList:
+        final arguments = routeSettings.arguments as List;
+        return MaterialPageRoute(
+          builder: (context) =>
+              ProviderListScreen(service: arguments[0] as String),
         );
     }
     return null;

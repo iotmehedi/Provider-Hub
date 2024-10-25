@@ -44,10 +44,13 @@ class AllServicesScreen extends StatelessWidget {
                     onTap: () {
                       _scrollToSelectedItem(index);
                       controller.selectedIndex.value = index;
+                      controller.selectedIndexName.value = item['title'];
                     },
                     child: Card(
                       elevation: 0.0,
-                      color: controller.selectedIndex.value == index ? AppColors.slightGrey.withOpacity(0.4) : AppColors.slightGrey.withOpacity(0.04),
+                      color: controller.selectedIndex.value == index
+                          ? AppColors.slightGrey.withOpacity(0.4)
+                          : AppColors.slightGrey.withOpacity(0.04),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(0),
                       ),
@@ -84,7 +87,6 @@ class AllServicesScreen extends StatelessWidget {
               ),
             ),
             40.ph,
-
             Expanded(
               child: ListView.builder(
                 scrollDirection: Axis.vertical,
@@ -98,383 +100,336 @@ class AllServicesScreen extends StatelessWidget {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                     if(subIndex == 0)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: CustomSimpleText(
-                              text: "${controller.gridItems[controller.selectedIndex.value]['subItems'].length.toString()} Services in DD Services",
-                              fontSize: 10,
-                              fontWeight: FontWeight.normal,
-                              color: AppColors.white,
+                      if (subIndex == 0)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20),
+                              child: CustomSimpleText(
+                                text:
+                                    "${controller.gridItems[controller.selectedIndex.value]['subItems'].length.toString()} Services in ${controller.selectedIndexName.value}",
+                                fontSize: 10,
+                                fontWeight: FontWeight.normal,
+                                color: AppColors.white,
+                              ),
                             ),
-                          ),
-                          20.ph,
-                        ],
-                      ),
+                            20.ph,
+                          ],
+                        ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: InkWell(
-                          onTap:(){
-                            if(controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" && subItem['title'] == "Regions"){
-                              RouteGenerator.pushNamed(context,Routes.dbhdsScreen);
-                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" && subItem['title'] == "License Specialist"){
-                              RouteGenerator.pushNamed(context,Routes.licenseSpecialistScreen);
-                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" && subItem['title'] == "Human Rights"){
-                              RouteGenerator.pushNamed(context,Routes.humanRightScreen);
-                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" && subItem['title'] == "CRC"){
-                              RouteGenerator.pushNamed(context,Routes.crcScreen);
-                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "Licensing"){
-                              RouteGenerator.pushNamed(context,Routes.licensingPage);
-                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "Human Rights Trainings"){
-                              RouteGenerator.pushNamed(context,Routes.humanRightsTrainingsScreen);
-                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "BIU"){
-                              RouteGenerator.pushNamed(context,Routes.biuScreen);
-                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" && subItem['title'] == "DMAS"){
-                              RouteGenerator.pushNamed(context,Routes.dmasScreen);
-                            }else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Provider Resources" && subItem['title'] == "Jump Start Fundings"){
-                              RouteGenerator.pushNamed(context,Routes.providerResourcesScreen);
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Alexandria"){
+                          onTap: () {
+                            if (controller.gridItems[controller.selectedIndex.value]['title'] == "DD Services" ||
+                                controller.gridItems[controller.selectedIndex.value]['title'] ==
+                                    "Mental Health Services") {
+                              RouteGenerator.pushNamedSms(
+                                  context, Routes.serviceWiseProviderList,
+                                  arguments: [subItem['title']]);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" &&
+                                subItem['title'] == "Regions") {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.dbhdsScreen);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" &&
+                                subItem['title'] == "License Specialist") {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.licenseSpecialistScreen);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" &&
+                                subItem['title'] == "Human Rights") {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.humanRightScreen);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" &&
+                                subItem['title'] == "CRC") {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.crcScreen);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" &&
+                                subItem['title'] == "Licensing") {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.licensingPage);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" &&
+                                subItem['title'] == "Human Rights Trainings") {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.humanRightsTrainingsScreen);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" &&
+                                subItem['title'] == "BIU") {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.biuScreen);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Updates" &&
+                                subItem['title'] == "DMAS") {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.dmasScreen);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Provider Resources" &&
+                                subItem['title'] == "Jump Start Fundings") {
+                              RouteGenerator.pushNamed(
+                                  context, Routes.providerResourcesScreen);
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" &&
+                                subItem['title'] == "Alexandria") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Alexandria',
-                                url:
-                                "https://www.alexandriava.gov/DCHS",
+                                url: "https://www.alexandriava.gov/DCHS",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Alexandria"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" &&
+                                subItem['title'] == "Alexandria") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Alexandria',
-                                url:
-                                "https://www.alexandriava.gov/DCHS",
+                                url: "https://www.alexandriava.gov/DCHS",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Alleghany"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Alleghany") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Alleghany',
-                                url:
-                                "https://ahcsb.org/",
+                                url: "https://ahcsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Arlington"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Arlington") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Arlington',
                                 url:
-                                "https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Community-Services-Board",
+                                    "https://www.arlingtonva.us/Government/Commissions-and-Advisory-Groups/Community-Services-Board",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Blue Ridge"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Blue Ridge") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Blue Ridge',
-                                url:
-                                "https://www.brbh.org/",
+                                url: "https://www.brbh.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Cheseapeake"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Cheseapeake") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Cheseapeake',
                                 url:
-                                "https://www.cityofchesapeake.net/1284/Chesapeake-Integrated-Behavioral-Healthc",
+                                    "https://www.cityofchesapeake.net/1284/Chesapeake-Integrated-Behavioral-Healthc",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Chesterfield"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Chesterfield") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Chesterfield',
                                 url:
-                                "https://www.chesterfield.gov/878/Mental-Health-Support-Services",
+                                    "https://www.chesterfield.gov/878/Mental-Health-Support-Services",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Colonial"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Colonial") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Colonial',
-                                url:
-                                "https://www.colonialbh.org/",
+                                url: "https://www.colonialbh.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Crossroads"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Crossroads") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Crossroads',
-                                url:
-                                "https://crossroadscsb.org/",
+                                url: "https://crossroadscsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Cumberland Mountain"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Cumberland Mountain") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Cumberland Mountain',
-                                url:
-                                "http://www.cmcsb.com/",
+                                url: "http://www.cmcsb.com/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Danville-Pittsylvania"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Danville-Pittsylvania") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Danville-Pittsylvania',
-                                url:
-                                "https://www.dpcs.org/",
+                                url: "https://www.dpcs.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Dickenson"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Dickenson") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Dickenson',
-                                url:
-                                "https://dcbhs.com/",
+                                url: "https://dcbhs.com/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "District 19"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "District 19") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'District 19',
-                                url:
-                                "https://d19csb.com/",
+                                url: "https://d19csb.com/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Eastern Shore"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Eastern Shore") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Eastern Shore',
-                                url:
-                                "https://escsb.org/",
+                                url: "https://escsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Fairfax-Falls Church"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Fairfax-Falls Church") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Fairfax-Falls Church',
                                 url:
-                                "https://www.fairfaxcounty.gov/community-services-board/",
+                                    "https://www.fairfaxcounty.gov/community-services-board/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Goochland-Powhatan"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Goochland-Powhatan") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Goochland-Powhatan',
-                                url:
-                                "https://gpcsb.org/",
+                                url: "https://gpcsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Hanover"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Hanover") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Hanover',
                                 url:
-                                "https://www.hanovercounty.gov/358/Community-Services-Board",
+                                    "https://www.hanovercounty.gov/358/Community-Services-Board",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Hampton-Newport"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Hampton-Newport") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Hampton-Newport',
-                                url:
-                                "https://www.hnncsb.org/",
+                                url: "https://www.hnncsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Harrisonburg Rockingham"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Harrisonburg Rockingham") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Harrisonburg Rockingham',
-                                url:
-                                "https://www.hrcsb.org/",
+                                url: "https://www.hrcsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Henrico Area"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Henrico Area") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Henrico Area',
-                                url:
-                                "https://henrico.us/mhds/",
+                                url: "https://henrico.us/mhds/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Highlands"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Highlands") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Highlands',
-                                url:
-                                "https://highlandscsb.org/",
+                                url: "https://highlandscsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Horizon"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Horizon") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Horizon',
-                                url:
-                                "https://www.horizonbh.org/",
+                                url: "https://www.horizonbh.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Loudoun"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Loudoun") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Loudoun',
                                 url:
-                                "https://www.loudoun.gov/121/Mental-Health-Substance-Abuse-Develop-Se",
+                                    "https://www.loudoun.gov/121/Mental-Health-Substance-Abuse-Develop-Se",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Middle Peninsula-Northern Neck"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Middle Peninsula-Northern Neck") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Middle Peninsula-Northern Neck',
-                                url:
-                                "https://www.mpnncsb.org/",
+                                url: "https://www.mpnncsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Mount Rogers"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Mount Rogers") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Mount Rogers',
-                                url:
-                                "http://www.mtrogerscsb.com/",
+                                url: "http://www.mtrogerscsb.com/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "New River Valley"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "New River Valley") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'New River Valley',
-                                url:
-                                "https://www.nrvcs.org/",
+                                url: "https://www.nrvcs.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Norfolk"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Norfolk") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Norfolk',
                                 url:
-                                "https://www.norfolk.gov/996/Norfolk-Community-Services-Board",
+                                    "https://www.norfolk.gov/996/Norfolk-Community-Services-Board",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Northwestern"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Northwestern") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Northwestern',
-                                url:
-                                "https://www.nwcsb.com/",
+                                url: "https://www.nwcsb.com/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Piedmont"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Piedmont") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Piedmont',
                                 url:
-                                "https://piedmontcsb.wixsite.com/piedmontcommunitysvc",
+                                    "https://piedmontcsb.wixsite.com/piedmontcommunitysvc",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Planning District One"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Planning District One") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Planning District One',
-                                url:
-                                "https://www.pd1bhs.org/",
+                                url: "https://www.pd1bhs.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Portsmouth"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Portsmouth") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Portsmouth',
                                 url:
-                                "https://www.portsmouthva.gov/149/Behavioral-Healthcare",
+                                    "https://www.portsmouthva.gov/149/Behavioral-Healthcare",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Prince William"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Prince William") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Prince William',
-                                url:
-                                "https://www.pwcva.gov/csb",
+                                url: "https://www.pwcva.gov/csb",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Rappahannock"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Rappahannock") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Rappahannock',
-                                url:
-                                "https://rappahannockareacsb.org/",
+                                url: "https://rappahannockareacsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Rappananock-Rapidan"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Rappananock-Rapidan") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Rappananock-Rapidan',
                                 url:
-                                "https://www.encompasscommunitysupports.org/",
+                                    "https://www.encompasscommunitysupports.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Region Ten"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Region Ten") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Region Ten',
-                                url:
-                                "https://regionten.org/",
+                                url: "https://regionten.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Richmond"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Richmond") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Richmond',
-                                url:
-                                "https://www.rbha.org/",
+                                url: "https://www.rbha.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Rockbridge"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Rockbridge") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Rockbridge',
-                                url:
-                                "https://www.racsb.org/",
+                                url: "https://www.racsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Southside"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Southside") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Southside',
-                                url:
-                                "https://www.sscsb.org/lander",
+                                url: "https://www.sscsb.org/lander",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Valley"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Valley") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Valley',
-                                url:
-                                "https://www.myvalleycsb.org/",
+                                url: "https://www.myvalleycsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Virginia"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Virginia") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Virginia',
-                                url:
-                                "https://vacsb.org/",
+                                url: "https://vacsb.org/",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Virginia Beach"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Virginia Beach") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Virginia Beach',
                                 url:
-                                "https://hs.virginiabeach.gov/about/community-services-board",
+                                    "https://hs.virginiabeach.gov/about/community-services-board",
                               );
-                            }
-                            else if(controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Weastern Tidewater"){
+                            } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Community Service Board" && subItem['title'] == "Weastern Tidewater") {
                               RouteGenerator.gotoWebPage(
                                 context: context,
                                 pageTitle: 'Weastern Tidewater',
-                                url:
-                                "https://www.wtcsb.org/",
+                                url: "https://www.wtcsb.org/",
                               );
-                            }
-                            else{
-                              if(validation(subItem['title']) == true){
+                            } else {
+                              if (validation(subItem['title']) == true) {
                                 print("this is item");
                               }
                             }
@@ -508,10 +463,15 @@ class AllServicesScreen extends StatelessWidget {
                                           fontWeight: FontWeight.normal,
                                           color: AppColors.white,
                                           fontSize: AppSizes.size13,
-                                          decoration: validation(subItem['title']) == true? TextDecoration.underline : TextDecoration.none,
+                                          decoration:
+                                              validation(subItem['title']) ==
+                                                      true
+                                                  ? TextDecoration.underline
+                                                  : TextDecoration.none,
                                           // Explicitly setting underline color to match the text color
                                           decorationColor: AppColors.white,
-                                          decorationThickness: 1.5, // Adjust thickness as needed
+                                          decorationThickness:
+                                              1.5, // Adjust thickness as needed
                                         ),
                                       ),
                                     ),
@@ -530,9 +490,12 @@ class AllServicesScreen extends StatelessWidget {
           ],
         )));
   }
+
   void _scrollToSelectedItem(int index) {
-    final double itemWidth = 104.8; // Adjust according to the width of each item
-    final double scrollPosition = index * itemWidth; // Calculate scroll position
+    final double itemWidth =
+        104.8; // Adjust according to the width of each item
+    final double scrollPosition =
+        index * itemWidth; // Calculate scroll position
 
     _horizontalScrollController.animateTo(
       scrollPosition,
@@ -540,93 +503,92 @@ class AllServicesScreen extends StatelessWidget {
       curve: Curves.easeInOut,
     );
   }
-  bool validation(subItem){
-    if(subItem == "Alexandria"){
+
+  bool validation(subItem) {
+    if (subItem == "Alexandria") {
       print("this is true");
       return true;
-    }
-    else if(subItem == "Alleghany"){
+    } else if (subItem == "Alleghany") {
       return true;
-    }else if(subItem == "Arlington"){
+    } else if (subItem == "Arlington") {
       return true;
-    }else if(subItem == "Blue Ridge"){
+    } else if (subItem == "Blue Ridge") {
       return true;
-    }else if(subItem == "Cheseapeake"){
+    } else if (subItem == "Cheseapeake") {
       return true;
-    }else if(subItem == "Chesterfield"){
+    } else if (subItem == "Chesterfield") {
       return true;
-    }else if(subItem == "Colonial"){
+    } else if (subItem == "Colonial") {
       return true;
-    }else if(subItem == "Crossroads"){
+    } else if (subItem == "Crossroads") {
       return true;
-    }else if(subItem == "Cumberland Mountain"){
+    } else if (subItem == "Cumberland Mountain") {
       return true;
-    }else if(subItem == "Danville-Pittsylvania"){
+    } else if (subItem == "Danville-Pittsylvania") {
       return true;
-    }else if(subItem == "Dickenson"){
+    } else if (subItem == "Dickenson") {
       return true;
-    }else if(subItem == "District 19"){
+    } else if (subItem == "District 19") {
       return true;
-    }else if(subItem == "Eastern Shore"){
+    } else if (subItem == "Eastern Shore") {
       return true;
-    }else if(subItem == "Fairfax-Falls Church"){
+    } else if (subItem == "Fairfax-Falls Church") {
       return true;
-    }else if(subItem == "Goochland-Powhatan"){
+    } else if (subItem == "Goochland-Powhatan") {
       return true;
-    }else if(subItem == "Hanover"){
+    } else if (subItem == "Hanover") {
       return true;
-    }else if(subItem == "Harrisonburg Rockingham"){
+    } else if (subItem == "Harrisonburg Rockingham") {
       return true;
-    }else if(subItem == "Henrico Area"){
+    } else if (subItem == "Henrico Area") {
       return true;
-    }else if(subItem == "Highlands"){
+    } else if (subItem == "Highlands") {
       return true;
-    }else if(subItem == "Horizon"){
+    } else if (subItem == "Horizon") {
       return true;
-    }else if(subItem == "Loudoun"){
+    } else if (subItem == "Loudoun") {
       return true;
-    }else if(subItem == "Middle Peninsula-Northern Neck"){
+    } else if (subItem == "Middle Peninsula-Northern Neck") {
       return true;
-    }else if(subItem == "Mount Rogers"){
+    } else if (subItem == "Mount Rogers") {
       return true;
-    }else if(subItem == "New River Valley"){
+    } else if (subItem == "New River Valley") {
       return true;
-    }else if(subItem == "Norfolk"){
+    } else if (subItem == "Norfolk") {
       return true;
-    }else if(subItem == "Northwestern"){
+    } else if (subItem == "Northwestern") {
       return true;
-    }else if(subItem == "Piedmont"){
+    } else if (subItem == "Piedmont") {
       return true;
-    }else if(subItem == "Planning District One"){
+    } else if (subItem == "Planning District One") {
       return true;
-    }else if(subItem == "Portsmouth"){
+    } else if (subItem == "Portsmouth") {
       return true;
-    }else if(subItem == "Prince William"){
+    } else if (subItem == "Prince William") {
       return true;
-    }else if(subItem == "Rappahannock"){
+    } else if (subItem == "Rappahannock") {
       return true;
-    }else if(subItem == "Rappananock-Rapidan"){
+    } else if (subItem == "Rappananock-Rapidan") {
       return true;
-    }else if(subItem == "Hampton-Newport"){
+    } else if (subItem == "Hampton-Newport") {
       return true;
-    }else if(subItem == "Region Ten"){
+    } else if (subItem == "Region Ten") {
       return true;
-    }else if(subItem == "Richmond"){
+    } else if (subItem == "Richmond") {
       return true;
-    }else if(subItem == "Rockbridge"){
+    } else if (subItem == "Rockbridge") {
       return true;
-    }else if(subItem == "Southside"){
+    } else if (subItem == "Southside") {
       return true;
-    }else if(subItem == "Valley"){
+    } else if (subItem == "Valley") {
       return true;
-    }else if(subItem == "Virginia"){
+    } else if (subItem == "Virginia") {
       return true;
-    }else if(subItem == "Virginia Beach"){
+    } else if (subItem == "Virginia Beach") {
       return true;
-    }else if(subItem == "Weastern Tidewater"){
+    } else if (subItem == "Weastern Tidewater") {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }

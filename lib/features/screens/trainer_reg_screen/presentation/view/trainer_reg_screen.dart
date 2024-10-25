@@ -199,18 +199,22 @@ class TrainerRegistrationScreen extends StatelessWidget {
                 10.ph,
                 SizedBox(
                   height: 48,
-                  child: CustomElevatedButton(
-                      text: CustomSimpleText(
-                        text: "Next",
-                        fontSize: 20,
-                        color: AppColors.white,
-                        alignment: Alignment.center,
-                      ),
-                      onPress: () {
-                        controller.validation();
-                      },
-                      backgroundColor: AppColors.appColors,
-                      elevatedButtonSideBorderColor: AppColors.appColors),
+                  child: controller.isLoading.value == true
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CustomElevatedButton(
+                          text: CustomSimpleText(
+                            text: "Next",
+                            fontSize: 20,
+                            color: AppColors.white,
+                            alignment: Alignment.center,
+                          ),
+                          onPress: () {
+                            controller.validation();
+                          },
+                          backgroundColor: AppColors.appColors,
+                          elevatedButtonSideBorderColor: AppColors.appColors),
                 ),
               ],
             ),

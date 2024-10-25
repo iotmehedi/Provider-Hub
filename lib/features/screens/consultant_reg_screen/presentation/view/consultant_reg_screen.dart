@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
+import 'package:hexcolor/hexcolor.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:provider_hub/const/utils/consts/app_assets.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
 import 'package:provider_hub/const/utils/consts/app_sizes.dart';
@@ -101,42 +103,38 @@ class ConsultantRegistrationScreen extends StatelessWidget {
                       textAlign: TextAlign.start,
                     )),
                 10.ph,
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.appColors, width: 1.0),
-                    borderRadius:
-                        BorderRadius.circular(5.0), // Adjust as needed
+                MultiSelectDialogField(
+                  items: controller.items,
+                  title: const Text("Animals"),
+                  backgroundColor: AppColors.backgroundColor,
+                  itemsTextStyle: const TextStyle(color: Colors.white),
+                  checkColor: AppColors.white,
+                  selectedColor: AppColors.appColors,
+                  selectedItemsTextStyle: const TextStyle(
+                    color: Colors.white,
                   ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      value: controller.selectedValue.value,
-                      items: <String>["Select Training's", 'A', 'B', 'C', 'D']
-                          .map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: CustomSimpleText(
-                            text: value,
-                            fontWeight: FontWeight.w500,
-                            fontSize: AppSizes.size14,
-                            color: AppColors.white,
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        controller.selectedValue.value = value!;
-                      },
-                      underline:
-                          const SizedBox(), // Removes the default underline
-                      isExpanded:
-                          true, // Makes the dropdown button expand to fill its container
-                      dropdownColor:
-                          Colors.black, // Sets the dropdown menu color to black
-                      iconEnabledColor: Colors
-                          .white, // Optional: Change the icon color if needed
-                      style: const TextStyle(color: Colors.white),
+                  decoration: BoxDecoration(
+                    color: HexColor('80848A').withOpacity(0.35),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
+                    border: Border.all(
+                      color: AppColors.appColors,
+                      width: 2,
                     ),
                   ),
+                  buttonIcon: Icon(
+                    Icons.arrow_drop_down,
+                    color: AppColors.white,
+                  ),
+                  buttonText: Text(
+                    "Choose Consult services",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: AppSizes.size13,
+                    ),
+                  ),
+                  onConfirm: (results) {
+                    controller.selectedServiceItems.value = results;
+                  },
                 ),
                 10.ph,
                 CustomTextTextfieldColumn(
@@ -199,18 +197,22 @@ class ConsultantRegistrationScreen extends StatelessWidget {
                 10.ph,
                 SizedBox(
                   height: 48,
-                  child: CustomElevatedButton(
-                      text: CustomSimpleText(
-                        text: "Next",
-                        fontSize: 20,
-                        color: AppColors.white,
-                        alignment: Alignment.center,
-                      ),
-                      onPress: () {
-                        RouteGenerator.pushNamed(context, Routes.paymentScreen);
-                      },
-                      backgroundColor: AppColors.appColors,
-                      elevatedButtonSideBorderColor: AppColors.appColors),
+                  child: controller.isLoading.value == true
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : CustomElevatedButton(
+                          text: CustomSimpleText(
+                            text: "Next",
+                            fontSize: 20,
+                            color: AppColors.white,
+                            alignment: Alignment.center,
+                          ),
+                          onPress: () {
+                            controller.validation();
+                          },
+                          backgroundColor: AppColors.appColors,
+                          elevatedButtonSideBorderColor: AppColors.appColors),
                 ),
               ],
             ),

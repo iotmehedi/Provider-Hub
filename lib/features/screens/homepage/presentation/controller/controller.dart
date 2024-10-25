@@ -11,8 +11,10 @@ import 'package:flutter/services.dart' show ByteData, rootBundle;
 import 'package:http/http.dart' as http;
 import '../../model/license_specialist_model.dart';
 import 'package:path/path.dart' as path;
-class HomepageContorller extends GetxController{
+
+class HomepageContorller extends GetxController {
   var selectedIndex = 0.obs;
+  var selectedIndexName = "".obs;
   var selectIndexForItem = 0.obs;
   var licenseSpecialists = RxList<LicenseSpecialist>();
   var qualityInformation = RxList<LicenseSpecialist>();
@@ -36,8 +38,14 @@ class HomepageContorller extends GetxController{
       'subItems': [
         {'title': 'In-Home Supportive Services', 'image': AppAssets.inHome},
         {'title': 'Group Home Services', 'image': AppAssets.groupHome},
-        {'title': 'Sponsored Residential Services', 'image': AppAssets.sponsored},
-        {'title': 'Community Engagement Services', 'image': AppAssets.community2},
+        {
+          'title': 'Sponsored Residential Services',
+          'image': AppAssets.sponsored
+        },
+        {
+          'title': 'Community Engagement Services',
+          'image': AppAssets.community2
+        },
         {'title': 'Day Support Services', 'image': AppAssets.daySupport},
       ],
     },
@@ -85,7 +93,10 @@ class HomepageContorller extends GetxController{
         {'title': 'Highlands', 'image': AppAssets.hignlands},
         {'title': 'Horizon', 'image': AppAssets.horizon},
         {'title': 'Loudoun', 'image': AppAssets.loudoun},
-        {'title': 'Middle Peninsula-Northern Neck', 'image': AppAssets.middle_peninsula},
+        {
+          'title': 'Middle Peninsula-Northern Neck',
+          'image': AppAssets.middle_peninsula
+        },
         {'title': 'Mount Rogers', 'image': AppAssets.mount},
         {'title': 'New River Valley', 'image': AppAssets.new_river},
         {'title': 'Norfolk', 'image': AppAssets.norfolk},
@@ -143,7 +154,6 @@ class HomepageContorller extends GetxController{
     // Add more grid items as needed
   ];
 
-
   @override
   void onInit() {
     super.onInit();
@@ -162,8 +172,6 @@ class HomepageContorller extends GetxController{
     fetchUseProvider();
   }
 
-
-
   Future<void> fetchLicenseSpecialist() async {
     final firestore = FirebaseFirestore.instance;
     final querySnapshot = await firestore.collection('licenceSpecialist').get();
@@ -176,9 +184,11 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     licenseSpecialists.value = specialists;
   }
+
   Future<void> fetchQualityInfromation() async {
     final firestore = FirebaseFirestore.instance;
-    final querySnapshot = await firestore.collection('qualityInformation').get();
+    final querySnapshot =
+        await firestore.collection('qualityInformation').get();
 
     // Convert the documents into LicenseSpecialist objects
     var specialists = querySnapshot.docs.map((doc) {
@@ -188,6 +198,7 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     qualityInformation.value = specialists;
   }
+
   Future<void> fetchSIU() async {
     final firestore = FirebaseFirestore.instance;
     final querySnapshot = await firestore.collection('siu').get();
@@ -200,6 +211,7 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     siuModel.value = specialists;
   }
+
   Future<void> fetchIMU() async {
     final firestore = FirebaseFirestore.instance;
     final querySnapshot = await firestore.collection('imu').get();
@@ -212,6 +224,7 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     imuModel.value = specialists;
   }
+
   Future<void> fetchRegionOne() async {
     final firestore = FirebaseFirestore.instance;
     final querySnapshot = await firestore.collection('regionOne').get();
@@ -224,6 +237,7 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     regionOne.value = specialists;
   }
+
   Future<void> fetchRegionTwo() async {
     final firestore = FirebaseFirestore.instance;
     final querySnapshot = await firestore.collection('regionTwo').get();
@@ -236,6 +250,7 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     regionTwo.value = specialists;
   }
+
   Future<void> fetchRegionThree() async {
     final firestore = FirebaseFirestore.instance;
     final querySnapshot = await firestore.collection('regionThree').get();
@@ -248,6 +263,7 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     regionThree.value = specialists;
   }
+
   Future<void> fetchRegionFour() async {
     final firestore = FirebaseFirestore.instance;
     final querySnapshot = await firestore.collection('regionFour').get();
@@ -260,9 +276,11 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     regionFour.value = specialists;
   }
+
   Future<void> fetchRegionFourPointFive() async {
     final firestore = FirebaseFirestore.instance;
-    final querySnapshot = await firestore.collection('regionFourPointFive').get();
+    final querySnapshot =
+        await firestore.collection('regionFourPointFive').get();
 
     // Convert the documents into LicenseSpecialist objects
     var specialists = querySnapshot.docs.map((doc) {
@@ -272,6 +290,7 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     regionFourPointFive.value = specialists;
   }
+
   Future<void> fetchRegionFive() async {
     final firestore = FirebaseFirestore.instance;
     final querySnapshot = await firestore.collection('regionFive').get();
@@ -284,6 +303,7 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     regionFive.value = specialists;
   }
+
   Future<void> fetchUseProvider() async {
     final firestore = FirebaseFirestore.instance;
     final querySnapshot = await firestore.collection('useProvider').get();
@@ -296,13 +316,32 @@ class HomepageContorller extends GetxController{
     // Update the RxList
     useProvider.value = specialists;
   }
+Future<List<Map<String, dynamic>>> fetchProvidersByService(String service) async {
+  final querySnapshot = await FirebaseFirestore.instance
+      .collection('users')
+      .where('type', isEqualTo: 'provider')
+      .where('service', isEqualTo: service) // Adjust field names if necessary
+      .get();
+
+  // Map the results to extract provider names
+  List<Map<String, dynamic>> providers = querySnapshot.docs.map((doc) {
+    return {
+      'providerName': doc['providerName'],
+      // Include other provider-specific fields if needed
+    };
+  }).toList();
+
+  return providers;
+}
   // Initialize the notification plugin
   Future<void> initializeNotifications() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
-    AndroidInitializationSettings('@mipmap/ic_launcher');
-    const DarwinInitializationSettings iOSInitializationSettings = DarwinInitializationSettings();
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const DarwinInitializationSettings iOSInitializationSettings =
+        DarwinInitializationSettings();
 
-    InitializationSettings initializationSettings = const InitializationSettings(
+    InitializationSettings initializationSettings =
+        const InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: iOSInitializationSettings,
     );
@@ -312,14 +351,16 @@ class HomepageContorller extends GetxController{
     );
 
     await flutterLocalNotificationsPlugin.value
-        ?.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.requestNotificationsPermission();
   }
 
   // Handle notification click
   void onNotificationSelect(NotificationResponse response) async {
     final directory = await getApplicationDocumentsDirectory();
-    final filePath = '${directory.path}/${imageFromImage.replaceAll("assets/", "")}';
+    final filePath =
+        '${directory.path}/${imageFromImage.replaceAll("assets/", "")}';
 
     OpenFilex.open(filePath);
   }
@@ -343,7 +384,8 @@ class HomepageContorller extends GetxController{
         return;
       }
 
-      final fileName = imageUrl.split('/').last; // Extract the file name from the URL
+      final fileName =
+          imageUrl.split('/').last; // Extract the file name from the URL
       final filePath = '${directory.path}/$fileName';
       final file = File(filePath);
       print("Saving file to: $filePath");
@@ -359,13 +401,15 @@ class HomepageContorller extends GetxController{
         final int chunkSize = totalBytes ~/ 100;
 
         for (int i = 0; i < totalBytes; i += chunkSize) {
-          final int end = (i + chunkSize < totalBytes) ? i + chunkSize : totalBytes;
+          final int end =
+              (i + chunkSize < totalBytes) ? i + chunkSize : totalBytes;
           sink.add(data.buffer.asUint8List(i, end - i));
 
           bytesWritten += chunkSize;
           progress.value = ((bytesWritten / totalBytes) * 100).toInt();
           await showProgressNotification(progress.value, imageUrl);
-          await Future.delayed(Duration(milliseconds: 100)); // Simulate delay for progress
+          await Future.delayed(
+              Duration(milliseconds: 100)); // Simulate delay for progress
         }
 
         await sink.flush();
@@ -381,13 +425,15 @@ class HomepageContorller extends GetxController{
         final chunkSize = totalBytes ~/ 100;
 
         for (int i = 0; i < response.bodyBytes.length; i += chunkSize) {
-          final int end = (i + chunkSize < totalBytes) ? i + chunkSize : totalBytes;
+          final int end =
+              (i + chunkSize < totalBytes) ? i + chunkSize : totalBytes;
           sink.add(response.bodyBytes.sublist(i, end));
 
           bytesWritten += chunkSize;
           progress.value = ((bytesWritten / totalBytes) * 100).toInt();
           await showProgressNotification(progress.value, imageUrl);
-          await Future.delayed(Duration(milliseconds: 100)); // Simulate delay for progress
+          await Future.delayed(
+              Duration(milliseconds: 100)); // Simulate delay for progress
         }
 
         await sink.flush();
@@ -404,44 +450,40 @@ class HomepageContorller extends GetxController{
   // Show a progress notification
   Future<void> showProgressNotification(int progress, String imageUrl) async {
     AndroidNotificationDetails androidPlatformChannelSpecifics =
-    AndroidNotificationDetails(
+        AndroidNotificationDetails(
       'download_channel',
       'Download Notification',
       channelDescription: 'Notification while downloading the image',
       importance: Importance.low,
       priority: Priority.low,
-      showProgress:  progress == 100 ? false : true,
+      showProgress: progress == 100 ? false : true,
       maxProgress: 100,
       progress: progress,
       playSound: false,
     );
     NotificationDetails platformChannelSpecifics =
-    NotificationDetails(android: androidPlatformChannelSpecifics);
+        NotificationDetails(android: androidPlatformChannelSpecifics);
 
     await flutterLocalNotificationsPlugin.value.show(
       0,
-      progress == 100 ? "Downloaded Image" :'Downloading Image',
+      progress == 100 ? "Downloaded Image" : 'Downloading Image',
       progress == 100 ? "Completed" : '$progress% completed',
       platformChannelSpecifics,
       payload: imageUrl.replaceAll("assets/", ""),
-
     );
   }
 
   // Show a completion notification when the download is done
   Future<void> showCompleteNotification(String imageUrl) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics =
-    AndroidNotificationDetails(
-        'download_channel',
-        'Download Complete',
-        channelDescription: 'Notification when image download is complete',
-        importance: Importance.max,
-        priority: Priority.high,
-        showProgress: true,
-        colorized: true
-    );
+        AndroidNotificationDetails('download_channel', 'Download Complete',
+            channelDescription: 'Notification when image download is complete',
+            importance: Importance.max,
+            priority: Priority.high,
+            showProgress: true,
+            colorized: true);
     const NotificationDetails platformChannelSpecifics =
-    NotificationDetails(android: androidPlatformChannelSpecifics);
+        NotificationDetails(android: androidPlatformChannelSpecifics);
 
     await flutterLocalNotificationsPlugin.value.show(
       0,
@@ -449,7 +491,6 @@ class HomepageContorller extends GetxController{
       'Tap to open the image',
       platformChannelSpecifics,
       payload: imageUrl.replaceAll("assets/", ""),
-
     );
   }
 }
