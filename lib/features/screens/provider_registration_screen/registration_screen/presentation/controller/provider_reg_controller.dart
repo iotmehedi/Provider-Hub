@@ -211,6 +211,7 @@ class ProviderRegController extends GetxController {
       'type': "provider", // type: string
       'password': passwordController.value.text, // password: string
       'fcmToken': "", // fcmToken: string (optional, replace if available)
+      'bio': '',
       'createdAt':
           FieldValue.serverTimestamp(), // createdAt: Firestore timestamp
     };

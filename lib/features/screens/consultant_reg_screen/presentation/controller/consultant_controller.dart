@@ -178,6 +178,7 @@ class ConsultantRegController extends GetxController {
       'service': selectedServiceItems,
       'password': passwordController.value.text,
       'type': "consultant",
+      'bio':'',
       'createdAt': FieldValue.serverTimestamp(),
     };
     users.add(consultantData).then((value) {

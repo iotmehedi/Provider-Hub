@@ -28,4 +28,5 @@ class Routes {
   static const providerResourcesScreen = "/providerResourcesScreen";
   static const providerDetailsProfile = "/providerDetailsProfile";
   static const serviceWiseProviderList = "/serviceWiseProviderList";
+  static const serviceWiseProviderListProfile = "/serviceWiseProviderListProfile";
 }

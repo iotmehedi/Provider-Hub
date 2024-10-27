@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider_hub/const/utils/consts/app_colors.dart';
+import 'package:provider_hub/const/utils/consts/app_sizes.dart';
+import 'package:provider_hub/const/utils/core/extensions/extensions.dart';
+import 'package:provider_hub/features/widget/custom_simple_text/custom_simple_text.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -27,14 +30,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: AppColors.backgroundColor,
       centerTitle: needTitleCenter ?? true,
-      title: Text(
-        title,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontFamily: fontFamily ?? "Podkova",
-            fontSize: fontSize ?? 20,
-            color: textColor ?? AppColors.appColors),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontFamily: fontFamily ?? "Podkova",
+                fontSize: fontSize ?? 20,
+                color: textColor ?? AppColors.appColors),
+          ),
+        ],
       ),
       leading: onBackPressed != null
           ? IconButton(
@@ -47,10 +55,21 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ? [
               IconButton(
                   onPressed: logoutButton,
-                  icon: Icon(
-                    Icons.logout,
-                    color: AppColors.white,
-                  ))
+                  icon: Column(
+                    children: [
+                      Icon(
+                        Icons.logout,
+                        color: AppColors.white,
+                      ),
+                      2.ph,
+                      CustomSimpleText(
+                        text: "Sign Out",
+                        fontSize: AppSizes.size11,
+                        color: AppColors.white,
+                        alignment: Alignment.centerLeft,
+                      )
+                    ],
+                  )),
             ]
           : null,
     );

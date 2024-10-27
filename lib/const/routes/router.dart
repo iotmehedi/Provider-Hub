@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider_hub/const/routes/route_name.dart';
@@ -21,6 +22,7 @@ import '../../features/screens/homepage/presentation/sub_item_page/license_speci
 import '../../features/screens/homepage/presentation/sub_item_page/updates/licensing_page.dart';
 import '../../features/screens/homepage/presentation/view/all_services_screen.dart';
 import '../../features/screens/homepage/presentation/view/homepage.dart';
+import '../../features/screens/homepage/presentation/view/profile_details_for_service_wise_provider_list.dart';
 import '../../features/screens/message_screen/presentation/view/message_screen.dart';
 import '../../features/screens/profile_page/presentation/view/profile_page.dart';
 import '../../features/screens/profile_page/presentation/view/provider_profile_details.dart';
@@ -226,8 +228,21 @@ class RouteGenerator {
       case Routes.serviceWiseProviderList:
         final arguments = routeSettings.arguments as List;
         return MaterialPageRoute(
-          builder: (context) =>
-              ProviderListScreen(service: arguments[0] as String),
+          builder: (context) => ProviderListScreen(
+            service: arguments[0] as String,
+            type: arguments[1] as String,
+            serviceType: arguments[2] as String,
+            // serviceType: arguments[2] as String,
+          ),
+        );
+        case Routes.serviceWiseProviderListProfile:
+        final arguments = routeSettings.arguments as List;
+        return MaterialPageRoute(
+          builder: (context) => ProfileDetailsForServiceWiseProviderListScreen(
+            profileModel: arguments[0] as QueryDocumentSnapshot<Object?>,
+            serviceType: arguments[1] as String,
+            type: arguments[2] as String,
+          ),
         );
     }
     return null;

@@ -265,12 +265,12 @@ class _HomepageScreenState extends State<HomepageScreen> {
                     // signInController.fetchProviders();
                     // signInController.getToken();
                     // signInController.saveFCMToken();
-                    if (Platform.isAndroid) {
-                      GetServiceKey getServerKey = GetServiceKey();
-                      String accessToken =
-                          await getServerKey.getServiceKeyToken();
-                      print(accessToken);
-                    }
+                    // if (Platform.isAndroid) {
+                    //   GetServiceKey getServerKey = GetServiceKey();
+                    //   String accessToken =
+                    //       await getServerKey.getServiceKeyToken();
+                    //   print(accessToken);
+                    // }
                     RouteGenerator.pushNamed(context, Routes.nearestProvider);
                   },
                   child: AbsorbPointer(

@@ -1,8 +1,0 @@
-const String stripePublishableKey =
-    "pk_test_51PtVYSBCXYpjXeteYuYg0WG4eLbiSNeD1XMdmP5yM2f9WGpd4rr9KcOlNxGvxJsCqwHSMExJIzyDxJCZ3e31EURF00OOvM3dq8";
-const String stripeSecretKey =
-    "sk_test_51PtVYSBCXYpjXetez0Dq7vOPdkbhFgOLHBxeqbL9VmFWcrc7BFflOnaVMqfSPAdVX1G1boYPkW368dJ1sGS2yfNf008isCACJP";
-
-
-// const String stripePublishableKey = "pk_live_51Pp0mcP21Q2jYuZBns9sl58GpXHSYMMVowRZ4KDb00t6slwrINIYsDGFVZTEVtY5r6iNttftUE6dtIvBzcM9g0vz0026EVZCfF";
-// const String stripeSecretKey = "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";

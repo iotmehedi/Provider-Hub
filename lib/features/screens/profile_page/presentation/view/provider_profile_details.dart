@@ -121,26 +121,26 @@ class ProviderProfileDetails extends StatelessWidget {
             ],
           ),
           // 10.ph,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: Image.asset(
-                  AppAssets.viewService,
-                  width: 18,
-                  height: 18,
-                ),
-              ),
-              8.ph,
-              CustomSimpleText(
-                text: 'View Services',
-                textDecoration: TextDecoration.underline,
-                fontSize: AppSizes.size13,
-                fontWeight: FontWeight.normal,
-                color: AppColors.white,
-              )
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     Center(
+          //       child: Image.asset(
+          //         AppAssets.viewService,
+          //         width: 18,
+          //         height: 18,
+          //       ),
+          //     ),
+          //     8.ph,
+          //     // CustomSimpleText(
+          //     //   text: 'View Services',
+          //     //   textDecoration: TextDecoration.underline,
+          //     //   fontSize: AppSizes.size13,
+          //     //   fontWeight: FontWeight.normal,
+          //     //   color: AppColors.white,
+          //     // )
+          //   ],
+          // ),
           CustomSimpleText(
             text: 'Bio',
             textDecoration: TextDecoration.none,
@@ -236,7 +236,7 @@ class ProviderProfileDetails extends StatelessWidget {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 2.0,
+                    crossAxisSpacing: 12.0,
                     mainAxisSpacing: 4.0),
                 itemCount: signinController.providerList.length,
                 physics: NeverScrollableScrollPhysics(),
@@ -247,7 +247,6 @@ class ProviderProfileDetails extends StatelessWidget {
                     children: [
                       Center(
                         child: Container(
-                          height: 125,
                           margin: EdgeInsets.only(top: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
@@ -255,8 +254,8 @@ class ProviderProfileDetails extends StatelessWidget {
                             color: Colors.black,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.grey.withOpacity(0.2),
-                                blurRadius: 9,
+                                color: Colors.grey.withOpacity(0.04),
+                                blurRadius: 8,
                                 offset: Offset(0, 0), // Shadow position
                               ),
                             ],
@@ -278,34 +277,44 @@ class ProviderProfileDetails extends StatelessWidget {
                                 ),
                               ),
                               5.ph,
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  PannableRatingBar(
-                                    rate: index / 10,
-                                    items: List.generate(
-                                        1,
-                                        (index) => const RatingWidget(
-                                              selectedColor: Colors.orange,
-                                              unSelectedColor: Colors.grey,
-                                              child: Icon(
-                                                Icons.star,
-                                                size: 15,
-                                              ),
-                                            )),
-                                  ),
-                                  CustomSimpleText(
-                                    text: "${index / 10}",
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: AppSizes.size15,
-                                    color: AppColors.white,
-                                    textAlign: TextAlign.center,
-                                    alignment: Alignment.center,
-                                  ),
-                                ],
+                              CustomSimpleText(
+                                text: item.phoneNumber ?? '',
+                                fontWeight: FontWeight.bold,
+                                fontSize: AppSizes.size14,
+                                color: AppColors.white,
+                                textAlign: TextAlign.center,
+                                alignment: Alignment.center,
                               ),
                               5.ph,
+                              // 5.ph,
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   crossAxisAlignment: CrossAxisAlignment.center,
+                              //   children: [
+                              //     PannableRatingBar(
+                              //       rate: index / 10,
+                              //       items: List.generate(
+                              //           1,
+                              //           (index) => const RatingWidget(
+                              //                 selectedColor: Colors.orange,
+                              //                 unSelectedColor: Colors.grey,
+                              //                 child: Icon(
+                              //                   Icons.star,
+                              //                   size: 15,
+                              //                 ),
+                              //               )),
+                              //     ),
+                              //     CustomSimpleText(
+                              //       text: "${index / 10}",
+                              //       fontWeight: FontWeight.bold,
+                              //       fontSize: AppSizes.size15,
+                              //       color: AppColors.white,
+                              //       textAlign: TextAlign.center,
+                              //       alignment: Alignment.center,
+                              //     ),
+                              //   ],
+                              // ),
+                              // 5.ph,
                               InkWell(
                                 onTap: () {
                                   RouteGenerator.pushNamedSms(

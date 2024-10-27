@@ -27,6 +27,7 @@ class InboxController extends GetxController {
   var chatListModel = MessageModelResponse().obs;
   var userId = ''.obs;
   var messageController = TextEditingController().obs;
+
   final ImagePicker _picker = ImagePicker();
   var imageBase64 = ''.obs;
   var pickedImage = File('').obs;

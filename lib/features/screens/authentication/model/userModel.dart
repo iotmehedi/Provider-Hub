@@ -11,6 +11,7 @@ class UserModel {
   final String? password;
   final DateTime? createdAt;
   final String? id;
+  final String? bio;
 
   UserModel({
     this.fullName,
@@ -23,6 +24,7 @@ class UserModel {
     this.password,
     this.createdAt,
     this.id,
+    this.bio,
   });
 
   // Factory method to create a UserModel from Firestore data
@@ -38,6 +40,34 @@ class UserModel {
       password: data['password'] ?? '',
       createdAt: (data['createdAt'] as Timestamp).toDate(),
       id: data['id'] ?? '',
+      bio: data['bio'] ?? '',
+    );
+  }
+  UserModel copyWith({
+    String? fullName,
+    String? email,
+    String? phoneNumber,
+    String? officeAddress,
+    List<dynamic>? training,
+    String? type,
+    String? imageBase64,
+    String? password,
+    DateTime? createdAt,
+    String? id,
+    String? bio,
+  }) {
+    return UserModel(
+      fullName: fullName ?? this.fullName,
+      email: email ?? this.email,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      officeAddress: officeAddress ?? this.officeAddress,
+      training: training ?? this.training,
+      type: type ?? this.type,
+      imageBase64: imageBase64 ?? this.imageBase64,
+      password: password ?? this.password,
+      createdAt: createdAt ?? this.createdAt,
+      id: id ?? this.id,
+      bio: bio ?? this.bio,
     );
   }
 }

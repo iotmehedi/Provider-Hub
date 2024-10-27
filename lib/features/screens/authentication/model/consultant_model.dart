@@ -11,6 +11,7 @@ class ConsultantModel {
   final String? type;
   final DateTime? createdAt;
   final String? id;
+  final String? bio;
 
   ConsultantModel({
     this.fullName,
@@ -23,6 +24,7 @@ class ConsultantModel {
     this.type,
     this.createdAt,
     this.id,
+    this.bio,
   });
 
   factory ConsultantModel.fromJson(Map<String, dynamic> json) {
@@ -36,6 +38,7 @@ class ConsultantModel {
       password: json['password'],
       type: json['type'],
       id: json['id'],
+      bio: json['bio'],
       createdAt: json['createdAt'] != null
           ? (json['createdAt'] as Timestamp).toDate()
           : null, // Handle null timestamp
@@ -54,9 +57,38 @@ class ConsultantModel {
       'password': password,
       'type': type,
       'id': id,
+      'bio': bio,
       'createdAt': createdAt != null
           ? Timestamp.fromDate(createdAt!)
           : FieldValue.serverTimestamp(),
     };
+  }
+  // Method to create a copy with updated fields
+  ConsultantModel copyWith({
+    String? fullName,
+    String? phoneNumber,
+    String? email,
+    String? consults,
+    String? imageBase64,
+    List<dynamic>? service,
+    String? password,
+    String? type,
+    DateTime? createdAt,
+    String? id,
+    String? bio,
+  }) {
+    return ConsultantModel(
+      fullName: fullName ?? this.fullName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      email: email ?? this.email,
+      consults: consults ?? this.consults,
+      imageBase64: imageBase64 ?? this.imageBase64,
+      service: service ?? this.service,
+      password: password ?? this.password,
+      type: type ?? this.type,
+      createdAt: createdAt ?? this.createdAt,
+      id: id ?? this.id,
+      bio: bio ?? this.bio,
+    );
   }
 }

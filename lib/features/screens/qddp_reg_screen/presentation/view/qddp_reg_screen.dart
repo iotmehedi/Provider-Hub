@@ -167,7 +167,7 @@ class QDDPRegistrationScreen extends StatelessWidget {
                         "Select Degree",
                         "Socialogy",
                         "social work",
-                        "special education",
+                        "Special education",
                         "psychology",
                         "rehabilatation",
                         "counceling",

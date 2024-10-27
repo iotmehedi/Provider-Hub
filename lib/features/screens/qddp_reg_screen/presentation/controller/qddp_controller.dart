@@ -167,6 +167,7 @@ class QDDPRegController extends GetxController {
       'password': passwordController.value.text,
       'degreeField': selectedValue.value,
       'degree': selectedDegree.value,
+      'bio': "",
       'createdAt': FieldValue.serverTimestamp(),
     }).then((value) {
       print("User Added");

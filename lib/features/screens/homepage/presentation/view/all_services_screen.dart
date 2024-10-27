@@ -126,7 +126,11 @@ class AllServicesScreen extends StatelessWidget {
                                     "Mental Health Services") {
                               RouteGenerator.pushNamedSms(
                                   context, Routes.serviceWiseProviderList,
-                                  arguments: [subItem['title']]);
+                                  arguments: [subItem['title'], "provider", "service"] );
+                            }else if (controller.gridItems[controller.selectedIndex.value]['title'] == "Trainings") {
+                              RouteGenerator.pushNamedSms(
+                                  context, Routes.serviceWiseProviderList,
+                                  arguments: [subItem['title'], "trainer", "training"]);
                             } else if (controller.gridItems[controller.selectedIndex.value]['title'] == "DBHDS" &&
                                 subItem['title'] == "Regions") {
                               RouteGenerator.pushNamed(

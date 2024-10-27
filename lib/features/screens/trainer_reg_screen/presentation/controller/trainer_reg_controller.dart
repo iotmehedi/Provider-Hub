@@ -185,6 +185,7 @@ class TrainerRegController extends GetxController {
       'service': "Trainer",
       'imageBase64': imageBase64.value,
       'password': passwordController.value.text,
+      'bio': "",
       'createdAt': FieldValue.serverTimestamp(),
     }).then((value) {
       print("User Added");

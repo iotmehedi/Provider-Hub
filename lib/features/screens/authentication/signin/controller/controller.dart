@@ -9,6 +9,8 @@ import 'package:provider_hub/features/screens/authentication/model/consultant_mo
 import 'package:provider_hub/features/screens/authentication/model/provider_model.dart';
 import 'package:provider_hub/features/screens/authentication/model/qddp_model.dart';
 import 'package:provider_hub/features/screens/inbox_page/presentation/controller/controller.dart';
+import 'package:provider_hub/features/screens/provider_registration_screen/registration_screen/presentation/controller/provider_reg_controller.dart';
+import 'package:provider_hub/features/screens/qddp_reg_screen/presentation/controller/qddp_controller.dart';
 import 'package:provider_hub/features/widget/custom_toast/custom_toast.dart';
 import 'package:provider_hub/main.dart';
 import '../../../../../const/routes/route_name.dart';
@@ -18,6 +20,11 @@ import '../../model/userModel.dart';
 class SigninController extends GetxController {
   var emailPhoneController = TextEditingController().obs;
   var passwordController = TextEditingController().obs;
+  var bioController = TextEditingController().obs;
+  var isClickedEditProfile = false.obs;
+  var isClickedEditDegree = false.obs;
+  var isClickedEditDegreeField = false.obs;
+  var isClickedService = false.obs;
   var auth = FirebaseAuth.instance.obs;
   var firestore = FirebaseFirestore.instance.obs;
   var userModel = UserModel().obs;
@@ -35,12 +42,27 @@ class SigninController extends GetxController {
   var isLoading = false.obs;
 
   var inboxController = Get.put(InboxController());
+  var providerController = Get.put(ProviderRegController());
+  var qddpController = Get.put(QDDPRegController());
   @override
   void onInit() {
     fetchProviders();
     super.onInit();
   }
+  void setSelectedServices() {
+   // providerController.selectedServiceItems.value = providerModel.value.service ?? [];
+   // print("value ${providerController.selectedServiceItems.value}");
+   providerController.selectedServiceItems.clear();
 
+   // Check for matches and populate selectedServiceItems
+   for (var service in providerController.selectedServiceName) {
+     if (providerModel.value.service?.contains(service) ?? false) {
+       providerController.selectedServiceItems.add(service); // Add matched service to selected items
+     }
+   }
+   print("the selected value ${providerController.selectedServiceItems}");
+   update();
+  }
   Future<void> signIn() async {
     var emailFromSession = box.read('email');
     var passwordFromSession = box.read('password');
@@ -178,7 +200,6 @@ class SigninController extends GetxController {
           filteredList.add(provider);
         }
       }
-
       // Print the number of providers fetched
       print("Number of providers: ${providerList.first.contactName}");
       print("Number of providers: ${filteredList.first.contactName}");
@@ -211,7 +232,146 @@ class SigninController extends GetxController {
           .toList();
     }
   }
+  Future<void> updateBio(String userId, String newBio) async {
+    try {
+      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        'bio': newBio,
+      });
+      print('Bio updated successfully');
+    } catch (e) {
+      print('Error updating bio: $e');
+    }
+    update();
+  }
+  Future<void> updateServicesInFirestore(String documentId, List<dynamic> newServices) async {
+    // Reference to the Firestore document
+    DocumentReference docRef = FirebaseFirestore.instance.collection('users').doc(documentId);
 
+    // Get the current services from Firestore
+    DocumentSnapshot docSnapshot = await docRef.get();
+
+    if (docSnapshot.exists) {
+      // Assuming 'service' is the field name in Firestore
+      List<String> currentServices = List<String>.from(docSnapshot['service'] ?? []);
+
+      // Merge existing services with new services, avoiding duplicates
+      List<dynamic> updatedServices = [ ...newServices].toSet().toList();
+
+      // Update the Firestore document with the merged service list
+      await docRef.update({
+        'service': updatedServices,
+      });
+    } else {
+      print("Document does not exist.");
+    }
+  }
+  Future<void> updateTrainingsInFirestore(String documentId, List<dynamic> newServices) async {
+    // Reference to the Firestore document
+    DocumentReference docRef = FirebaseFirestore.instance.collection('users').doc(documentId);
+
+    // Get the current services from Firestore
+    DocumentSnapshot docSnapshot = await docRef.get();
+
+    if (docSnapshot.exists) {
+      // Assuming 'service' is the field name in Firestore
+      List<String> currentServices = List<String>.from(docSnapshot['training'] ?? []);
+
+      // Merge existing services with new services, avoiding duplicates
+      List<dynamic> updatedServices = [ ...newServices].toSet().toList();
+
+      // Update the Firestore document with the merged service list
+      await docRef.update({
+        'training': updatedServices,
+      });
+    } else {
+      print("Document does not exist.");
+    }
+  }
+  Future<void> updateConsultantInFirestore(String documentId, List<dynamic> newServices) async {
+    // Reference to the Firestore document
+    DocumentReference docRef = FirebaseFirestore.instance.collection('users').doc(documentId);
+
+    // Get the current services from Firestore
+    DocumentSnapshot docSnapshot = await docRef.get();
+
+    if (docSnapshot.exists) {
+      // Assuming 'service' is the field name in Firestore
+      List<String> currentServices = List<String>.from(docSnapshot['service'] ?? []);
+
+      // Merge existing services with new services, avoiding duplicates
+      List<dynamic> updatedServices = [ ...newServices].toSet().toList();
+
+      // Update the Firestore document with the merged service list
+      await docRef.update({
+        'service': updatedServices,
+      });
+    } else {
+      print("Document does not exist.");
+    }
+  }
+  Future<void> fetchDegreeFromFirestore(String userId) async {
+    qddpController.selectedDegree.value = "Select Degree";
+    try {
+      var docSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      if (docSnapshot.exists && docSnapshot.data()!.containsKey('degree')) {
+        String degree = docSnapshot['degree'] ?? "Select Degree";
+        if (["Select Degree",
+          "Socialogy",
+          "social work",
+          "special education",
+          "psychology",
+          "rehabilatation",
+          "counceling",
+          "Bachelor’s",
+          "Masters"].contains(degree)) {
+         qddpController.selectedDegree.value = degree;
+        } else {
+        qddpController.selectedDegree.value = "Select Degree"; // Default to a valid item if no match
+        }
+       // qddpController.selectedValue.value = degree;
+        print("this is value ${ qddpController.selectedDegree.value}");
+      }
+    } catch (e) {
+      print("Error fetching degree: $e");
+    }
+  }
+  Future<void> fetchDegreeFieldFromFirestore(String userId) async {
+    qddpController.selectedValue.value = "Choose one";
+    try {
+      var docSnapshot = await FirebaseFirestore.instance.collection('users').doc(userId).get();
+      if (docSnapshot.exists && docSnapshot.data()!.containsKey('degreeField')) {
+        String degree = docSnapshot['degreeField'] ?? "Choose one";
+        if (["Choose one",
+          "Registered nurse",
+          "Human Services"].contains(degree)) {
+         qddpController.selectedValue.value = degree;
+        } else {
+        qddpController.selectedValue.value = "Choose one"; // Default to a valid item if no match
+        }
+       // qddpController.selectedValue.value = degree;
+        print("this is value ${ qddpController.selectedValue.value}");
+      }
+    } catch (e) {
+      print("Error fetching degree: $e");
+    }
+  }
+  Future<void> updateDegreeInFirestore(String userId, String field) async {
+    try {
+      if(field == "degreeField"){
+        await FirebaseFirestore.instance.collection('users').doc(userId).update({
+          'degreeField': qddpController.selectedValue.value,
+        });
+      }else{
+        await FirebaseFirestore.instance.collection('users').doc(userId).update({
+          'degree': qddpController.selectedDegree.value,
+        });
+      }
+      successToast(context: navigatorKey.currentContext!,msg:"Updated successfully");
+    } catch (e) {
+      print("Error updating degree: $e");
+    }
+    update();
+  }
   // Future<void> getToken() async {
   //   FirebaseMessaging messaging = FirebaseMessaging.instance;
   //   var currentId = FirebaseAuth.instance.currentUser;
